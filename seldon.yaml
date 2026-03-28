@@ -1,7 +1,14 @@
-project:
-  name: ai-workflow-design
-  description: "AI Workflow Design for Official Statistics"
+event_store:
+  path: seldon_events.jsonl
+neo4j:
   database: seldon-ai-workflow-design
+  uri: bolt://localhost:7687
+project:
+  created_at: '2026-03-27T00:00:00.000000Z'
+  domain: research
+  name: ai-workflow-design
+  slug: ai-workflow-design
+  description: "AI Workflow Design for Official Statistics"
 
 paths:
   cc_tasks: cc_tasks/
