@@ -1,0 +1,29 @@
+project:
+  name: ai-workflow-design
+  description: "AI Workflow Design for Official Statistics"
+  database: seldon-ai-workflow-design
+
+paths:
+  cc_tasks: cc_tasks/
+  handoffs: handoffs/
+  book: book/
+  docs: docs/
+  assets: assets/
+
+shared_ontology:
+  # Per AD-017: Central Validity Ontology
+  # This project inherits shared terminology from the main Seldon repo.
+  # Canonical definitions live in seldon/ontology/ — NOT in this project.
+  # Project-level terms can extend but never override the shared namespace.
+  source: /Users/brock/Documents/GitHub/seldon/ontology/
+  vocabularies:
+    - validity/VALIDITY_VOCABULARY.md
+  inheritance: read-only  # This project queries, does not own
+
+conventions:
+  cc_task_naming: "YYYY-MM-DD_<descriptive_slug>.md"
+  chapter_naming: "chapter-NN.md"
+  handoff_naming: "HANDOFF_YYYY-MM-DD-sessionN.md"
+  figures_term: "figure"
+  prohibited_tools:
+    - "github:create_or_update_file"
