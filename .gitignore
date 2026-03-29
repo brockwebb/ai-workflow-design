@@ -30,6 +30,10 @@ book/_build/
 # Claude Code
 .claude/
 
+# Session artifacts (not for public repo)
+cc_tasks/
+handoffs/
+
 # IDE
 .vscode/
 .idea/
