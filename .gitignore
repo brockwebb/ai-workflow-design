@@ -12,6 +12,13 @@ venv/
 # Build outputs (tracked selectively)
 exports/_combined_DEBUG.md
 exports/_debug_output.typ
+exports/*.pdf
+exports/aiwf4os.png
+scripts/typst_cover.typ
+
+# PaperBanana outputs (large generated images)
+assets/diagrams/paperbanana/outputs/
+assets/diagrams/paperbanana/.env
 
 # MyST build output
 book/_build/

@@ -117,7 +117,13 @@ See `book/appendix-principles.md` for standalone reference page.
 
 ## Build System
 
-TBD — will prototype PDF pipeline early (lesson from ai4stats). Likely Jupyter Book or Quarto. Decision deferred until chapter 1 draft exists.
+**MyST** (`mystmd`) — matching ai4stats.
+
+- HTML site: `cd book && myst build --html` → `book/_build/html/`
+- PDF export: Typst via `myst build --pdf` (template: `plain_typst_book`, output: `exports/ai-workflow-design.pdf`)
+- GitHub Pages: `.github/workflows/deploy.yml` deploys on push to `main` (requires Pages source set to "GitHub Actions" in repo settings)
+- Config: `book/myst.yml`
+- License: CC BY 4.0
 
 ## Related Projects
 

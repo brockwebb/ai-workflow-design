@@ -1,0 +1,3 @@
+# Table column width overrides for PDF export
+# See ai4stats/scripts/table_map.yaml for format reference
+tables: []

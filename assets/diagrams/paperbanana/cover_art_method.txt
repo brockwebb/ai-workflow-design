@@ -1,0 +1,46 @@
+# Book Cover Art: AI Workflow Design for Official Statistics
+
+## Overview
+
+This is an abstract decorative book cover illustration, NOT a technical diagram. It should evoke the concepts of workflow design, parallel processing, and decision architecture without being literally readable as a flowchart. The aesthetic is risograph print art — textured, imperfect, and artistic.
+
+## Composition
+
+A vertically-oriented abstract composition (8.5 x 11 portrait aspect ratio) featuring:
+
+- A central branching structure: a single vertical flow line that splits into 2-3 parallel paths, weaves through diamond-shaped nodes, and reconverges. The paths should cross and interweave, suggesting parallel processing and decision routing.
+- Diamond shapes at intersection points suggesting decision nodes — varying sizes, not uniform.
+- The overall composition should be ASYMMETRIC — weighted toward the upper-left, with open negative space in the lower-right quadrant for text overlay (title and author name will be placed there).
+- Scattered small dots and faint grid lines as background texture, sparse and subtle.
+- The composition fills roughly 60% of the canvas. The remaining 40% is intentional negative space.
+
+## Color Palette (strictly limited)
+
+- Steel blue (muted, not bright — approximately #4A7C8F)
+- Dark terracotta/burnt sienna (approximately #C45D3E)
+- Black (#1A1A1A)
+- Background: warm cream/off-white (#F5F0E8)
+
+NO other colors. Where blue and terracotta overlap, the overprint should darken naturally (not create a new hue like purple or green). Black is used for the main flow lines and smallest elements.
+
+## Texture and Style
+
+- Risograph print aesthetic: visible halftone dot grain across all colored areas
+- Slight ink misregistration — colored fills are offset 1-2px from their outlines
+- Paper texture visible throughout, including within colored shapes
+- Imperfections: small ink spatter dots, uneven edges on shapes
+- NO gradients, NO drop shadows, NO 3D/isometric perspective
+- All elements are flat geometric forms
+- Think: mid-century modern poster meets technical blueprint
+
+## What This Is NOT
+
+- NOT a readable flowchart or technical diagram — no labels, no text, no arrows with labels
+- NOT symmetric or perfectly centered
+- NOT clean/sterile/corporate — it should feel hand-printed
+- NOT busy — fewer elements with more breathing room, not more elements
+- NOT 3D or isometric — strictly flat/2D
+
+## Accessibility Note
+
+The three colors (steel blue, terracotta, black) must be distinguishable in grayscale. They have intentionally different luminance values: steel blue (medium-light), terracotta (medium), black (dark).

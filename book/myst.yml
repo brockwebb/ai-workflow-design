@@ -9,6 +9,7 @@ project:
     - format: typst
       template: plain_typst_book
       output: exports/ai-workflow-design.pdf
+      cover: images/cover-web.png
   toc:
     - file: cover.md
     - file: intro.md

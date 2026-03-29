@@ -1,7 +1,8 @@
 # AI Workflow Design for Official Statistics
 
+```{image} images/cover-web.png
+:alt: AI Workflow Design for Official Statistics — Book Cover
+:width: 100%
+```
+
 *Brock Webb*
-
----
-
-A practical guide to designing reliable AI/LLM workflows for statistical research and official statistics production.
