@@ -15,3 +15,8 @@
 - The five threats: T1-T5
 - Grounding strategies for temporal knowledge gaps
 - Canonical source: seldon/ontology/validity/VALIDITY_VOCABULARY.md
+- SFV sub-dimensions applied to knowledge graphs as concrete example:
+  - Compression fidelity: did chunking/extraction preserve meaning, or lose context at chunk boundaries?
+  - Terminological stability: is "household income" the same node every time, or did extraction create 5 variants?
+  - State provenance: can you trace every edge and node to source passage, model version, prompt?
+- Model selection logic as a drift surface: optimal model blend shifts as models update — selection criteria need versioning

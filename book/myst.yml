@@ -1,0 +1,34 @@
+version: 1
+project:
+  title: 'AI Workflow Design for Official Statistics'
+  authors:
+    - name: Brock Webb
+  github: brockwebb/ai-workflow-design
+  jupyter: false
+  exports:
+    - format: typst
+      template: plain_typst_book
+      output: exports/ai-workflow-design.pdf
+  toc:
+    - file: cover.md
+    - file: intro.md
+    - file: chapter-01.md
+    - file: chapter-02.md
+    - file: chapter-03.md
+    - file: chapter-04.md
+    - file: chapter-05.md
+    - file: chapter-06.md
+    - file: chapter-07.md
+    - file: chapter-08.md
+    - file: chapter-09.md
+    - file: chapter-10.md
+    - file: chapter-11.md
+    - file: chapter-12.md
+    - file: chapter-13.md
+    - file: chapter-14.md
+    - file: appendix-principles.md
+    - file: bibliography.md
+site:
+  options:
+    folders: true
+  template: book-theme

@@ -10,7 +10,7 @@ An open-source book on designing reliable AI/LLM workflows for statistical resea
 
 **Repo:** `brockwebb/ai-workflow-design`
 **Author:** Brock Webb
-**License:** TBD (likely CC BY 4.0, matching ai4stats)
+**License:** CC BY 4.0 (matching ai4stats)
 
 ## Project Structure
 
@@ -31,7 +31,7 @@ ai-workflow-design/
 
 ## Chapter Outline (Draft)
 
-1. **Why Design Matters** — The Hadoop parallel. LLM systems as distributed systems with stochastic components. Design discipline isn't optional.
+1. **Why Design Matters** — The Hadoop parallel. LLM systems as distributed systems with stochastic components. The systems engineering gap for researchers: statisticians and data scientists aren't trained in these methods, the tooling market isn't building for research workflows, and the community has to fill that gap or it won't get filled. Design discipline isn't optional.
 2. **Classification & Coding Workflows** — Survey question mapping, occupation/industry coding, document classification. Ensemble agreement, confidence routing, human review escalation. Federal Survey Concept Mapper as anchor case study.
 3. **Data Cleaning & Imputation Workflows** — LLMs for anomaly detection, inconsistency flagging, imputation proposals. Where LLMs complement traditional methods. Edit/imputation pipeline design.
 4. **Detection & Extraction Workflows** — Entity extraction, pattern detection, disclosure review assistance. Recall vs precision tradeoffs in statistical contexts.
@@ -40,7 +40,58 @@ ai-workflow-design/
 7. **Checkpoints, Failures, and Recovery** — Config-driven architecture. Retry logic. Idempotent operations. Picking up where you left off.
 8. **Evaluation by Design** — Design systems that produce their own statistics. Metrics collection as architecture, not afterthought.
 9. **State, Drift, and Validity** — SFV applied. Context window management. Training cutoff windows. When your instrument changes under you.
-10. **Cost & Practicality** — Token budgets. Batch economics. When cheap models win. Making the case to your program office.
+10. **State Management & Research Provenance** — Tracking what happened, what changed, and why across a research pipeline. Configuration control, artifact tracking, ontology management. Seldon as case study. Connection to SFV: state management is how you operationalize validity.
+11. **Workflow Orchestration & the Tool Landscape** — Abstract treatment of orchestration approaches: tradeoffs between managed platforms, code-first, and CLI-native. MCP friction analysis as a worked example. Context windows and long-term memory. What to bet on vs wait on. Designed for updateability.
+12. **Security, Supply Chain, and Model Provenance** — The information security chapter. Model provenance verification, dependency auditing, "offline isn't offline," data residency constraints, the security surface area of LLM workflows that security teams don't yet have playbooks for.
+13. **Deploying in Institutional Environments** — Cloud parity gap, ATO timelines, governance-as-bottleneck vs governance-as-enabler, IT as partner not gatekeeper, continuous delivery culture shift, institutional friction, "enough governance and no more."
+14. **Cost & Practicality** — Token budgets. Batch economics. When cheap models win. Making the case to your program office.
+
+## Organizing Framework
+
+The book is structured around two paired layers that originate from Census AI program strategy work (March 2026) and are stated universally. Introduced in Chapter 1, referenced throughout.
+
+**Compressed Tenets** (strategic — what matters):
+1. Trust defines the mission
+2. Data precedes models
+3. Deliver capability quickly
+4. Governance must enable execution
+5. Humans remain accountable
+6. Defensibility is required
+7. Adapt continuously
+8. Build internal capability
+9. Experiment under control
+10. Infrastructure enables delivery
+
+**Working Principles** (practitioner — how to act):
+1. If it cannot be explained, do not use it
+2. Slow governance prevents delivery
+3. Adoption determines impact
+4. Build lineage before scale
+5. Reuse data before collecting more
+6. Access defines capability
+7. Security is a system property
+8. Outputs require full provenance
+
+**Chapter-to-Principle Mapping:**
+
+| Chapter | Primary Working Principle(s) | Primary Tenet(s) |
+|---------|------------------------------|------------------|
+| Ch 1: Why Design Matters | All (introduction) | All (introduction) |
+| Ch 2: Classification & Coding | Adoption determines impact | Deliver capability quickly |
+| Ch 3: Data Cleaning & Imputation | Reuse data before collecting more | Data precedes models |
+| Ch 4: Detection & Extraction | If it cannot be explained, do not use it | Humans remain accountable |
+| Ch 5: Ensemble & Multi-Model | Outputs require full provenance | Defensibility is required |
+| Ch 6: Parallel, Serial, Bottleneck | Adoption determines impact | Deliver capability quickly |
+| Ch 7: Checkpoints & Recovery | Build lineage before scale | Experiment under control |
+| Ch 8: Evaluation by Design | If it cannot be explained, do not use it | Defensibility is required |
+| Ch 9: State, Drift, Validity | Outputs require full provenance | Trust defines the mission |
+| Ch 10: State Mgmt & Provenance | Build lineage before scale | Defensibility is required |
+| Ch 11: Workflow Orchestration | Access defines capability | Infrastructure enables delivery |
+| Ch 12: Security & Supply Chain | Security is a system property | Trust defines the mission |
+| Ch 13: Institutional Deployment | Slow governance prevents delivery | Governance must enable execution |
+| Ch 14: Cost & Practicality | Slow governance prevents delivery | Infrastructure enables delivery |
+
+See `book/appendix-principles.md` for standalone reference page.
 
 ## Workflow Rules
 

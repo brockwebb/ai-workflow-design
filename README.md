@@ -2,7 +2,7 @@
 
 Practical design patterns for building reliable AI-powered data processing pipelines in federal statistical agencies and research organizations.
 
-**Status:** Early development. Private until ready for public release.
+**Status:** Early development.
 
 ## What This Is
 
@@ -21,10 +21,8 @@ Data scientists and statisticians building AI-powered pipelines for:
 
 ## Author
 
-Brock Webb — Data Scientist, U.S. Census Bureau
-
-*Views expressed are the author's own and do not represent the U.S. Census Bureau or the Department of Commerce.*
+Brock Webb. Views expressed are personal and do not represent any federal agency.
 
 ## License
 
-TBD
+CC BY 4.0. See LICENSE file.

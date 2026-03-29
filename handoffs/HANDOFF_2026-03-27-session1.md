@@ -40,7 +40,7 @@ Source material to draw from:
 ## Verification Checklist (from CC task)
 
 - [x] Git repo initialized locally
-- [ ] GitHub repo exists (private) at brockwebb/ai-workflow-design — see session notes
+- [x] GitHub repo exists (private) at brockwebb/ai-workflow-design
 - [x] seldon.yaml exists with shared_ontology section
 - [ ] Seldon recognizes the project (pending seldon_go)
 - [x] All 10 chapter placeholders exist in book/
@@ -49,6 +49,6 @@ Source material to draw from:
 - [x] .gitignore in place
 - [ ] Shared validity ontology accessible from project context (pending Seldon init)
 - [x] Chapter 9 placeholder references canonical vocabulary, not local definitions
-- [ ] Initial commit pushed to main (pending GitHub repo confirmation)
+- [x] Initial commit pushed to main
 - [x] Handoff document written (this file)
 - [ ] All artifacts registered with Seldon (pending seldon_go)

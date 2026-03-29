@@ -13,9 +13,15 @@ venv/
 exports/_combined_DEBUG.md
 exports/_debug_output.typ
 
+# MyST build output
+book/_build/
+
 # Environment
 .env
 .env.local
+
+# Claude Code
+.claude/
 
 # IDE
 .vscode/
