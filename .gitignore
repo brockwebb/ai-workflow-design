@@ -34,6 +34,13 @@ book/_build/
 cc_tasks/
 handoffs/
 
+# Research notes (raw material, not for public repo)
+docs/research_notes/
+
+# External reference documents (PDFs, CSVs — not for public repo)
+docs/*.pdf
+docs/*.csv
+
 # IDE
 .vscode/
 .idea/

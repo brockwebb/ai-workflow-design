@@ -5,6 +5,8 @@ project:
     - name: Brock Webb
   github: brockwebb/ai-workflow-design
   jupyter: false
+  bibliography:
+    - references.bib
   exports:
     - format: typst
       template: plain_typst_book
@@ -12,6 +14,7 @@ project:
       cover: images/cover-web.png
   toc:
     - file: cover.md
+    - file: foreword.md
     - file: intro.md
     - file: chapter-01.md
     - file: chapter-02.md

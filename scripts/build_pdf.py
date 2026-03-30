@@ -38,6 +38,7 @@ ADMONITION_LABELS = {
 # Front/back matter files that get unnumbered chapter headers
 UNNUMBERED_FILES = {
     "cover.md",
+    "foreword.md",
     "intro.md",
     "appendix-principles.md",
     "bibliography.md",

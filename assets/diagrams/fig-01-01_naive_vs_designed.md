@@ -1,20 +1,22 @@
-# fig-01-01: Naive vs Designed Single Stage
+# fig-01-01: Naive vs Designed Single Stage (Two-Stage Presentation)
 
 ## Concept
-Two-panel horizontal comparison: naive single-stage LLM workflow (left) vs properly designed single-stage workflow (right). The foundational visual for the book's thesis.
+Two separate figures presented sequentially with reflection questions between them.
+The reader sees the naive workflow first, engages with "what could go wrong," then
+sees the designed workflow with each component motivated by the problems they identified.
 
-## Left Panel: "The Naive Stage"
-Input → Model → Output
-- No model selection rationale
-- No version tracking
-- Bias accepted silently
-- No confidence score
-- No comparison
-- No stored evidence
-- No provenance chain
-Label: "Most people build this and call it done."
+## fig-01-01a: The Naive Workflow
 
-## Right Panel: "The Designed Stage"
+Simple block diagram: **Input → Model → Output**
+
+- Visually sparse, clean, deceptively simple
+- No annotations, no callouts
+- The simplicity IS the point: it looks easy, but hides all the problems
+
+Label: "The naive workflow. Input goes in, model processes it, output comes out."
+
+## fig-01-01b: The Designed Workflow
+
 Input → [Model Selection Layer → Parallel Inference (Model A, Model B) → Agreement & Confidence Scoring → Decision Logic → Evidence Accumulation] → Output
 
 Layers:
@@ -24,17 +26,18 @@ Layers:
 4. Decision Logic: explicit rule for N outputs → 1 decision
 5. Evidence Accumulation: stored scores, versions, disagreements, adjudication
 
-Label: "Same input, same output — now you can defend it."
+Label: "The designed workflow. Same input, same output, but now you can defend it."
 
 ## Design Constraints
-- Horizontal layout
-- Left sparse, right rich-but-organized
-- Same input/output boxes both sides
+- Two separate images, not one two-panel figure
+- fig-01-01a: very sparse, muted colors
+- fig-01-01b: rich but organized, distinct layers
+- Same input/output boxes both sides for visual continuity
 - Works in grayscale
 - No company/product names
 
 ## Placement
-- Primary: Chapter 1 (Why Design Matters)
+- Primary: Chapter 1 (Why Design Matters), presented sequentially with reflection questions between
 - Referenced: Ch 5 (Ensemble), Ch 8 (Evaluation), Ch 9 (State/Validity)
 
 ## Rendering

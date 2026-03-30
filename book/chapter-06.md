@@ -1,6 +1,12 @@
 # Chapter 6: Parallel, Serial, and the Bottleneck
 
 <!-- STATUS: Placeholder -->
+<!-- RELOCATED from Chapter 1: The constraint-aware design parallel.
+     Physical constraints (token throughput, rate limits, cost, context window limits)
+     force design discipline, just as data transport time, compute costs, and cluster
+     reliability forced design discipline in the Hadoop/MapReduce era. The $15 vs $1,500
+     pipeline example belongs here where batch design and cost tradeoffs are concrete.
+     See Session 4/5 handoffs for context. -->
 
 ## Working Notes
 

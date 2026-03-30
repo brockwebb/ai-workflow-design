@@ -8,7 +8,8 @@
 
 | Figure ID | Chapter | Title | Source File | Status |
 |-----------|---------|-------|-------------|--------|
-| fig-01-01 | Ch 1 | Naive vs Designed Single Stage | assets/diagrams/fig-01-01_naive_vs_designed.md | Concept |
+| fig-01-01a | Ch 1 | The Naive Workflow | assets/diagrams/fig-01-01_naive_vs_designed.md | Concept |
+| fig-01-01b | Ch 1 | The Designed Workflow | assets/diagrams/fig-01-01_naive_vs_designed.md | Concept |
 
 ## Tables
 

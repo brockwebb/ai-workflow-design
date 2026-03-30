@@ -3,14 +3,6 @@
 <!-- STATUS: Draft -->
 <!-- Bridge from ai4stats Chapter 15 → design discipline for LLM workflows -->
 
-## Start Where You Are
-
-Consider a simple scenario. You have 3,000 Excel files from a survey operation and you need to run a set of quality checks across all of them. You ask an LLM to generate the VBA macro code. It produces something close. You modify it, test it against a few files, verify the results, deploy it. Done. You got help, you checked the work, you saved a few hours. That is a perfectly valid use of AI in a research context. Limited scope, limited risk, real value.
-
-Now consider a different scenario. You want to classify 7,000 survey questions against a standardized concept taxonomy, with confidence scores, disagreement detection, and an auditable evidence chain. You want to run it for under $20 and have the results be defensible in a methods review. That is not a VBA macro. That is a system, and it requires design.
-
-The distance between those two scenarios is what this book covers. Most people can do the first one already. The second one requires design patterns, engineering discipline, and infrastructure that most researchers have never been taught and the market is not building for them. That is the gap this book fills.
-
 ## The Nature of the Beast
 
 LLM-powered research workflows are stochastic systems operating over language, not numbers. This isn't a bug. It is a fundamental property of the instrument, and it requires a different design discipline than anything most researchers or data scientists have been trained in.
@@ -31,7 +23,7 @@ Every LLM invocation where a deterministic or seed-reproducible method would suf
 
 ## What Breaks: Reproducibility, Evidence, and State
 
-*AI for Official Statistics* (the predecessor to this book) introduced the State Fidelity Validity (SFV) framework in its final chapter, along with the three layers of the reproducibility problem that LLM-assisted research creates: stochastic outputs, prompt sensitivity, and state accumulation failures. If you have read that chapter, the next few paragraphs will be familiar territory. If you haven't, what follows is self-contained.
+*AI for Official Statistics* {cite:p}`webb_2026_ai4stats` (the predecessor to this book) introduced the State Fidelity Validity (SFV) framework in its final chapter, along with the three layers of the reproducibility problem that LLM-assisted research creates: stochastic outputs, prompt sensitivity, and state accumulation failures. If you have read that chapter, the next few paragraphs will be familiar territory. If you haven't, what follows is self-contained.
 
 Traditional reproducible research rests on a simple contract: same data plus same code equals same results. With LLMs in the pipeline, that contract is broken. Same prompt plus same model does not equal same output. The classical evidence chain, the one that lets a reviewer trace a published number back through code to data, has a gap in it now.
 
@@ -45,15 +37,17 @@ Variance compounds through pipelines. A single stochastic node introduces manage
 
 A common response to LLM unreliability is to add a refinement loop: generate an output, evaluate it, revise, repeat. This is intuitive and sometimes effective. It is also a trap.
 
-The core problem is that when the evaluator shares the generator's blind spots, iteration rearranges errors without removing them. Huang et al. (2024) demonstrated this directly: large language models cannot self-correct reasoning when no external signal is provided. The model's internal critic has the same training data, the same biases, and the same failure modes as the generator. Asking it to evaluate its own work is asking the student to grade their own exam.
+The core problem is that when the evaluator shares the generator's blind spots, iteration rearranges errors without removing them. {cite:t}`huang_2024` demonstrated this directly: large language models cannot self-correct reasoning when no external signal is provided. The model's internal critic has the same training data, the same biases, and the same failure modes as the generator. Asking it to evaluate its own work is asking the student to grade their own exam.
 
-The empirical picture is consistent. Madaan et al. (2023) showed diminishing returns in iterative self-refinement, with the largest improvements concentrated in the first one or two rounds. Yang et al. (2025) formalized the convergence ceiling: there is a maximum accuracy a self-refinement loop can reach regardless of how many iterations you run, determined by the model's ability to preserve correct content while fixing errors. This ceiling is a mathematical property of the system, not a tuning problem.
+The empirical picture is consistent. {cite:t}`madaan_2023` showed diminishing returns in iterative self-refinement, with the largest improvements concentrated in the first one or two rounds. {cite:t}`yang_2025` formalized the convergence ceiling: there is a maximum accuracy a self-refinement loop can reach regardless of how many iterations you run, determined by the model's ability to preserve correct content while fixing errors. This ceiling is a mathematical property of the system, not a tuning problem.
 
-The pathologies go deeper than diminishing returns. Xu et al. (2024) documented *self-bias amplification*: LLMs systematically overrate their own generations, and this bias amplifies monotonically over multiple self-refinement steps. The model becomes more confident in its own output with each iteration, not more accurate. Pan et al. (2024) identified *reward hacking* in self-refinement: when the generator and evaluator are the same model, the generator learns to exploit the evaluator's preferences rather than improving output quality. And the RefineBench benchmark (Lee et al., 2025) put numbers on the gap: state-of-the-art models show at most 1.8 percentage points of gain from self-refinement across five iterations, but near-perfect gains when guided by *external* feedback.
+The pathologies go deeper than diminishing returns. {cite:t}`xu_2024` documented *self-bias amplification*: LLMs systematically overrate their own generations, and this bias amplifies monotonically over multiple self-refinement steps. The model becomes more confident in its own output with each iteration, not more accurate. {cite:t}`pan_2024` identified *reward hacking* in self-refinement: when the generator and evaluator are the same model, the generator learns to exploit the evaluator's preferences rather than improving output quality. And the RefineBench benchmark ({cite:t}`lee_2025`) put numbers on the gap: state-of-the-art models show at most 1.8 percentage points of gain from self-refinement across five iterations, but near-perfect gains when guided by *external* feedback.
 
 Machines can overthink problems too. The design implication is clear: self-refinement loops need explicit stopping criteria, external validation signals, and architectural awareness that the model's critic shares the model's blind spots. This connects directly to the ensemble approach in Chapter 5. Use *different* models to evaluate each other, not the same model evaluating itself.
 
-[NEEDS: verify whether the analogy between inference-time self-refinement and training-time model collapse has been made explicitly in the literature. If not, this is an original observation worth developing: model collapse (training on own outputs) degrades the model over time; iterative self-refinement at inference time is a structurally similar dynamic, with the system consuming its own output and converging on its own biases. The training-time and inference-time versions may share more formal structure than the current literature acknowledges.]
+There is a structural resemblance between inference-time self-refinement degradation and training-time model collapse. Model collapse occurs when models are trained recursively on their own outputs, progressively degrading until the model becomes useless {cite:p}`shumailov_2024`. Self-consuming generative models, as {cite:t}`alemohammad_2023` demonstrated, go "MAD," they lose diversity and converge on a narrow subset of their output space. At inference time, iterative self-refinement exhibits a structurally similar dynamic: the system consumes its own output, amplifies its own biases, and converges on increasingly confident but not increasingly correct answers.
+
+The mechanisms are different. Training-time collapse involves weight updates on synthetic data eroding the learned distribution. Inference-time degradation involves context window pollution and the model's inability to reliably evaluate its own output; no weights change. But the pattern is shared: recursive self-consumption degrades output quality. The practical implication is the same in both cases: external signal is the remedy. Fresh training data prevents model collapse; external evaluation prevents self-refinement degradation. Design accordingly.
 
 ## The Systems Engineering Gap
 
@@ -67,7 +61,7 @@ The community has to fill this gap, or it won't get filled.
 
 ### Levels of AI Automation in Research
 
-Dan Shapiro (2026) proposed five levels of AI coding automation, modeled after NHTSA's five levels of driving automation. The levels range from "spicy autocomplete" (Level 0, AI suggests the next line) through "junior developer" (Level 2, AI navigates multi-file changes but the human reviews everything) to "the dark factory" (Level 5, autonomous software production from specs). Shapiro's key insight: every level past 2 "feels like you are done. But you are not done." He estimates 90% of developers using AI tools are stuck at Level 2.
+{cite:t}`shapiro_2026` proposed five levels of AI coding automation, modeled after NHTSA's five levels of driving automation. The levels range from "spicy autocomplete" (Level 0, AI suggests the next line) through "junior developer" (Level 2, AI navigates multi-file changes but the human reviews everything) to "the dark factory" (Level 5, autonomous software production from specs). Shapiro's key insight: every level past 2 "feels like you are done. But you are not done." He estimates 90% of developers using AI tools are stuck at Level 2.
 
 The framework translates to research workflows, but with a critical difference. Software verification at Level 5 is "do the tests pass?" Research verification at Level 5 is "is this defensible as official statistics?" The second question requires validity, provenance, and institutional credibility. It cannot be reduced to a pass/fail check.
 
@@ -83,26 +77,47 @@ For research workflows, the levels look roughly like this:
 
 The argument for this book is that the levels exist for research workflows, but the infrastructure to operate safely at the higher levels *does not exist yet for this context*. The tooling market is building Level 3+ infrastructure for software developers: test suites, CI/CD, type systems. For research workflows, the equivalent infrastructure (SFV, artifact tracking, dual-path verification, evidence chains) has to be built by the people who need it. This book teaches you how.
 
-There is empirical support for the gap between perceived and actual productivity at these levels. A randomized controlled trial by METR (2025) studied 16 experienced open-source developers on 246 real tasks with AI tools. The tools slowed their work by 19% on average. The developers estimated AI made them 24% *faster*. They were wrong about both direction and magnitude. The tool changed; the workflow did not. Moving up through the levels requires more than a better tool. It requires redesigning how you work.
+There is empirical support for the gap between perceived and actual productivity at these levels. A randomized controlled trial by METR {cite:p}`becker_2025` studied 16 experienced open-source developers on 246 real tasks with AI tools. The tools slowed their work by 19% on average. The developers estimated AI made them 24% *faster*. They were wrong about both direction and magnitude. The tool changed; the workflow did not. Moving up through the levels requires more than a better tool. It requires redesigning how you work.
 
-[NEEDS: METR RCT full citation details. Published July 2025. Verify author list and venue.]
+This perception gap is not limited to a small-sample study. The 2024 Accelerate State of DevOps Report {cite:p}`dora_2024`, surveying over 39,000 professionals globally, found the same pattern at scale: 75% of developers self-reported productivity gains from AI tools, while measured delivery metrics told a different story. Every 25% increase in AI adoption correlated with a 1.5% dip in delivery speed and a 7.2% drop in system stability. The METR result is the RCT; the DORA result is the large-sample observational confirmation. Together they establish that the gap between perceived and actual AI-assisted productivity is robust across methodologies and sample sizes. When people report that AI has accelerated their work, the evidence suggests they may be wrong about both the direction and the magnitude of the effect.
 
-```{figure} images/fig-01-01_naive_vs_designed.png
-:alt: Comparison of a naive single-stage LLM workflow versus a designed single-stage workflow
-:width: 100%
+### What's Wrong With This Picture?
 
-The gap between a naive single-stage LLM workflow and a designed one. Same input, same output, but only the right side can defend its result.
+Consider the simplest possible LLM workflow:
+
+```{figure} images/fig-01-01a_naive.png
+:alt: A naive single-stage LLM workflow: Input goes to Model goes to Output
+:width: 80%
+
+The naive workflow. Input goes in, model processes it, output comes out.
 ```
 
-[NEEDS: figure not yet rendered. Will be generated via PaperBanana in a separate CC task.]
+[NEEDS: fig-01-01a not yet rendered.]
 
-## The Hadoop Aside
+This is how most people start. One model, one call, one result. It works, in the sense that you get output. Now ask yourself:
 
-There is a useful historical parallel in the Hadoop era. Fifteen years ago, the hard part of big data wasn't writing MapReduce jobs. It was knowing what to parallelize, where to checkpoint, and how to handle failures. The technology was accessible before the design patterns were codified. Physical constraints, data transport time, compute costs, cluster reliability, forced design discipline on practitioners who would have preferred to skip it.
+- What could go wrong here?
+- How would you know if the output was wrong?
+- Could you defend this result to a reviewer? To an auditor? To Congress?
+- What happens when you run it again tomorrow and get a different answer?
+- What happens when the model provider updates the model next month?
 
-LLM workflows face analogous constraints: token throughput, API rate limits, cost per call, context window limits, and training data cutoff dates. These are the physical realities that force design discipline. The $15 classification pipeline and the $1,500 classification pipeline that produce the same result differ not in the model they use but in whether someone designed around these constraints or ignored them.
+These are not rhetorical questions. They are the actual engineering problems the rest of this book addresses. Take a moment with them before reading on.
 
-[NEEDS: fact-check the Hadoop timeline and any specific claims before expanding. Do not assert specifics from memory.]
+Now consider the designed version of the same workflow:
+
+```{figure} images/fig-01-01b_designed.png
+:alt: A designed single-stage LLM workflow with model selection, parallel inference, agreement scoring, decision logic, and evidence accumulation
+:width: 100%
+
+The designed workflow. Same input, same output, but now you can defend it.
+```
+
+[NEEDS: fig-01-01b not yet rendered.]
+
+Same input, same output. But every component exists because it solves one of the problems you just identified. The model selection layer exists because you need to reason about your instrument. The parallel inference exists because a single stochastic output is not trustworthy. The agreement scoring exists because you need a quantitative basis for confidence. The decision logic exists because "pick one" is not a defensible rule. The evidence accumulation exists because you cannot defend a result without a record of how it was produced.
+
+The chapters that follow address each of these components: ensemble patterns (Chapter 5), evaluation infrastructure (Chapter 8), state management and provenance (Chapters 9 and 10).
 
 ## The Evaluation Trap
 
@@ -177,3 +192,15 @@ The chapters that follow are organized in four clusters.
 **Chapters 11 through 14** cover operational concerns: workflow orchestration and the tool landscape, security and supply chain risks, deploying in institutional environments, and cost engineering. These chapters address the reality that building a working pipeline is only half the problem; operating it in a real organization with real constraints is the other half.
 
 Each chapter is designed to stand alone. You can read them in order for the full argument, or jump to the chapter that addresses your immediate problem. The tenets and working principles provide the connective tissue.
+
+### Thought Experiment
+
+Your team has built an LLM pipeline that classifies survey responses into standardized categories. It ran overnight on 50,000 records. The summary statistics look reasonable: the distribution across categories matches historical patterns, the processing cost was within budget, and no errors were logged.
+
+How do you know the model didn't silently change its classification criteria at record 23,000? How do you know a prompt that worked correctly on English-language responses didn't mishandle the Spanish-language subset? How do you know that "reasonable summary statistics" aren't masking a systematic error that happens to preserve the aggregate distribution while misclassifying individual records?
+
+If you cannot answer these questions with your current infrastructure, you know where to start reading.
+
+---
+
+The next chapter takes the first domain workflow, classification and coding, and shows these design principles in action against a real problem with real data and a real cost constraint.

@@ -93,6 +93,31 @@ The book is structured around two paired layers that originate from Census AI pr
 
 See `book/appendix-principles.md` for standalone reference page.
 
+## Chapter Pedagogical Pattern
+
+Every chapter follows this consistent structure (Feynman pedagogy operationalized):
+
+- **Opening hook:** A concrete scenario or problem that motivates the chapter's topic. Grounded, not abstract.
+- **Core content:** Technical material, design patterns, principles.
+- **Reflection prompts (distributed throughout):** "What could go wrong here?" / "How would you check this?" Inline, not boxed at the end. They interrupt reading at natural pause points to force active engagement.
+- **Thought experiment (at least one per chapter):** A substantial scenario asking the reader to apply what they learned. Not homework; a provocation.
+- **Chapter bridge:** Each chapter ends by connecting forward to what comes next and why it matters.
+
+## Citation Conventions
+
+- **BibTeX file:** `book/references.bib` — single source of truth for all citations.
+- **Narrative (textual) citations:** `` {cite:t}`key` `` → renders as "Author et al. (Year)"
+  - Example: `` {cite:t}`huang_2024` `` → Huang et al. (2024)
+  - Use when the author is the grammatical subject: "Huang et al. (2024) demonstrated..."
+- **Parenthetical citations:** `` {cite:p}`key` `` → renders as "(Author et al., Year)"
+  - Example: `` {cite:p}`huang_2024` `` → (Huang et al., 2024)
+  - Use at end of a claim: "LLMs cannot self-correct reasoning ({cite:p}`huang_2024`)."
+- **Multiple citations:** `` {cite:p}`key1;key2` `` → (Author1, Year; Author2, Year)
+- **Key convention:** `firstauthor_year` in lowercase with underscores.
+- **Adding new citations:** Every CC task that introduces a source MUST add the BibTeX entry to `references.bib` AND use the proper `{cite:t}` or `{cite:p}` role in the chapter text.
+- **No bare prose citations.** Do not write "Huang et al. (2024)" as plain text. Always use the role markup so both HTML and PDF builds resolve correctly.
+- **PDF pipeline:** MyST → Pandoc → Typst. The `{cite:t}` and `{cite:p}` roles resolve through Pandoc's citeproc. The BibTeX file is the input for both build targets.
+
 ## Workflow Rules
 
 - **Seldon-managed from day one.** All artifacts tracked. No direct file edits on tracked files — changes go through CC tasks.
