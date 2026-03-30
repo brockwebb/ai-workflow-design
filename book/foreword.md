@@ -2,15 +2,17 @@
 
 <!-- STATUS: Draft -->
 
-## Knowing the Name vs. Knowing the Thing
+## A New Design Space
 
-Richard Feynman once said, "I learned very early the difference between knowing the name of something and knowing something." That distinction is the reason this book exists.
+Large language models have opened a design space that did not previously exist. They have not just accelerated existing work. They have made it possible to approach problems that were never approachable before, and they have given people with domain expertise the ability to exercise their ideas and creativity in ways that were previously locked behind specialized engineering teams. That democratization is real, and its consequences for research, operations, and public service are only beginning to be understood.
 
-Right now, across federal statistical agencies, research organizations, and data science teams, people are integrating large language models into their workflows. They know the names: GPT, Claude, Gemini, embeddings, RAG, fine-tuning, prompt engineering. They can call the APIs, get fluent output, and show impressive demos. But knowing the names of these things is not the same as knowing them.
+The tools let you dig a lot of holes fast. A working prototype that demonstrates a concept is now days of effort, not months. That speed matters, because it lets you move horizontally across problems, find the ones that have real value, and invest deeply where it counts. Not every idea should become a production system. Not every prototype should scale. Part of what these tools enable is the ability to explore widely and identify where the real opportunities are.
 
-Knowing something means you can explain *why* it works. It means you can predict when it will fail. It means you can design around its limitations, defend your results to a skeptical reviewer, and recover when things go wrong. Most people building AI-powered research workflows today cannot do these things, not because they lack intelligence or expertise, but because nobody has taught them how to think about these systems as systems.
+But the gap between a prototype and a production system has not gone away. A prototype shows that something can be done. A production system shows how it is actually done: operationally, reliably, sustainably. That gap exists for a reason. And because these tools have opened the door to so many more people, many of those now building have never had to cross it before.
 
-This is the gap between knowing the name and knowing the thing. This book exists to close it.
+This book is about crossing that gap. These systems break the conventions that every other tool in a professional career has followed. They do not produce the same output twice. They fail in ways that look like success. They degrade without warning. The principles that keep complex systems reliable apply here, but they are not obvious, and they are not part of standard training in any field now adopting these tools.
+
+You do not have to learn these principles the hard way. If you start with the right understanding of how these systems actually behave, your prototypes will be better informed, your designs will be more honest about what will and will not scale, and when the time comes to make the leap from idea to real research, you will know what that requires.
 
 ## First Principles, Not Recipes
 
@@ -22,9 +24,7 @@ If you understand the principles, you can evaluate any tool, adapt to any model 
 
 ## The Hardest Part
 
-Feynman's first principle of scientific integrity: "The first principle is that you must not fool yourself, and you are the easiest person to fool."
-
-This is the hardest part of working with AI systems, and it is the part nobody talks about honestly. When your AI workflow produces output that looks right and confirms what you expected, that is the most dangerous moment. Not because the output is wrong (it might be fine), but because you have no way of knowing without the infrastructure to check.
+The hardest part of working with AI systems is something nobody talks about honestly: you are the easiest person to fool. When your AI workflow produces output that looks right and confirms what you expected, that is the most dangerous moment. Not because the output is wrong (it might be fine), but because you have no way of knowing without the infrastructure to check.
 
 Confirmation bias is the silent killer in AI-assisted research. When output looks wrong, at least you know to investigate. When it looks right but *is* wrong, you have been fooled by a pattern machine that produces fluent, confident, plausible-looking incorrect answers. The failure mode is not noise or garbage. It is a well-formed, reasonable-sounding wrong answer that passes casual inspection.
 
@@ -46,7 +46,7 @@ Different readers bring different strengths. Some are strong on statistical meth
 
 The thought experiments and reflection prompts throughout the book are not academic exercises. They are invitations to try, break, and understand. You learn more by building something wrong and taking it apart than by reading about someone else's correct answer. The book pushes you to think, but it is alongside you, not above you. Its job is to find your edge and push you just past it.
 
-Feynman again: "Have no respect whatsoever for authority; forget who said it and instead look at what he starts with, where he ends up, and ask yourself, 'Is it reasonable?'" Apply that standard to this book. If something doesn't make sense, don't take it on authority. Work through it. Break it. That is how you learn.
+Apply that standard to this book. If something does not make sense, do not take it on authority. Work through it. Break it. That is how you learn.
 
 ## Where We Begin
 
