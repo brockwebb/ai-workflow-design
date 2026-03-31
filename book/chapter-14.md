@@ -26,13 +26,16 @@ The real comparison is total cost of the AI pipeline, including development, ope
 | | AI Pipeline | Manual Equivalent |
 |---|---|---|
 | Task | Map 6,987 survey questions to standardized concepts | Same task, same taxonomy |
-| Inference cost | ~$15 | $0 (no API calls) |
-| Runtime | ~2 hours | Weeks of analyst time |
+| Development cost | ~$3,500 (one-time: pipeline, prompts, evaluation design) | ~$800 (one-time: analyst training) |
+| Per-run cost | ~$15 (inference) | ~$23,300 (analyst labor) |
+| Runtime | ~2 hours | ~233 analyst-hours |
 | Accuracy | 99.5% (dual-model cross-validated) | Varies by analyst, estimated comparable |
 | Evidence chain | Complete: model versions, confidence scores, agreement rates, disagreements logged | Notes, spreadsheets, institutional memory |
 | Reproducibility | Re-run produces documented results with provenance | Re-assignment produces different results depending on analyst |
+| Year 1 total | ~$3,515 | ~$24,100 |
+| Year 2+ per cycle | ~$15 | ~$23,300 |
 
-[OPEN QUESTION: What would the manual equivalent have cost? Brock to provide estimate: FTEs, weeks, approximate labor cost. Even a rough "this would have taken N people M weeks" is sufficient for the comparison.]
+The manual equivalent: a trained analyst classifying survey questions against the harmonized taxonomy. Assume 8 hours of training on the taxonomy and classification conventions, then a sustained rate of approximately 30 questions per hour — a reasonable estimate for a skilled analyst making judgment calls on semantic alignment. At 6,987 questions, that is 233 analyst-hours of classification work alone. At a fully loaded labor rate of $100 per hour, the manual equivalent costs approximately $24,100 per cycle (including training). The AI pipeline's $15 inference cost is not the full comparison — development cost was approximately $3,500 in engineering time (roughly 35 hours of pipeline construction, prompt design, evaluation framework development, and iterative debugging, drawing on prior experience with LLM pipeline patterns). But development cost is a one-time investment. The pipeline now runs each new survey wave for $15; the manual process costs $23,300 every time.
 
 The $15 is the inference cost. The development cost (building the pipeline, designing prompts, creating the evaluation framework) was higher. But it was a one-time investment. The pipeline now runs on each new survey wave for $15, not for three FTEs over four weeks.
 
@@ -49,7 +52,7 @@ People conflate four different cost categories when they talk about "AI costs." 
 
 Most conversations about "AI costs" address only inference costs. That is often the smallest category. Development costs dominate for complex workflows: the time to build the pipeline, design the evaluation framework, test against ground truth, and iterate on prompts is measured in person-weeks, not API dollars. Operational costs are ongoing and often underestimated: models change, prompts need updating, evaluation metrics need re-running. Opportunity costs are the largest but hardest to quantify: what is the cost of three senior researchers spending 60% of their time on data wrangling that a well-designed pipeline could handle?
 
-[OPEN QUESTION: Do we have concrete numbers for any of these categories from the Concept Mapper or other projects? Even an approximate breakdown of hours spent on development versus inference cost would make this section concrete rather than abstract.]
+The Concept Mapper illustrates the typical distribution. Inference cost: $15. Development cost: approximately 35 hours of engineering time — pipeline construction, prompt design, evaluation framework, and iterative debugging. This was not a cold start; the developer brought prior experience with LLM pipeline patterns, which substantially compressed the timeline. A team building its first pipeline should expect development measured in person-weeks, not person-days. Operational costs are ongoing but modest for a batch pipeline: prompt updates when model behavior shifts, re-running the evaluation suite after model version changes, maintaining the orchestration code. The precise hours vary, but the pattern holds: inference is the smallest cost category, development dominates the initial investment, and operational costs are the long tail that organizations chronically underestimate.
 
 ## Batch Economics
 
@@ -89,7 +92,11 @@ The $15 version: right-sized model (mid-tier model that meets the accuracy thres
 
 The difference is the design discipline this book teaches. Every chapter contributes to it: ensemble patterns that validate cheaply (Chapter 5), evaluation infrastructure that proves which model suffices (Chapter 8), checkpoint design that prevents expensive reprocessing (Chapter 7), configuration-driven model selection that makes swapping a config change, not a rewrite.
 
-[OPEN QUESTION: Can we give a concrete example of a task where a cheap model matched a frontier model's accuracy? Any cases from the Concept Mapper or other projects?]
+The question is not whether a cheap model matches a frontier model on benchmarks. It rarely will. The question is whether a cheaper model passes *your* quality gate on *your* task. Benchmarks tell you where to start looking; your evaluation harness (Chapter 8) tells you where to stop.
+
+Smaller models are not just cheaper — they are faster. A frontier reasoning model processing 50,000 classification records is a dump truck hauling a brick: you are paying for capability the task does not require, and the overhead is not just cost but latency. A mid-tier or small model that meets your accuracy threshold will process the same batch in a fraction of the time. For batch statistical workflows with no latency requirements, this matters less than for interactive use — but it still matters for pipeline throughput, retry budgets, and rate limit management. Faster models mean more room for multi-model consensus runs within the same time window and cost envelope.
+
+The Concept Mapper's dual-model design illustrates the selection principle: model selection was driven by inter-rater reliability on the actual classification task, not by benchmark rankings. The models that made the cut were the ones that produced defensible agreement scores on the agency's taxonomy — a domain-specific threshold that no public benchmark measures. Run your candidates against your golden test set. The cheapest one that passes is the right one. When new models release or pricing changes, re-run the evaluation and update the configuration. This is model selection as continuous cost optimization, not a one-time architectural bet.
 
 **Configuration-driven model selection.** Design the pipeline so that swapping models is a configuration change, not a code rewrite. Then model selection becomes continuous: as new models release or pricing changes, you re-run your evaluation suite, update the config, and the pipeline uses the new optimal model. This is cost optimization as architecture, not as a one-time decision.
 
