@@ -29,22 +29,22 @@ ai-workflow-design/
 └── scripts/               # Build and utility scripts
 ```
 
-## Chapter Outline (Draft)
+## Chapter Outline
 
-1. **Why Design Matters** — The Hadoop parallel. LLM systems as distributed systems with stochastic components. The systems engineering gap for researchers: statisticians and data scientists aren't trained in these methods, the tooling market isn't building for research workflows, and the community has to fill that gap or it won't get filled. Design discipline isn't optional.
-2. **Classification & Coding Workflows** — Survey question mapping, occupation/industry coding, document classification. Ensemble agreement, confidence routing, human review escalation. Federal Survey Concept Mapper as anchor case study.
-3. **Data Wrangling & Standardization Workflows** — Response code correction, schema inference, format extraction, semantic analysis of open-ended responses. Where LLMs handle semantic reasoning and where traditional methods (MICE, Fellegi-Holt) still win. The fine-tuning cost trap.
-4. **Detection & Extraction Workflows** — Entity extraction, pattern detection, disclosure review assistance. Recall vs precision tradeoffs in statistical contexts.
-5. **The Ensemble & Multi-Model Playbook** — ABBA designs, judge loops, agreement scoring, model order switching. The cross-cutting "how" chapter.
-6. **Parallel, Serial, and the Bottleneck** — What runs concurrently. Batch design. Rate limits and cost. The $15 vs $1500 lesson.
-7. **Checkpoints, Failures, and Recovery** — Config-driven architecture. Retry logic. Idempotent operations. Picking up where you left off.
-8. **Evaluation by Design** — Design systems that produce their own statistics. Metrics collection as architecture, not afterthought.
-9. **State, Drift, and Validity** — SFV applied. Context window management. Training cutoff windows. When your instrument changes under you.
-10. **State Management & Research Provenance** — Tracking what happened, what changed, and why across a research pipeline. Configuration control, artifact tracking, ontology management. Seldon as case study. Connection to SFV: state management is how you operationalize validity.
-11. **Workflow Orchestration & the Tool Landscape** — Abstract treatment of orchestration approaches: tradeoffs between managed platforms, code-first, and CLI-native. MCP friction analysis as a worked example. Context windows and long-term memory. What to bet on vs wait on. Designed for updateability.
-12. **Security, Supply Chain, and Model Provenance** — The information security chapter. Model provenance verification, dependency auditing, "offline isn't offline," data residency constraints, the security surface area of LLM workflows that security teams don't yet have playbooks for.
-13. **Deploying in Institutional Environments** — Cloud parity gap, ATO timelines, governance-as-bottleneck vs governance-as-enabler, IT as partner not gatekeeper, continuous delivery culture shift, institutional friction, "enough governance and no more."
-14. **Cost & Practicality** — Token budgets. Batch economics. When cheap models win. Making the case to your program office.
+1. Why Design Matters
+2. Classification & Coding Workflows
+3. Data Wrangling & Standardization Workflows
+4. Detection & Extraction Workflows
+5. The Ensemble & Multi-Model Playbook
+6. Parallel, Serial, and the Bottleneck
+7. Checkpoints, Failures, and Recovery
+8. Evaluation by Design
+9. State, Drift, and Validity
+10. State Management & Research Provenance
+11. Workflow Orchestration & the Tool Landscape
+12. Security, Supply Chain, and Model Provenance
+13. Deploying in Institutional Environments
+14. Cost & Practicality
 
 ## Organizing Framework
 
