@@ -33,7 +33,7 @@ ai-workflow-design/
 
 1. **Why Design Matters** — The Hadoop parallel. LLM systems as distributed systems with stochastic components. The systems engineering gap for researchers: statisticians and data scientists aren't trained in these methods, the tooling market isn't building for research workflows, and the community has to fill that gap or it won't get filled. Design discipline isn't optional.
 2. **Classification & Coding Workflows** — Survey question mapping, occupation/industry coding, document classification. Ensemble agreement, confidence routing, human review escalation. Federal Survey Concept Mapper as anchor case study.
-3. **Data Cleaning & Imputation Workflows** — LLMs for anomaly detection, inconsistency flagging, imputation proposals. Where LLMs complement traditional methods. Edit/imputation pipeline design.
+3. **Data Wrangling & Standardization Workflows** — Response code correction, schema inference, format extraction, semantic analysis of open-ended responses. Where LLMs handle semantic reasoning and where traditional methods (MICE, Fellegi-Holt) still win. The fine-tuning cost trap.
 4. **Detection & Extraction Workflows** — Entity extraction, pattern detection, disclosure review assistance. Recall vs precision tradeoffs in statistical contexts.
 5. **The Ensemble & Multi-Model Playbook** — ABBA designs, judge loops, agreement scoring, model order switching. The cross-cutting "how" chapter.
 6. **Parallel, Serial, and the Bottleneck** — What runs concurrently. Batch design. Rate limits and cost. The $15 vs $1500 lesson.
