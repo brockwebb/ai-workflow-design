@@ -40,7 +40,7 @@ Practitioner rules — how to act.
 |---------|------------------------------|------------------|
 | Ch 1: Why Design Matters | All (introduction) | All (introduction) |
 | Ch 2: Classification & Coding | Adoption determines impact | Deliver capability quickly |
-| Ch 3: Data Cleaning & Imputation | Reuse data before collecting more | Data precedes models |
+| Ch 3: Data Wrangling & Standardization | Reuse data before collecting more | Data precedes models |
 | Ch 4: Detection & Extraction | If it cannot be explained, do not use it | Humans remain accountable |
 | Ch 5: Ensemble & Multi-Model | Outputs require full provenance | Defensibility is required |
 | Ch 6: Parallel, Serial, Bottleneck | Adoption determines impact | Deliver capability quickly |
