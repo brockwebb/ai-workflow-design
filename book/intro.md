@@ -14,6 +14,8 @@ This book is about crossing that gap. These systems break the conventions that e
 
 You do not have to learn these principles the hard way. If you start with the right understanding of how these systems actually behave, your prototypes will be better informed, your designs will be more honest about what will and will not scale, and when the time comes to make the leap from idea to real research, you will know what that requires.
 
+For those working in official statistics, scientific research, and public-facing evidence production, the stakes of crossing that gap are specific: the work must withstand independent audit, public scrutiny, and the standard of integrity that the public trust demands. A prototype that produces plausible output is not sufficient. A production system that produces defensible output, with evidence chains, provenance, and verifiable quality, is the minimum standard. This book teaches the design discipline to meet that standard.
+
 ## First Principles, Not Recipes
 
 This book does not teach you how to use specific tools. Tools change weekly. A tutorial on today's framework is a historical artifact by next quarter. Instead, this book teaches you how to think about the problem.
@@ -47,6 +49,12 @@ Different readers bring different strengths. Some are strong on statistical meth
 The thought experiments and reflection prompts throughout the book are not academic exercises. They are invitations to try, break, and understand. You learn more by building something wrong and taking it apart than by reading about someone else's correct answer. The book pushes you to think, but it is alongside you, not above you. Its job is to find your edge and push you just past it.
 
 Apply that standard to this book. If something does not make sense, do not take it on authority. Work through it. Break it. That is how you learn.
+
+The experience of learning to work with these tools is not linear. You grind through manual processes, hit frustrations, work at a pace that feels slow. Then something clicks, a process improvement, an automation, a conceptual shift, and you experience a burst of acceleration. Suddenly you are operating at a fundamentally different velocity.
+
+These bursts come at every level. You look back at what you were doing three or four months ago and it seems impossibly slow. That is the trajectory. The maturity levels in Chapter 1 are not just categories; they are velocity thresholds. There are shades of gray all through them. The boundaries are not sharp. But the velocity shifts are real, and they compound.
+
+It is okay to be at whatever level you are at when you start. The acceleration will come. The intention to learn, to operate differently, to push past the current edge, that is what matters.
 
 ## How This Book Is Organized
 
