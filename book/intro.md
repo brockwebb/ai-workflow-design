@@ -50,7 +50,7 @@ The thought experiments and reflection prompts throughout the book are not acade
 
 Apply that standard to this book. If something does not make sense, do not take it on authority. Work through it. Break it. That is how you learn.
 
-The learning curve is not linear. You grind through manual processes at a pace that feels slow, then something clicks — a process improvement, a conceptual shift — and you are operating at a fundamentally different velocity. These velocity shifts are real and they compound. The maturity levels in Chapter 1 describe those thresholds. You will look back at what you were doing three months ago and it will seem impossibly slow. That is the trajectory.
+The learning curve is not linear. You grind through manual processes at a pace that feels slow, then something clicks (a process improvement, a conceptual shift) and you are operating at a fundamentally different velocity. These velocity shifts are real and they compound. The maturity levels in Chapter 1 describe those thresholds. You will look back at what you were doing three months ago and it will seem impossibly slow. That is the trajectory.
 
 ## How This Book Is Organized
 
@@ -62,7 +62,7 @@ The book moves through five phases, from the nature of the instrument to the ins
 
 ### Domain Workflows
 
-**Chapter 2: Classification and Coding Workflows.** 6,954 survey questions, 152 categories, $15 in API costs. The Federal Survey Concept Mapper case study demonstrates dual-model cross-validation, structured arbitration, confidence routing, and complete evidence chains. Classification is the natural entry point because it has ground truth, making it evaluable in ways that open-ended generation is not.
+**Chapter 2: Classification and Coding Workflows.** 6,954 survey questions, 152 categories, \$15 in API costs. The Federal Survey Concept Mapper case study demonstrates dual-model cross-validation, structured arbitration, confidence routing, and complete evidence chains. Classification is the natural entry point because it has ground truth, making it evaluable in ways that open-ended generation is not.
 
 **Chapter 3: Data Wrangling and Standardization Workflows.** Fixing bad codes, standardizing formats, combining disparate sources, extracting structured data from unstructured input. Where LLMs handle the semantic reasoning parts of the data quality pipeline and where traditional methods (MICE, hot-deck, Fellegi-Holt) still win. The fine-tuning cost trap: most teams do not do the total cost of ownership comparison honestly.
 
