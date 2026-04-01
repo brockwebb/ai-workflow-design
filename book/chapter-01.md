@@ -92,7 +92,6 @@ Consider the simplest possible LLM workflow:
 The naive workflow. Input goes in, model processes it, output comes out.
 ```
 
-[NEEDS: fig-01-01a not yet rendered.]
 
 This is how most people start. One model, one call, one result. It works, in the sense that you get output. Now ask yourself:
 
@@ -113,7 +112,6 @@ Now consider the designed version of the same workflow:
 The designed workflow. Same input, same output, but now you can defend it.
 ```
 
-[NEEDS: fig-01-01b not yet rendered.]
 
 Same input, same output. But every component exists because it solves one of the problems you just identified. The model selection layer exists because you need to reason about your instrument. The parallel inference exists because a single stochastic output is not trustworthy. The agreement scoring exists because you need a quantitative basis for confidence. The decision logic exists because "pick one" is not a defensible rule. The evidence accumulation exists because you cannot defend a result without a record of how it was produced.
 
