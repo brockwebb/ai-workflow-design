@@ -10,7 +10,7 @@ The tools let you dig a lot of holes fast. A working prototype that demonstrates
 
 But the gap between a prototype and a production system has not gone away. A prototype shows that something can be done. A production system shows how it is actually done: operationally, reliably, sustainably. That gap exists for a reason. And because these tools have opened the door to so many more people, many of those now building have never had to cross it before.
 
-This book is about crossing that gap. These systems break the conventions that every other tool in a professional career has followed. They do not produce the same output twice. They fail in ways that look like success. They degrade without warning. The principles that keep complex systems reliable apply here, but they are not obvious, and they are not part of standard training in any field now adopting these tools.
+This book is about crossing that gap. These systems break a convention that most tools in a professional career have followed: the assumption that the same input produces the same output. Statisticians work with stochastic methods, but those methods are transparent about their randomness. LLMs produce stochastic output that reads like deterministic human reasoning, and that is what makes the variance invisible. They fail in ways that look like success. They degrade without warning. The principles that keep complex systems reliable apply here, but they are not obvious, and they are not part of standard training in any field now adopting these tools.
 
 You do not have to learn these principles the hard way. If you start with the right understanding of how these systems actually behave, your prototypes will be better informed, your designs will be more honest about what will and will not scale, and when the time comes to make the leap from idea to real research, you will know what that requires.
 
@@ -26,7 +26,7 @@ If you understand the principles, you can evaluate any tool, adapt to any model 
 
 ## The Hardest Part
 
-The hardest part of working with AI systems is something nobody talks about honestly: you are the easiest person to fool. When your AI workflow produces output that looks right and confirms what you expected, that is the most dangerous moment. Not because the output is wrong (it might be fine), but because you have no way of knowing without the infrastructure to check.
+The hardest part of working with AI systems is something that gets surprisingly little attention in practitioner guidance: you are the easiest person to fool. When your AI workflow produces output that looks right and confirms what you expected, that is the most dangerous moment. Not because the output is wrong (it might be fine), but because you have no way of knowing without the infrastructure to check.
 
 Confirmation bias is the silent killer in AI-assisted research. When output looks wrong, at least you know to investigate. When it looks right but *is* wrong, you have been fooled by a pattern machine that produces fluent, confident, plausible-looking incorrect answers. The failure mode is not noise or garbage. It is a well-formed, reasonable-sounding wrong answer that passes casual inspection.
 
@@ -50,11 +50,7 @@ The thought experiments and reflection prompts throughout the book are not acade
 
 Apply that standard to this book. If something does not make sense, do not take it on authority. Work through it. Break it. That is how you learn.
 
-The experience of learning to work with these tools is not linear. You grind through manual processes, hit frustrations, work at a pace that feels slow. Then something clicks, a process improvement, an automation, a conceptual shift, and you experience a burst of acceleration. Suddenly you are operating at a fundamentally different velocity.
-
-These bursts come at every level. You look back at what you were doing three or four months ago and it seems impossibly slow. That is the trajectory. The maturity levels in Chapter 1 are not just categories; they are velocity thresholds. There are shades of gray all through them. The boundaries are not sharp. But the velocity shifts are real, and they compound.
-
-It is okay to be at whatever level you are at when you start. The acceleration will come. The intention to learn, to operate differently, to push past the current edge, that is what matters.
+The learning curve is not linear. You grind through manual processes at a pace that feels slow, then something clicks — a process improvement, a conceptual shift — and you are operating at a fundamentally different velocity. These velocity shifts are real and they compound. The maturity levels in Chapter 1 describe those thresholds. You will look back at what you were doing three months ago and it will seem impossibly slow. That is the trajectory.
 
 ## How This Book Is Organized
 

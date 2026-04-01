@@ -20,7 +20,7 @@ Read for the principles. Treat specific tools and examples as illustrations of t
 
 Many excellent books teach how to build AI applications, how to engineer AI systems, how to ship products faster. This book serves a different purpose.
 
-The audience for this book produces work that upholds the public trust. Official statistics, scientific research, evidence that informs policy: these carry obligations that commercial software does not. Getting it wrong has consequences beyond a bad user experience.
+The audience for this book produces work that upholds the public trust. Official statistics, scientific research, evidence that informs policy: these carry a specific obligation to the public trust that shapes every design decision. Getting it wrong has consequences beyond a bad user experience.
 
 That does not mean moving slowly. It means putting the checks and controls where they matter. It means designing systems where every component earns its place and can be defended. It means approaching these tools with the same rigor applied to any measurement instrument in scientific work.
 
