@@ -81,19 +81,11 @@ Every one of these routing decisions — what threshold triggers auto-accept, wh
 
 ## Confidence Routing and the Division of Labor
 
-Not every classification needs the same treatment. The Concept Mapper implements confidence-based routing that directs attention where it adds the most value:
+Not every classification needs the same treatment. The Concept Mapper implements confidence-based routing that directs attention where it adds the most value. Items with high agreement and high confidence are auto-accepted — the vast majority of classifications require no human attention at all. Items with high agreement but borderline characteristics get flagged for periodic batch review, a sample-based quality check rather than exhaustive review. Where models disagree, a more capable model arbitrates with full context of both prior judgments. And for items where all models struggle — the approximately 38 questions (0.55%) that resisted automated resolution — the pipeline routes them to human domain experts.
 
-**High agreement, high confidence: auto-accept.** The vast majority of classifications. No human attention needed.
+Out of 1,598 question pairs evaluated in the harmonization stage, only 142 candidate bridge variables needed expert review. The pipeline reduced expert workload by an order of magnitude, not by replacing expert judgment but by directing it where it actually matters. AI handles volume. Humans handle judgment. The pipeline's job is to sort the easy cases from the hard cases and present experts with a curated review list, not a haystack.
 
-**High agreement, edge cases: flagged for batch review.** Periodic quality checks on a sample, not exhaustive review.
-
-**Disagreement: structured arbitration.** A more capable model reviews with full context of both prior judgments.
-
-**Persistent ambiguity: expert review queue.** The approximately 38 questions (0.55%) that all models struggled with go to human domain experts. Out of 1,598 question pairs evaluated in the harmonization stage, only 142 candidate bridge variables needed expert review. The pipeline reduced expert workload by an order of magnitude, not by replacing expert judgment but by directing it where it adds the most value.
-
-This is the design principle: AI handles volume, humans handle judgment. The pipeline's job is to sort the easy cases from the hard cases and present experts with a curated review list, not a haystack.
-
-A note on costs. The dual-model classification of 6,954 questions cost approximately $15 in API fees and ran in about two hours. The full pipeline including barrier rating and arbitration cost under $100 in total API fees. The counterfactual, a research team manually classifying 7,000 questions into 152 categories, would take months of analyst time. But state this honestly: the $15 API cost is real, and the human engineering cost to design, debug, and validate the pipeline dwarfed it. That ratio inverts as you build reusable patterns and gain experience, which is part of the point of this book. Chapter 14 addresses cost accounting in full.
+The dual-model classification of 6,954 questions cost approximately $15 in API fees and ran in about two hours. The full pipeline, including barrier rating and arbitration across three rater models and three arbitrator models, cost under $100 in total API fees. Manually classifying 7,000 questions into 152 categories would take months of analyst time. The API cost is real, but it is not the whole story — the human engineering cost to design, debug, and validate the pipeline dwarfed it by orders of magnitude. That ratio shifts as you build reusable patterns and accumulate experience, but the first pipeline is always the most expensive in engineering hours per dollar of API spend. Chapter 14 addresses cost accounting in full.
 
 ## Order Effects and the ABBA Design
 
