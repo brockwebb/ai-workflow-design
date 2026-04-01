@@ -7,7 +7,7 @@
 
 ## Seven Thousand Questions, One Hundred Fifty-Two Categories
 
-You have 6,954 survey questions and need to classify them into a 152-category taxonomy. A single model gets about 85% right on its first pass. Is that good enough?
+You have 6,954 survey questions and need to classify them into a 152-category taxonomy. Suppose a single model gets about 85% right on its first pass. Is that good enough?
 
 The answer depends entirely on what you do with the other 15%, and whether you can even identify which 15% it is. A wrong classification label does not throw an exception. It does not produce an error message. It sits quietly in your output file, propagating downstream into whatever analysis depends on it. Classification errors are silent errors, and silent errors are the most dangerous kind in any statistical workflow.
 
@@ -21,7 +21,7 @@ This chapter uses the Federal Survey Concept Mapper {cite:p}`webb_2026_concept_m
 
 LLMs have a structural advantage over traditional NLP approaches for classification tasks. They can reason about hierarchical taxonomies, weigh contextual clues, and handle the kind of semantic ambiguity that trips up keyword matching and even embedding-based similarity methods. They can read a 100-word survey question and determine that it belongs to "Employment Status" rather than "Labor Force Participation" based on nuance that no bag-of-words model would catch.
 
-But a single LLM call is a single opinion from a single rater. Statisticians would never accept a single human rater's judgment as definitive for a classification task. The entire field of inter-rater reliability exists because individual raters are biased, inconsistent, and occasionally wrong. Why would you accept a single model's judgment without the same scrutiny?
+But a single LLM call is a single opinion from a single rater. Statisticians would never accept a classification study design that relies on a single rater without measuring reliability. The entire field of inter-rater reliability exists because individual raters are biased, inconsistent, and occasionally wrong. Why would you accept a single model's judgment without the same scrutiny?
 
 The *stochastic tax* from Chapter 1 gets its first concrete application here. Every classification you accept from a single model call is a classification you accepted without any internal consistency check. You paid the stochastic tax (used a probabilistic system instead of a deterministic one) and got nothing back for it: no confidence measure, no disagreement signal, no evidence trail. The design patterns in this chapter exist to extract value from the stochastic tax you are already paying.
 
@@ -57,7 +57,15 @@ The agreement analysis routes outputs through three paths:
 
 The key design insight: *disagreement is signal, not noise*. When two independently trained systems disagree, one of three things is true. One is wrong and the other is right. Both are wrong. Or the question is genuinely ambiguous and belongs in multiple categories. All three are valuable information. A single model would silently pick one answer and hide the ambiguity from you entirely.
 
-LLMs are independently trained neural networks, just as human raters are independently trained neural networks, with very different architectures but the same fundamental property: independent training produces independent biases. The methods for managing variability across human raters, inter-rater reliability statistics, agreement analysis, structured arbitration protocols, apply directly. This is not a novel methodological insight. It is a transfer of existing statistical methodology to a new context. The gap is that most people building with LLMs come from software engineering, where determinism is the default expectation, rather than from the statistical sciences, where managing variability is the core discipline.
+```{figure} images/fig-02-01_classification_routing.png
+:name: fig-02-01
+:alt: Classification routing flowchart showing three paths: consensus (68.5%), dual-modal assignment (11.8%), and arbitration (19.7%)
+:width: 70%
+
+Classification routing in the dual-model pattern. Independent models classify each item; routing is determined by agreement level and confidence scores.
+```
+
+LLMs are independently trained neural networks, just as human raters are independently trained neural networks, with very different architectures but the same fundamental property: independent training produces independent biases. The independence is imperfect — models from different vendors still share overlapping training corpora — but it is stronger than within-vendor model diversity and sufficient to surface meaningful disagreement signals. The methods for managing variability across human raters, inter-rater reliability statistics, agreement analysis, structured arbitration protocols, apply directly. This is not a novel methodological insight. It is a transfer of existing statistical methodology to a new context. The gap is that most people building with LLMs come from software engineering, where determinism is the default expectation, rather than from the statistical sciences, where managing variability is the core discipline.
 
 Topic-level agreement between the two models: Cohen's κ = 0.839. Subtopic-level agreement: κ = 0.687. The subtopic disagreement at finer granularity is expected and informative. It tells you where the taxonomy's boundaries are blurry, not where the models are failing.
 
@@ -73,11 +81,11 @@ Not every classification needs the same treatment. The Concept Mapper implements
 
 **Disagreement: structured arbitration.** A more capable model reviews with full context of both prior judgments.
 
-**Persistent ambiguity: expert review queue.** The approximately 38 questions (0.5%) that all models struggled with go to human domain experts. Out of 1,598 question pairs evaluated in the harmonization stage, only 142 candidate bridge variables needed expert review. The pipeline reduced expert workload by an order of magnitude, not by replacing expert judgment but by directing it where it adds the most value.
+**Persistent ambiguity: expert review queue.** The approximately 38 questions (0.55%) that all models struggled with go to human domain experts. Out of 1,598 question pairs evaluated in the harmonization stage, only 142 candidate bridge variables needed expert review. The pipeline reduced expert workload by an order of magnitude, not by replacing expert judgment but by directing it where it adds the most value.
 
 This is the design principle: AI handles volume, humans handle judgment. The pipeline's job is to sort the easy cases from the hard cases and present experts with a curated review list, not a haystack.
 
-A note on costs. The dual-model classification of 6,954 questions cost approximately $15 in API fees and ran in about two hours. The full pipeline including barrier rating and arbitration cost approximately $100. The counterfactual, a research team manually classifying 7,000 questions into 152 categories, would take months of analyst time. But state this honestly: the $15 API cost is real, and the human engineering cost to design, debug, and validate the pipeline dwarfed it. That ratio inverts as you build reusable patterns and gain experience, which is part of the point of this book. Chapter 14 addresses cost accounting in full.
+A note on costs. The dual-model classification of 6,954 questions cost approximately $15 in API fees and ran in about two hours. The full pipeline including barrier rating and arbitration cost under $100 in total API fees. The counterfactual, a research team manually classifying 7,000 questions into 152 categories, would take months of analyst time. But state this honestly: the $15 API cost is real, and the human engineering cost to design, debug, and validate the pipeline dwarfed it. That ratio inverts as you build reusable patterns and gain experience, which is part of the point of this book. Chapter 14 addresses cost accounting in full.
 
 ## Order Effects and the ABBA Design
 

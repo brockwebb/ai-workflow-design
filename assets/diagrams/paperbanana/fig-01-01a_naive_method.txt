@@ -1,0 +1,44 @@
+# fig-01-01a: The Naive Workflow
+
+## Diagram Type
+Technical block diagram. Clean, minimal, professional.
+
+## Layout
+Horizontal left-to-right flow. Three blocks connected by arrows.
+
+## Elements
+1. Rectangle labeled "Input" — left side
+2. Arrow pointing right
+3. Rectangle labeled "Model" — center
+4. Arrow pointing right
+5. Rectangle labeled "Output" — right side
+
+## Visual Style
+- Clean, sparse, deliberately simple
+- Muted colors: light gray fills, dark gray or black outlines and text
+- No decorative elements, no gradients, no shadows
+- The simplicity IS the point — this diagram looks deceptively easy
+- Sans-serif font (e.g., Inter, Helvetica, or similar clean typeface)
+- Generous whitespace around all elements
+- Arrows are simple, thin, with small arrowheads
+
+## Color Palette
+- Background: white or very light warm gray (#F8F7F5)
+- Box fill: light gray (#E8E8E8)
+- Box outline: dark gray (#333333)
+- Text: black (#1A1A1A)
+- Arrows: dark gray (#333333)
+
+## Dimensions
+- Landscape orientation, roughly 4:1 aspect ratio (wide and short)
+- Suitable for 80% page width in a book layout
+
+## What This Is NOT
+- Not busy or complex
+- Not colorful
+- Not labeled with technical jargon
+- No annotations, callouts, or footnotes
+- No icons or symbols inside the boxes
+
+## Caption
+"The naive workflow. Input goes in, model processes it, output comes out."

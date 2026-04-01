@@ -1,0 +1,69 @@
+# fig-01-01b: The Designed Workflow
+
+## Diagram Type
+Technical block diagram. Structured, layered, professional. More complex than fig-01-01a but still clean and readable.
+
+## Layout
+Horizontal left-to-right flow with a multi-layer processing block in the center. The Input and Output boxes should visually match fig-01-01a for continuity — same size, same style, same position at left and right edges.
+
+## Elements (left to right)
+
+1. **Input** — Rectangle, left side. Same as fig-01-01a.
+
+2. **Arrow** pointing right into the processing block.
+
+3. **Processing Block** — A large rounded rectangle or container that encloses five internal layers stacked vertically, connected by downward arrows between them:
+
+   Layer 1: **Model Selection** — Rectangle. 
+   Subtitle or annotation: "Documented rationale"
+
+   Layer 2: **Parallel Inference** — Two side-by-side rectangles labeled "Model A" and "Model B", with the input arrow splitting to feed both.
+
+   Layer 3: **Agreement & Confidence Scoring** — Rectangle receiving output from both Model A and Model B.
+   Subtitle: "Quantitative comparison"
+
+   Layer 4: **Decision Logic** — Diamond or rectangle.
+   Subtitle: "Explicit rules"
+
+   Layer 5: **Evidence Accumulation** — Rectangle.
+   Subtitle: "Scores, versions, disagreements"
+
+4. **Arrow** pointing right from the processing block.
+
+5. **Output** — Rectangle, right side. Same as fig-01-01a.
+
+## Visual Style
+- Clean and organized but richer than fig-01-01a
+- The processing block container should be visually distinct (light border, subtle background tint) to show it's an integrated system
+- Internal layers are clearly separated but connected by arrows
+- The parallel inference layer (Model A / Model B) should show the split visually — one arrow in, two paths, converging back
+- Sans-serif font throughout
+- Subtitles/annotations in smaller, lighter text below each layer label
+- No decorative elements, no gradients, no shadows, no icons
+
+## Color Palette
+- Background: white or very light warm gray (#F8F7F5)
+- Input/Output boxes: light gray (#E8E8E8) — matching fig-01-01a
+- Processing block container: very light blue-gray (#EDF2F7) with thin border (#B0BEC5)
+- Internal layer boxes: white (#FFFFFF) with thin dark gray outlines (#555555)
+- Model A / Model B boxes: slightly different tint to show they are parallel (e.g., light steel blue #D6E4F0)
+- Text: black (#1A1A1A), subtitles in medium gray (#666666)
+- Arrows: dark gray (#333333)
+
+## Dimensions
+- Landscape orientation, roughly 2:1 aspect ratio (wider than tall)
+- Suitable for 100% page width in a book layout
+- Taller than fig-01-01a because of the layered internal structure
+
+## What This Is NOT
+- Not a flowchart with branching decision paths — it is a linear pipeline with internal structure
+- Not cluttered — each layer has one label and optionally one subtitle
+- Not 3D or isometric
+- No company names, no product names
+- No code or pseudocode
+
+## Key Visual Contrast with fig-01-01a
+The reader should immediately see the difference: fig-01-01a is three boxes and two arrows. Fig-01-01b has the same input and output but the middle has been replaced by a structured, multi-layer system. The visual message: "same input, same output, but now you can defend it."
+
+## Caption
+"The designed workflow. Same input, same output, but now you can defend it."

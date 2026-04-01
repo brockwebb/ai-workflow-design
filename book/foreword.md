@@ -36,6 +36,8 @@ The recursive application is worth noting: the methodology this book teaches was
 
 ---
 
+A note on product references: this book occasionally names specific AI models, vendors, and tools where doing so is necessary to report methodology accurately or to ground design patterns in real implementations. These references reflect the tools available at the time of writing and do not constitute endorsement. The design patterns themselves are vendor-independent.
+
 ## Acknowledgments
 
 Throughout my career, I have been continually humbled and inspired by the generosity of others: those who shared their knowledge, offered honest feedback, and walked with me for portions of this journey. There are too many to name individually, and attempting to do so would inevitably leave someone out. You know who you are, and I am grateful. The only way I know to truly show that gratitude is to give back. This work is one small attempt to do so.
