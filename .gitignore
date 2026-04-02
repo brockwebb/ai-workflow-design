@@ -33,6 +33,7 @@ book/_build/
 # Session artifacts (not for public repo)
 cc_tasks/
 handoffs/
+audits/
 
 # Research notes (raw material, not for public repo)
 docs/research_notes/
