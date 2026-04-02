@@ -1,0 +1,87 @@
+# fig-03-01: Data Quality Pipeline Routing
+
+## Diagram Type
+Technical flow diagram. Clean, minimal, professional. Matches fig-01-01 and fig-02-01 style.
+
+## Layout
+Left-to-right flow. Messy input on the left, clean output on the right. A central routing zone splits sub-tasks into two lanes: "Semantic Reasoning (LLM)" and "Statistical Methods (Traditional)." Verification checkpoints sit between the lanes and the output.
+
+## Elements
+
+### Input
+1. Rectangle on far left, slightly rough/informal styling: "Messy Input"
+   Small text below: "Wrong codes, inconsistent formats, missing values, open-ended text"
+
+### Routing Zone (center, takes up most of the diagram width)
+
+Two horizontal swim lanes, stacked vertically:
+
+**Top Lane — "Semantic Reasoning (LLM-Assisted)"**
+Contains four boxes arranged horizontally:
+2. "Code Correction" — small text: "Dual-model verification"
+3. "Schema Inference" — small text: "LLM proposes, human reviews"
+4. "Format Extraction" — small text: "Heterogeneous documents"
+5. "Theme Extraction" — small text: "Hybrid: LLM + consolidation"
+
+**Bottom Lane — "Statistical Methods (Traditional)"**
+Contains two boxes:
+6. "Imputation" — small text: "MICE, Fellegi-Holt, hot-deck"
+7. "Continuous Correction" — small text: "Bounds, ratios, distributions"
+
+### Routing Arrows
+8. From "Messy Input," arrows fan out to the appropriate boxes in each lane. The arrow splits at a decision-like fork point labeled "Task Type?"
+   - Arrows to top lane boxes: solid lines
+   - Arrows to bottom lane boxes: solid lines
+   - The fork makes clear that routing is a design decision, not automatic
+
+### Verification Checkpoint
+9. A vertical dashed line between the routing zone and the output, labeled "Verification"
+   Small annotations along this line:
+   - Next to top lane: "Dual-model agreement, human review queue, provenance log"
+   - Next to bottom lane: "Distributional checks, edit constraints"
+
+### Output
+10. Rectangle on far right, clean/formal styling: "Standardized Output"
+    Small text below: "Verified, provenance-tracked, audit-ready"
+
+### Design Principle Callout (optional, only if it fits without clutter)
+11. A small text annotation below the diagram, italicized:
+    "LLMs handle semantic reasoning. Traditional methods handle statistical properties. The design discipline is routing each sub-task to the right tool."
+
+## Visual Style
+- Clean, sparse, professional — matches Chapter 1 and 2 figure style
+- Muted colors: light gray fills, dark gray outlines and text
+- The two swim lanes should be visually distinct but not garish:
+  - Top lane (LLM): very light blue-gray background (#EBF0F5)
+  - Bottom lane (Traditional): very light warm gray (#F5F0EB)
+- No decorative elements, no gradients, no shadows
+- Sans-serif font (e.g., Inter, Helvetica, or similar clean typeface)
+- Generous whitespace around all elements
+- Arrows are simple, thin, with small arrowheads
+- The dashed verification line should be visually prominent but not heavy
+
+## Color Palette
+- Background: white or very light warm gray (#F8F7F5)
+- LLM lane background: light blue-gray (#EBF0F5)
+- Traditional lane background: light warm gray (#F5F0EB)
+- Box fill within lanes: white (#FFFFFF)
+- Box outline: dark gray (#333333)
+- Text: black (#1A1A1A)
+- Small text / annotations: medium gray (#666666)
+- Arrows: dark gray (#333333)
+- Verification dashed line: medium gray (#888888)
+
+## Dimensions
+- Landscape orientation, roughly 3:2 aspect ratio (wider than tall)
+- Suitable for full page width in a book layout
+
+## What This Is NOT
+- Not a UML diagram
+- Not a decision tree (the routing is a design decision, not a runtime conditional)
+- No vendor names or model names — architecture only
+- No icons or clipart
+- Not cluttered — the two lanes and the routing concept must be immediately legible
+- The boxes inside the lanes are NOT sequential steps — they are parallel sub-tasks that each receive routed input
+
+## Caption
+"Data quality pipeline routing. Semantic reasoning tasks route to LLM-assisted methods with dual-model verification; statistical tasks route to traditional methods with distributional checks. The design discipline is matching each sub-task to the right tool."

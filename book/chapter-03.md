@@ -12,6 +12,14 @@ This is not classification in the Chapter 2 sense. In Chapter 2, the input was w
 
 The design challenge is verification at scale. An LLM that proposes a "corrected" NAICS code with high confidence is performing what Chapter 4 will call confidence laundering if there is no evidence chain for why that correction is right. The dual-model patterns from Chapter 2 apply, but the error modes are different because the input quality is worse. When the input is noisy, single-model confidence is even less trustworthy than it was for clean classification.
 
+```{figure} images/fig-03-01_data_quality_routing.png
+:name: fig-03-01
+:alt: Data quality pipeline routing diagram showing semantic reasoning tasks routed to LLM-assisted methods and statistical tasks routed to traditional methods, with verification checkpoints
+:width: 100%
+
+Data quality pipeline routing. Semantic reasoning tasks route to LLM-assisted methods with dual-model verification; statistical tasks route to traditional methods with distributional checks. The design discipline is matching each sub-task to the right tool.
+```
+
 ## Response Code Correction
 
 This is the core use case. Respondents self-report codes (NAICS, SOC, NAPCS, and others) and get them wrong. Sometimes wildly wrong: a restaurant coded as a hospital. Sometimes plausibly wrong: a general contractor coded as a specialty trade contractor. LLMs can read the free-text description alongside the reported code and propose corrections.
