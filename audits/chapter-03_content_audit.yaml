@@ -1,0 +1,496 @@
+audit:
+  file: "book/chapter-03.md"
+  date: "2026-04-01"
+
+  summary:
+    total_assertions: 52
+    facts_with_citation: 1
+    citation_gaps: 14
+    judgments_properly_framed: 18
+    judgments_as_fact: 5
+    conjectures_appropriate: 0
+    conjectures_in_empirical: 0
+    thin_sections: 2
+    terminology_issues: 2
+    cross_section_impacts: 8
+
+  # ──────────────────────────────────────────────
+  # Pedagogical pattern check
+  # ──────────────────────────────────────────────
+  pedagogical_pattern:
+    opening_hook: true  # "The Code Says 999999" — concrete NAICS scenario
+    core_content: true  # Five substantive sections
+    reflection_prompts_distributed: false  # Only 1 reflection prompt (line 27), and 1 thought experiment at end. Ch pattern requires distributed prompts.
+    thought_experiment: true  # Line 89–97
+    chapter_bridge: true  # Line 101 — bridges to Ch 4
+    notes: >
+      The chapter has only one reflection prompt (line 27, the 200k records cost question)
+      embedded in the body. The thought experiment at the end is good but isolated.
+      The pedagogical pattern calls for reflection prompts "distributed throughout" —
+      at minimum one per major section. Sections 3 (Schema Inference), 4 (Format Extraction),
+      and 5 (Semantic Analysis) have none.
+
+  # ──────────────────────────────────────────────
+  # Formatting / mechanical checks
+  # ──────────────────────────────────────────────
+  formatting:
+    em_dashes: 0
+    bare_dollar_signs: 0
+    vendor_names_in_body: 0  # No OpenAI/Anthropic/Google found
+    notes: "Clean on all mechanical checks."
+
+  # ──────────────────────────────────────────────
+  # Section-by-section audit
+  # ──────────────────────────────────────────────
+  sections:
+    # ── Section 1: The Code Says 999999 ──────────
+    - heading: "## The Code Says 999999"
+      word_count: 217
+      depth_assessment: "substantive"
+      depth_notes: "Good opening hook with concrete NAICS scenario. Connects to Ch 2 and Ch 4. Sets up the chapter's core tension (verification at scale)."
+
+      findings:
+        - paragraph: 9
+          text: "A respondent self-reported their NAICS code as 999999."
+          classification: "fact"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Illustrative scenario, not an empirical claim. No citation needed."
+          cascading_impacts: []
+
+        - paragraph: 9
+          text: "A human coder would read the description, look up the plumbing contractor code (238220), and fix it."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "238220 is a specific NAICS code for 'Plumbing, Heating, and Air-Conditioning Contractors.' This is verifiable against the NAICS manual. While likely correct, it should be confirmed."
+          suggested_query: "NAICS code 238220 description plumbing contractor 2022"
+          cascading_impacts: []
+
+        - paragraph: 11
+          text: "In Chapter 2, the input was well-formed: clear survey questions mapped to a structured taxonomy. Here, the input itself is the problem."
+          classification: "judgment"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Properly framed comparative judgment about the two chapters' scope."
+          cascading_impacts: []
+
+        - paragraph: 13
+          text: "An LLM that proposes a 'corrected' NAICS code with high confidence is performing what Chapter 4 will call confidence laundering if there is no evidence chain."
+          classification: "judgment"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Introduces term 'confidence laundering' and attributes it to Chapter 4. Cross-reference check needed."
+          cascading_impacts:
+            - affected_section: "book/chapter-04.md"
+              reason: "Ch 3 promises Ch 4 will define 'confidence laundering.' Verify the term is actually defined there."
+              audit_type: "terminology_check"
+
+    # ── Section 2: Response Code Correction ──────
+    - heading: "## Response Code Correction"
+      word_count: 339
+      depth_assessment: "substantive"
+      depth_notes: "Well-developed section. Connects dual-model cross-validation to dirty-input scenario. Good design guidance on confidence routing and pipeline position."
+
+      findings:
+        - paragraph: 17
+          text: "Respondents self-report codes (NAICS, SOC, NAPCS, and others) and get them wrong."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "That respondents frequently mis-report industry/occupation codes is well-established in survey methodology literature but not cited here. This is a foundational claim for the chapter."
+          suggested_query: "self-reported NAICS SOC coding error rates survey methodology Census"
+          cascading_impacts: []
+
+        - paragraph: 17
+          text: "Sometimes wildly wrong: a restaurant coded as a hospital. Sometimes plausibly wrong: a general contractor coded as a specialty trade contractor."
+          classification: "fact"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Illustrative examples. No citation needed."
+          cascading_impacts: []
+
+        - paragraph: 19
+          text: "This is classification (Chapter 2 patterns apply) but with dirty input."
+          classification: "judgment"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Appropriate framing judgment connecting to prior chapter."
+          cascading_impacts: []
+
+        - paragraph: 21
+          text: "Dual-model cross-validation matters even more here than it did in Chapter 2."
+          classification: "judgment"
+          citation_present: false
+          finding_type: "unsupported_claim"
+          routing: "needs_author"
+          notes: "Judgment stated as fact. 'Matters even more' is a comparative claim without evidence. Should be framed as 'In practice, dual-model cross-validation becomes even more important when...' or similar."
+          cascading_impacts: []
+
+        - paragraph: 25
+          text: "A bad NAICS code that passes through correction unchallenged affects industry tabulations, economic indicators, and any analysis that stratifies by industry."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "The downstream impact of NAICS coding errors on economic indicators is documented in Census and BLS literature. Should be cited."
+          suggested_query: "impact NAICS coding errors economic indicators industry tabulation Census BLS"
+          cascading_impacts:
+            - affected_section: "book/chapter-08.md"
+              reason: "Ch 8 (Evaluation by Design) may make similar claims about error propagation. Citation should be consistent."
+              audit_type: "citation_check"
+
+    # ── Section 3: The Fine-Tuning Cost Trap ─────
+    - heading: "## The Fine-Tuning Cost Trap"
+      word_count: 632
+      depth_assessment: "substantive"
+      depth_notes: "Longest section. Makes strong claims about fine-tuning TCO. Multiple unsourced factual assertions about costs, timelines, and deployment tax. Bold-label fragments create choppy structure (flagged by seldon paper audit PQ-03)."
+
+      findings:
+        - paragraph: 31
+          text: "Some agencies are fine-tuning small language models for NAICS and NAPCS coding."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "Specific claim about what agencies are doing. If this is based on the author's knowledge of specific programs, it should either be cited or framed as author observation."
+          suggested_query: "federal agencies fine-tuning language models NAICS NAPCS coding Census BLS"
+          cascading_impacts: []
+
+        - paragraph: 33
+          text: "Fine-tuning requires training data curation...compute for training...evaluation harness...retraining when the classification system updates...model hosting...MLOps overhead...staff expertise."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "The components of fine-tuning TCO are widely discussed in ML engineering literature. A citation to a TCO analysis or MLOps cost framework would strengthen this."
+          suggested_query: "fine-tuning total cost of ownership MLOps lifecycle costs language model deployment"
+          cascading_impacts:
+            - affected_section: "book/chapter-14.md"
+              reason: "Ch 14 (Cost & Practicality) should present the same TCO framework consistently. If a citation is found here, it should also appear in Ch 14."
+              audit_type: "factual_consistency"
+
+        - paragraph: 33
+          text: "For most use cases, the total cost of ownership for fine-tuning exceeds the API approach, often by a large margin."
+          classification: "judgment"
+          citation_present: false
+          finding_type: "unsupported_claim"
+          routing: "needs_author"
+          notes: "Judgment stated as fact. 'For most use cases' and 'often by a large margin' are strong comparative claims without evidence. Should be framed as author analysis or supported by a cost comparison."
+          cascading_impacts:
+            - affected_section: "book/chapter-14.md"
+              reason: "Ch 14 may make similar cost claims. Consistency needed."
+              audit_type: "factual_consistency"
+
+        - paragraph: 35
+          text: "Data sensitivity that genuinely prohibits cloud API access: Title 13 data, CIPSEA-protected microdata, data with legal restrictions on transmission to external services."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "Title 13 and CIPSEA are specific legal frameworks with specific data handling requirements. Should be cited to the relevant statutes or guidance."
+          suggested_query: "Title 13 CIPSEA data protection cloud computing restrictions Census Bureau"
+          cascading_impacts:
+            - affected_section: "book/chapter-12.md"
+              reason: "Ch 12 (Security, Supply Chain, and Model Provenance) likely discusses the same data protection frameworks. Citations should be consistent."
+              audit_type: "citation_check"
+
+        - paragraph: 35
+          text: "This can take 6 to 18 months before you process a single production record."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "Specific timeline claim (6-18 months) for institutional deployment. Repeated at line 39. If based on author experience, should be framed as such. If based on documented federal procurement timelines, should be cited."
+          suggested_query: "federal government IT procurement timeline cloud authorization FedRAMP months"
+          cascading_impacts:
+            - affected_section: "book/chapter-13.md"
+              reason: "Ch 13 (Deploying in Institutional Environments) likely discusses the same procurement and deployment timelines. Must be consistent."
+              audit_type: "factual_consistency"
+
+        - paragraph: 37
+          text: "If institutional constraints block API access and the fine-tuning/local deployment path takes 18 months, practitioners are stuck with traditional NLP (bag of words, regex, rule-based systems) that everyone knows is inferior for this task."
+          classification: "judgment"
+          citation_present: false
+          finding_type: "unsupported_claim"
+          routing: "needs_author"
+          notes: "Judgment stated as fact. 'Everyone knows is inferior' is an unsupported comparative claim. LLMs outperforming traditional NLP on coding tasks needs a citation, or the sentence needs reframing."
+          cascading_impacts: []
+
+        - paragraph: 39
+          text: "The procurement and security process takes 6 to 18 months."
+          classification: "fact"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Duplicate of the claim at line 35. The repetition itself is a style issue (flagged in seldon paper audit). The citation gap is already captured above."
+          cascading_impacts: []
+
+        - paragraph: 41
+          text: "Models that are marginal today may be substantially more capable in 12 to 18 months."
+          classification: "conjecture"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Appropriately framed conjecture ('may be') in a forward-looking paragraph. Acceptable."
+          cascading_impacts: []
+
+    # ── Section 4: Schema Inference and Data Combination ──
+    - heading: "## Schema Inference and Data Combination"
+      word_count: 228
+      depth_assessment: "thin"
+      depth_notes: "No examples, no case study, no worked demonstration. General descriptions of what LLMs can do without evidence they do it well. No citations. The Pragmatics system reference (line 49) is a bare prose mention, not a citation directive."
+
+      findings:
+        - paragraph: 45
+          text: "Data arrives from disparate sources with different structures. CSV files with different headers. Excel workbooks with different column names. Databases with different schemas."
+          classification: "fact"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "General description of a common data engineering scenario. Common knowledge, no citation needed."
+          cascading_impacts: []
+
+        - paragraph: 47
+          text: "LLMs can read the source schemas and propose mappings. Auto-generate a target schema from the union of source fields. Propose join keys and crosswalks between fields."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "Claims about LLM capabilities for schema mapping. This is an empirical capability claim that should be supported."
+          suggested_query: "LLM schema mapping data integration automated crosswalk generation research"
+          cascading_impacts: []
+
+        - paragraph: 49
+          text: "Semantic equivalences can be wrong: 'income' could mean gross or net, pre-tax or post-tax, individual or household."
+          classification: "fact"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Illustrative example of a well-known data integration problem. Common knowledge."
+          cascading_impacts: []
+
+        - paragraph: 49
+          text: "...the metadata that Chapter 8's evaluation framework and the Pragmatics system's expert judgment layer are designed to provide."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_fix"
+          notes: "The 'Pragmatics system' is the crosswalk paper (webb_2026_crosswalk or webb_2026_pragmatics). This should be a {cite:t} or {cite:p} directive, not a bare prose reference. Known orphan reference from Session 17 audit."
+          suggested_query: null
+          cascading_impacts:
+            - affected_section: "book/chapter-08.md"
+              reason: "Ch 8 is referenced here as having an 'evaluation framework.' Verify Ch 8 actually provides what Ch 3 claims it provides."
+              audit_type: "factual_consistency"
+
+    # ── Section 5: Format Extraction and Standardization ──
+    - heading: "## Format Extraction and Standardization"
+      word_count: 229
+      depth_assessment: "thin"
+      depth_notes: "No examples, no case study, no empirical evidence for LLM parsing superiority. General claims about LLM capabilities without support. The config-driven pattern reference to Chapter 7 needs cross-reference verification."
+
+      findings:
+        - paragraph: 57
+          text: "LLMs handle format diversity better than any rule-based system because they can interpret structure from context rather than requiring explicit parsing rules for each format."
+          classification: "judgment"
+          citation_present: false
+          finding_type: "unsupported_claim"
+          routing: "needs_author"
+          notes: "Judgment stated as fact. 'Better than any rule-based system' is a strong comparative claim. Should be framed as 'In practice, LLMs tend to handle format diversity more flexibly than rule-based systems because...' or supported with evidence."
+          cascading_impacts: []
+
+        - paragraph: 59
+          text: "This is the config-driven pattern from Chapter 7: the LLM maps to the schema, it does not invent one."
+          classification: "fact"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Cross-reference to Chapter 7. Verify Ch 7 actually defines 'config-driven pattern.'"
+          cascading_impacts:
+            - affected_section: "book/chapter-07.md"
+              reason: "Ch 3 attributes 'config-driven pattern' to Ch 7. Verify the term is defined there."
+              audit_type: "terminology_check"
+
+        - paragraph: 61
+          text: "Extraction errors on structured data (wrong field mapping) are different from extraction errors on unstructured data (misinterpretation of content)."
+          classification: "judgment"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Reasonable design judgment, appropriately framed."
+          cascading_impacts: []
+
+    # ── Section 6: Semantic Analysis of Open-Ended Responses ──
+    - heading: "## Semantic Analysis of Open-Ended Responses"
+      word_count: 234
+      depth_assessment: "thin"
+      depth_notes: "Makes strong claims about LLM superiority over traditional NLP for theme extraction without citations. References Ch 2, Ch 8, Ch 10 patterns appropriately but provides no empirical evidence for the capability claims."
+
+      findings:
+        - paragraph: 69
+          text: "No traditional NLP approach handles open-ended semantic analysis at this quality level."
+          classification: "judgment"
+          citation_present: false
+          finding_type: "unsupported_claim"
+          routing: "needs_author"
+          notes: "Judgment stated as fact. This is a strong comparative claim about LLM vs. traditional NLP quality. Needs reframing or citation."
+          cascading_impacts: []
+
+        - paragraph: 69
+          text: "Topic models, keyword extraction, and sentiment analysis are crude approximations compared to what a language model can produce from the same input."
+          classification: "judgment"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "Specific comparison of LLMs to topic models, keyword extraction, and sentiment analysis for open-ended response analysis. This is an empirical claim that has been studied."
+          suggested_query: "LLM versus topic models keyword extraction open-ended survey response analysis comparison"
+          cascading_impacts: []
+
+        - paragraph: 71
+          text: "Two models may extract different themes from the same corpus."
+          classification: "fact"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Reasonable factual observation. Could be supported but is fairly self-evident."
+          cascading_impacts: []
+
+        - paragraph: 75
+          text: "How do you evaluate whether theme extraction is 'correct' when there is no ground truth?"
+          classification: "judgment"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Properly framed as a question, connecting to Ch 8's evaluation framework."
+          cascading_impacts: []
+
+    # ── Section 7: Where Traditional Methods Still Win ──
+    - heading: "## Where Traditional Methods Still Win"
+      word_count: 258
+      depth_assessment: "substantive"
+      depth_notes: "The one section with a citation. Clear, specific claims about imputation methods. The tian_2025 citation is present and properly formatted. Good boundary-drawing between LLM and traditional method domains."
+
+      findings:
+        - paragraph: 81
+          text: "MICE, hot-deck, Fellegi-Holt, and other established imputation methods preserve distributional properties, respect survey design effects (weights, clustering, stratification), and are theoretically well-understood."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "Claims about specific statistical methods (MICE, hot-deck, Fellegi-Holt) and their properties. Well-established in survey methodology but should be cited for a book aimed at practitioners who may not know this literature."
+          suggested_query: "MICE hot-deck Fellegi-Holt imputation methods survey data distributional properties"
+          cascading_impacts: []
+
+        - paragraph: 81
+          text: "LLMs do not maintain distributional properties and have no concept of survey design."
+          classification: "fact"
+          citation_present: false
+          finding_type: "citation_gap"
+          routing: "auto_search"
+          notes: "Specific claim about LLM limitations for imputation. The tian_2025 citation partially supports this but is cited in a different paragraph."
+          suggested_query: "LLM imputation distributional properties statistical bias survey design effects"
+          cascading_impacts: []
+
+        - paragraph: 85
+          text: "{cite:t}`tian_2025` showed LLM imputation outperforming MICE on categorical variables (F1 0.65 versus 0.50) in a real 2024 election survey, but at 40 times the computational cost."
+          classification: "fact"
+          citation_present: true
+          finding_type: null
+          routing: null
+          notes: "Properly cited. Numbers match the references.bib note (F1 0.65-0.66 vs 0.50-0.58, ~40x slower). The chapter rounds to cleaner numbers, which is acceptable for prose."
+          cascading_impacts: []
+
+        - paragraph: 85
+          text: "Even in the best case for LLMs, the cost-performance tradeoff is narrow, and it only favors LLMs on categorical variables where the 'imputation' is closer to classification."
+          classification: "judgment"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Properly framed judgment that follows from the cited evidence. The qualifier 'even in the best case' appropriately signals this is an interpretation."
+          cascading_impacts: []
+
+    # ── Section 8: Thought Experiment ────────────
+    - heading: "### Thought Experiment"
+      word_count: 112
+      depth_assessment: "substantive"
+      depth_notes: "Good thought experiment with five specific design questions. Connects to the chapter's core themes (scale, cost, data protection)."
+
+      findings: []
+
+    # ── Chapter Bridge ───────────────────────────
+    - heading: "(chapter bridge, no heading)"
+      word_count: 42
+      depth_assessment: "substantive"
+      depth_notes: "Clean bridge to Chapter 4. References confidence laundering concept."
+
+      findings:
+        - paragraph: 101
+          text: "The confidence laundering risk previewed in this chapter gets its full treatment there."
+          classification: "fact"
+          citation_present: false
+          finding_type: null
+          routing: null
+          notes: "Cross-reference to Ch 4. Verify 'confidence laundering' is fully treated in Ch 4."
+          cascading_impacts:
+            - affected_section: "book/chapter-04.md"
+              reason: "Ch 3 promises Ch 4 gives confidence laundering 'its full treatment.' Verify."
+              audit_type: "factual_consistency"
+
+  # ──────────────────────────────────────────────
+  # Cascading audit tasks
+  # ──────────────────────────────────────────────
+  cascading_audit_tasks:
+    - target_section: "book/chapter-04.md"
+      triggered_by: "paragraph 13, terminology reference to 'confidence laundering'"
+      audit_type: "terminology_check"
+      reason: "Ch 3 introduces 'confidence laundering' and attributes its definition to Ch 4. Verify the term is defined there and matches the usage here."
+      priority: "high"
+
+    - target_section: "book/chapter-04.md"
+      triggered_by: "paragraph 101, cross-reference claim"
+      audit_type: "factual_consistency"
+      reason: "Ch 3 chapter bridge promises confidence laundering gets 'its full treatment' in Ch 4. Verify this is true."
+      priority: "medium"
+
+    - target_section: "book/chapter-07.md"
+      triggered_by: "paragraph 59, attribution of 'config-driven pattern'"
+      audit_type: "terminology_check"
+      reason: "Ch 3 attributes 'config-driven pattern' to Ch 7. Verify Ch 7 defines and uses this term."
+      priority: "medium"
+
+    - target_section: "book/chapter-08.md"
+      triggered_by: "paragraph 49, claim about evaluation framework and Pragmatics system"
+      audit_type: "factual_consistency"
+      reason: "Ch 3 claims Ch 8's evaluation framework provides the metadata needed for semantic equivalence checking. Verify Ch 8 actually delivers this."
+      priority: "medium"
+
+    - target_section: "book/chapter-12.md"
+      triggered_by: "paragraph 35, Title 13 and CIPSEA data protection references"
+      audit_type: "citation_check"
+      reason: "Ch 3 references Title 13 and CIPSEA as data sensitivity constraints. Ch 12 (Security) likely discusses the same frameworks. Citations should be consistent."
+      priority: "medium"
+
+    - target_section: "book/chapter-13.md"
+      triggered_by: "paragraph 35, 6-18 month deployment timeline claim"
+      audit_type: "factual_consistency"
+      reason: "Ch 3 claims institutional deployment takes 6-18 months. Ch 13 (Institutional Deployment) must present consistent timelines."
+      priority: "high"
+
+    - target_section: "book/chapter-14.md"
+      triggered_by: "paragraph 33, fine-tuning TCO claim"
+      audit_type: "factual_consistency"
+      reason: "Ch 3 claims fine-tuning TCO exceeds API approach for most use cases. Ch 14 (Cost & Practicality) must present consistent cost framework."
+      priority: "high"
+
+    - target_section: "book/chapter-08.md"
+      triggered_by: "paragraph 25, NAICS error propagation claim"
+      audit_type: "citation_check"
+      reason: "Ch 3 claims bad NAICS codes affect industry tabulations and economic indicators. If Ch 8 makes similar error propagation claims, citations should be consistent."
+      priority: "low"
