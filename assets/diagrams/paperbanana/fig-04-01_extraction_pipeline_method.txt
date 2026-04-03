@@ -1,0 +1,98 @@
+# fig-04-01: Extraction Pipeline Architecture
+
+## Diagram Type
+Technical flow diagram. Clean, minimal, professional. Matches fig-02-01 and fig-03-01 style.
+
+## Layout
+Left-to-right flow. Raw text on the far left, validated output on the far right. Five stages across the middle, with a branching path at the disagreement analysis stage that routes ambiguous cases to a human review queue before rejoining the main flow.
+
+## Elements
+
+### Input
+1. Rectangle on far left, slightly rough/informal styling: "Raw Text Input"
+   Small text below: "Documents, survey responses, public comments, agency reports"
+
+### Stage 1: Semantic Chunking
+2. Box: "Semantic Chunking"
+   Small text: "Paragraph / section / heading boundaries — not token counts"
+   Arrow from input to this box.
+
+### Stage 2: Dual-Model Extraction
+3. Two parallel boxes (stacked vertically, same horizontal position):
+   - Top box: "Model A — Extraction"
+   - Bottom box: "Model B — Extraction"
+   Small text under each: "Independent — no shared context"
+   Arrows from Semantic Chunking to BOTH boxes.
+
+### Stage 3: Disagreement Analysis
+4. Diamond shape (decision node): "Disagreement?"
+   Arrows from both Model A and Model B boxes pointing into this diamond.
+
+### Branching paths from Disagreement:
+
+**Agreement path (main flow, continuing right):**
+5. Label "Agree" on the arrow continuing right from the diamond.
+
+**Disagreement path (routes up/down to human review):**
+6. Label "Disagree" on the arrow branching off.
+7. Box (off the main flow, above or below): "Human Review Queue"
+   Small text: "Disagreement is signal — reviewer resolves"
+   Arrow from disagreement branch to this box.
+   Arrow from this box rejoining the main flow AFTER entity resolution (before provenance record).
+
+### Stage 4: Entity Resolution
+8. Box: "Entity Resolution"
+   Small text (3 lines, showing escalation):
+   "1. Exact match → auto-resolve"
+   "2. Embedding similarity → threshold"
+   "3. Ambiguous → human review"
+   Arrow from agreement path into this box.
+
+### Stage 5: Provenance Record
+9. Box: "Provenance Record"
+   Small text: "Source passage · Model version · Prompt · Run ID"
+   Arrow from Entity Resolution into this box.
+   Arrow from Human Review Queue also feeds into this box (all paths converge here).
+
+### Output
+10. Rectangle on far right, clean/formal styling: "Validated Output"
+    Small text below: "Every extraction traceable to source passage"
+    Arrow from Provenance Record to this box.
+
+## Visual Style
+- Clean, sparse, professional — matches Chapter 2 and 3 figure style
+- Muted colors: light gray fills, dark gray outlines and text
+- Main pipeline flow boxes: white fill (#FFFFFF), dark gray outline (#333333)
+- Human Review Queue box: light yellow (#FFFBEB) fill, dark gray outline — visually distinct but not garish
+- Decision diamond: white fill, dark gray outline
+- Agreement arrow: solid line with label "Agree"
+- Disagreement branch: dashed line with label "Disagree"
+- No decorative elements, no gradients, no shadows
+- Sans-serif font (Inter, Helvetica, or similar)
+- Generous whitespace
+- Arrows are simple, thin, with small arrowheads
+
+## Color Palette
+- Background: white or very light warm gray (#F8F7F5)
+- Main pipeline boxes: white (#FFFFFF) fill, dark gray (#333333) outline
+- Human Review Queue: light yellow (#FFFBEB) fill, dark gray (#333333) outline
+- Decision diamond: white (#FFFFFF) fill
+- Text: black (#1A1A1A)
+- Small annotation text: medium gray (#666666)
+- Main flow arrows: dark gray (#333333)
+- Disagreement branch arrow: medium gray (#888888), dashed
+
+## Dimensions
+- Landscape orientation, roughly 3:2 aspect ratio (wider than tall)
+- Suitable for full page width in a book layout
+
+## What This Is NOT
+- Not a UML diagram
+- Not a swimlane diagram — this is a linear pipeline with a branch, not parallel tracks
+- No vendor names, no model names, no tool names — architecture only
+- No icons or clipart
+- The human review queue is a side branch that REJOINS the main flow — it is not an endpoint
+- The three entity resolution steps (exact/embedding/ambiguous) are annotations on the stage, not separate boxes
+
+## Caption
+"Extraction pipeline architecture. Raw text enters at left. Semantic chunking preserves meaning before extraction begins. Dual-model extraction runs independently; disagreements route to human review. Agreed extractions proceed through entity resolution with escalating ambiguity handling. Every extraction carries provenance to its source passage before reaching validated output."
