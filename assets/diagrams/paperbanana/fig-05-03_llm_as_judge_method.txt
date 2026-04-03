@@ -1,0 +1,91 @@
+# fig-05-03: LLM-as-Judge Topology
+
+## Diagram Type
+Technical flow diagram. Clean, minimal, professional. Matches series style.
+
+## Layout
+Left-to-right flow. Input → Judge (with rubric alongside) → Pass/Fail gate → two output paths (accepted vs. human review). Simpler than fig-05-02; the rubric is the visual distinguishing element.
+
+## Elements
+
+### Input
+1. Rectangle on far left: "Input"
+   Small text below: "Output from generator model requiring quality evaluation"
+   Arrow to Judge box.
+
+### Rubric (annotated alongside Judge)
+2. Box positioned above or alongside the Judge box, visually connected by a dashed line:
+   "Evaluation Rubric"
+   Small text (3 lines):
+   "Domain-grounded criteria"
+   "Decomposed dimensions: accuracy, completeness, format, coherence"
+   "Versioned — changes are tracked"
+   Dashed arrow from this box into the Judge box: "rubric governs evaluation"
+
+### Stage 1: Judge
+3. Box: "Judge (Model C)"
+   Small text: "Evaluates input against rubric — not performing the original task"
+   Arrow from Input into this box.
+
+### Stage 2: Score
+4. Box: "Rubric Score"
+   Small text: "Per-dimension scores + overall verdict"
+   Arrow from Judge into this box.
+
+### Stage 3: Threshold Gate
+5. Diamond: "Above threshold?"
+   Arrow from Score into this diamond.
+
+### Branching paths:
+
+**Pass path:**
+6. Label "Pass" on arrow continuing right.
+7. Box: "Accepted Output"
+   Small text: "Score, rubric version, model version recorded"
+
+**Fail path:**
+8. Label "Fail" on branching arrow.
+9. Box: "Human Review Queue"
+   Small text (2 lines):
+   "Below-threshold outputs for expert review"
+   "Periodic calibration: compare judge to human agreement"
+   Arrow from fail branch into this box.
+
+### Calibration Loop (small annotation below)
+10. Small annotation outside main flow:
+    "Calibration requirement: golden test set + human agreement checks on a sample"
+    "Judge drift signal: approval rate rising without corresponding quality improvement"
+
+### Output
+11. Both paths (Accepted Output and Human Review Queue) converge at a Provenance Record box:
+    Box: "Provenance Record"
+    Small text: "Judge version · Rubric version · Score · Threshold version"
+    Arrow to final Output rectangle.
+
+## Visual Style
+- Clean, sparse, professional
+- The rubric box is visually set apart (above the main flow, dashed connection) to emphasize it is a configuration input, not a pipeline stage
+- Human Review Queue: light yellow (#FFFBEB) fill
+- Rubric box: light blue (#EEF4FF) fill — configuration, not pipeline
+- Main boxes: white (#FFFFFF), dark gray outline (#333333)
+- Dashed line for rubric connection
+- No vendor names, no model names
+
+## Color Palette
+- Background: white or very light warm gray (#F8F7F5)
+- Main pipeline boxes: white (#FFFFFF), dark gray outline (#333333)
+- Human Review Queue: light yellow (#FFFBEB)
+- Rubric box: light blue (#EEF4FF) — visually distinct as a config input
+- Text: black (#1A1A1A), annotations medium gray (#666666)
+
+## Dimensions
+- Landscape orientation, roughly 3:2 aspect ratio
+
+## What This Is NOT
+- Not a consensus diagram — the judge evaluates ONE input against a rubric
+- Not a critic loop — there is no feedback arc back to the generator
+- The rubric is a configuration input, not a pipeline stage
+- No vendor or model names in the diagram
+
+## Caption
+"LLM-as-Judge topology. A dedicated judge model evaluates generator output against a versioned rubric. Outputs scoring above threshold are accepted with provenance; below-threshold outputs route to human review. Periodic calibration against a golden test set is a design requirement, not optional maintenance."

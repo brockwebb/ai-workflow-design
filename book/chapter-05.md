@@ -21,19 +21,21 @@ Chapter 2 presented this pattern in detail through the Concept Mapper case study
 
 **The pattern.** N models receive the same input independently. Outputs are compared. Agreement indicates confidence; disagreement triggers escalation or adjudication.
 
-**Model selection for diversity of failure modes.** The goal is not N copies of the same bias. It is N independently trained systems with different architectural assumptions. Models sharing training corpora (Common Crawl, Wikipedia, public web) are not statistically independent. But different architectures, training objectives, RLHF tuning, and parameter configurations produce meaningfully different bias profiles: correlated but not identical failure modes. For federal statistical work, you are optimizing within a constrained pool of Western frontier models where you have visibility into training methodology and corporate governance. The pool is bounded, but diversity within it is achievable.
+**Model selection for diversity of failure modes.** The goal is not N copies of the same bias. It is N independently trained systems with different architectural assumptions. Models sharing training corpora (Common Crawl, Wikipedia, public web) are not statistically independent. But different architectures, training objectives, RLHF tuning, and parameter configurations produce different agreement patterns and failure behavior: models from different vendor families show lower exact agreement than models within the same family, which is precisely the diversity that makes cross-model validation informative.
 
 The foundational principle behind parallel consensus is self-consistency: sampling multiple independent reasoning paths and selecting the most consistent answer {cite:p}`wang_2022`. The multi-model variant extends this from sampling within a single model to sampling across models with different training, which provides stronger independence guarantees.
 
-**Quantitative agreement definition.** "Agreement" must be defined for the domain. Token match? Semantic similarity? Structured output field comparison? The Concept Mapper used structured output comparison against a fixed schema {cite:p}`fortier_2011;wolf_2016`: the agreement metric was whether two models mapped a survey question to the same harmonized variable. Your agreement metric should be equally concrete.
+**Quantitative agreement definition.** "Agreement" must be defined for the domain. Token match? Semantic similarity? Structured output field comparison? The Concept Mapper used structured output comparison against a fixed schema: the agreement metric was whether two models mapped a survey question to the same harmonized variable, a concept grounded in existing cross-study harmonization frameworks {cite:p}`fortier_2011;wolf_2016`. Your agreement metric should be equally concrete.
 
 **Decision logic: N outputs to one decision.** Majority vote? Confidence-weighted arbitration? Human-in-the-loop above a disagreement threshold? The decision rule must be explicit, versioned, and auditable. It is part of the pipeline configuration, not an informal convention.
 
-**Inter-rater reliability as the native evaluation framework.** LLMs as independently trained neural networks are directly amenable to inter-rater reliability methods: Cohen's kappa, Fleiss' kappa, Krippendorff's alpha. This is a transfer of existing statistical methodology, not a novel invention {cite:p}`webb_2026_concept_mapper`.
+**Inter-rater reliability as the native evaluation framework.** LLMs as independently trained neural networks are directly amenable to inter-rater reliability methods: Cohen's kappa (two raters), Fleiss' kappa (multiple raters, categorical data), Krippendorff's alpha (flexible across scale types and rater counts). This is a transfer of existing statistical methodology, not a novel invention {cite:p}`webb_2026_concept_mapper`.
 
 **ABBA design for position bias control.** Run Model A then Model B on the same input, then Model B then Model A. If results change based on order, you have detected position bias in your evaluation, not a real difference in model capability. This is standard counterbalancing from experimental design, applied to LLM evaluation.
 
 Two-versus-three models is not the point. The point is: more than one look, stored comparisons, and a decision rule for disagreements. The optimal blend shifts as models update, which is why selection logic must be versioned and revisitable (Chapter 9 treats this as a formal drift concern).
+
+If full parallel consensus is too expensive, run the second model on a stratified sample of outputs: the lowest-confidence results from the first model, plus a random sample of high-confidence results for calibration. Even partial cross-validation is better than none. The goal is not perfection; it is making hidden uncertainty visible on the cases most likely to be wrong.
 
 > *You are designing a classification pipeline and your two models agree on 97% of cases. Is that 3% disagreement rate a sign of success or failure? What would you need to know to decide?*
 
@@ -41,11 +43,11 @@ Two-versus-three models is not the point. The point is: more than one look, stor
 
 This is a fundamentally different shape from parallel consensus. In consensus, models perform the *same task* independently. In a generator-critic loop, models perform *different tasks* in sequence: one generates, another evaluates, and the evaluation feeds back to improve the generation.
 
-**The canonical pattern.** {cite:t}`madaan_2023` introduced the Self-Refine framework: a single LLM generates an initial output, then provides feedback on its own output, then uses that feedback to refine iteratively. Across seven tasks, Self-Refine improved performance by approximately 20% over single-shot generation.
+**The canonical pattern.** {cite:t}`madaan_2023` introduced the Self-Refine framework: a single LLM generates an initial output, then provides feedback on its own output, then uses that feedback to refine iteratively. Across seven diverse tasks, Self-Refine improved performance by approximately 20% on average over single-shot generation, though gains varied substantially across tasks.
 
-**The critical limitation: same-model self-refinement degrades.** This is where the chapter connects to Chapter 1's iterative refinement trap. {cite:t}`huang_2024` demonstrated that LLMs cannot reliably self-correct their own reasoning without external feedback. {cite:t}`xu_2024` showed that LLMs amplify their own biases during self-refinement. {cite:t}`pan_2024` documented spontaneous reward hacking in iterative self-refinement: the model learns to game its own evaluation criteria. {cite:t}`yang_2025` provided a probabilistic inference framework showing why self-correction has theoretical limits. {cite:t}`lee_2025` benchmarked these degradation patterns empirically.
+**The critical limitation: same-model self-refinement degrades.** This is where the chapter connects to Chapter 1's iterative refinement trap. Chapter 1 documented five degradation pathways in self-refinement loops in detail. The core finding: LLMs cannot reliably self-correct their own reasoning without external feedback ({cite:p}`huang_2024`), and the failure modes compound: bias amplification, reward hacking, and theoretical limits on self-correction all work against you ({cite:p}`xu_2024;pan_2024;yang_2025;lee_2025`).
 
-The design implication for statistical production: same-model self-refinement is a trap. The model's blind spots are systematic. Asking it to critique its own output does not surface errors it cannot see. The signal degrades, not improves, after the first few iterations.
+The design implication for statistical production: same-model self-refinement is a trap. The model's blind spots are systematic. Asking it to critique its own output does not surface errors it cannot see. The signal degrades rather than improves over successive iterations.
 
 **The cross-model variant.** The more robust design separates the generator from the critic:
 
@@ -53,7 +55,7 @@ The design implication for statistical production: same-model self-refinement is
 
 **Design questions unique to this topology:**
 
-*How many iterations before you bail?* The degradation literature suggests diminishing returns after two to three rounds for most tasks. Design your termination condition conservatively.
+*How many iterations before you bail?* The degradation literature shows performance often flattens or degrades over multiple self-refinement turns, with no universal optimum. Design your termination condition around observed trajectory: if iteration N+1 is not measurably better than iteration N, stop. Monitor for oscillation (iteration 3 worse than iteration 2) as a signal to terminate immediately.
 
 *Does quality actually improve on retry, or does it oscillate?* Monitor the trajectory. If iteration 3 is worse than iteration 2, you have oscillation, not convergence. Stop.
 
@@ -89,7 +91,7 @@ The judge pattern is architecturally distinct from both consensus and refinement
 
 *Pairwise comparison.* The judge receives two candidate outputs and selects the better one against criteria. Useful for prompt optimization and model selection experiments.
 
-**Failure modes specific to this topology.** The judge may lack domain knowledge: a general-purpose LLM evaluating domain-specific statistical output may not catch errors that a subject-matter expert would. Rubric gaming: models optimized against a rubric will find shortcuts that satisfy the letter but not the spirit of the criteria, a form of Goodhart's Law applied to LLM evaluation. Who judges the judge? At some point, human calibration is required. Golden test sets, periodic human agreement checks, and rubric revision cycles are part of the operating cost. Position bias in pairwise comparison: the order in which candidates are presented affects the judge's preference. ABBA counterbalancing applies here too.
+**Failure modes specific to this topology.** The judge may lack domain knowledge: a general-purpose LLM evaluating domain-specific statistical output may not catch errors that a subject-matter expert would. Rubric gaming: models optimized against a rubric will find shortcuts that satisfy the letter but not the spirit of the criteria, a form of Goodhart's Law (when a measure becomes a target, it ceases to be a good measure) applied to LLM evaluation. Who judges the judge? At some point, human calibration is required. Golden test sets, periodic human agreement checks, and rubric revision cycles are part of the operating cost. Position bias in pairwise comparison: the order in which candidates are presented affects the judge's preference. ABBA counterbalancing applies here too.
 
 > *You deploy an LLM judge to quality-check extraction outputs. After a month, you notice the approval rate has climbed from 82% to 96%. Is the generator improving, or has the judge drifted? What data would you need to tell the difference?*
 
@@ -107,6 +109,8 @@ Not every problem needs a multi-model solution. Not every multi-model solution n
 
 This connects directly to Chapter 2's "try the cheap thing first" principle. The Concept Mapper only moved to LLMs after embedding-based matching failed. The LLM solution was the second approach, not the first.
 
+In practice, pipelines combine topologies. The thought experiment at the end of this chapter asks you to do exactly this: consensus for classification, a critic loop for extraction, a judge gate for quality. The key design question when composing topologies is the interface between stages. Each topology produces output that feeds the next. The consensus stage's agreed classifications become input to the extraction stage. The extraction stage's structured output becomes input to the quality judge. Define the data contract at each interface: what fields, what format, what metadata carries forward, before you build any individual stage.
+
 ## Cross-Cutting Design Principles
 
 Regardless of topology, these principles apply:
@@ -117,9 +121,11 @@ Regardless of topology, these principles apply:
 
 **Design for model transience.** Models are deprecated, updated, and replaced. Your pipeline must survive a model swap without architectural redesign. Golden test sets, model-agnostic interfaces, and version pinning with expiration dates are design requirements, not nice-to-haves {cite:p}`webb_2026_concept_mapper`.
 
-**Cost the full cycle, not just the inference call.** A multi-model pipeline's cost includes API calls for all models, retry and refinement iterations, human review for escalated cases, and the engineering time to maintain the orchestration. The $15 API cost for the Concept Mapper was real; the human engineering cost dwarfed it.
+**Cost the full cycle, not just the inference call.** A multi-model pipeline's cost includes API calls for all models, retry and refinement iterations, human review for escalated cases, and the engineering time to maintain the orchestration. The \$15 API cost for the Concept Mapper was real; the human engineering cost dwarfed it.
 
 **Reprocessing advantage.** Unlike manufacturing, reprocessing data costs electrons, not materials. If a model is updated or a rubric is revised, you can rerun the pipeline. Design around this advantage: store inputs, version everything, and build for reproducibility.
+
+> *You have budget and engineering time for three of these five principles in your first release. Which three do you choose, and what risk does each omission create?*
 
 ### Thought Experiment
 
@@ -129,9 +135,9 @@ You have been asked to design an LLM-powered pipeline. Consider:
 
 1. Which topology (or combination) would you use for the extraction step? For the classification step? For the quality flagging step? Are they the same?
 2. The forms come from 50 states with slightly different layouts. Does this change your extraction approach? Do you need an LLM at all for the structured extraction, or would a template-based approach serve better?
-3. Your budget allows for approximately $500 in API costs per annual run. How does this constrain your topology choices? What would you sacrifice first: the second model, the critic loop, or the judge gate?
+3. Your budget allows for approximately \$500 in API costs per annual run. How does this constrain your topology choices? What would you sacrifice first: the second model, the critic loop, or the judge gate?
 4. The report is published once a year but the methodology must be defensible to Congress. How does this change your provenance and auditability requirements versus a pipeline that runs daily for internal use?
 
 ---
 
-You now have three topologies for combining models and a framework for choosing between them. But knowing *which* pattern does not tell you *how* the pieces execute. When you run two models on 10,000 records, do they run in parallel or in sequence? How do you handle rate limits? What happens when one model's API goes down mid-batch? Chapter 6 turns from the logical architecture to the physical execution: parallel versus serial processing, batch design, and the engineering reality of the $15 versus $1,500 lesson.
+You now have three topologies for combining models and a framework for choosing between them. But knowing *which* pattern does not tell you *how* the pieces execute. When you run two models on 10,000 records, do they run in parallel or in sequence? How do you handle rate limits? What happens when one model's API goes down mid-batch? Chapter 6 turns from the logical architecture to the physical execution. Force multipliers amplify good design and bad design equally. Parallelization, batching, and automation do not care whether they are scaling a solution or scaling a problem. Chapter 6 teaches the engineering discipline that makes the difference: batch design, model selection as an engineering decision, and building infrastructure that survives the model changes that are coming.

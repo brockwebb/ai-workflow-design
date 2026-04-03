@@ -1,0 +1,96 @@
+# fig-05-01: Parallel Consensus Topology
+
+## Diagram Type
+Technical flow diagram. Clean, minimal, professional. Matches fig-02-01, fig-03-01, fig-04-01 style.
+
+## Layout
+Left-to-right flow. Input on the far left, output on the far right. Fan-out to N independent models in the middle, converging to a comparison and decision stage, with a disagreement path branching to human review before output.
+
+## Elements
+
+### Input
+1. Rectangle on far left, slightly rough/informal styling: "Input"
+   Small text below: "Classification task, coding item, or categorization request"
+   Arrow fans out to all N model boxes.
+
+### Stage 1: Independent Processing
+2. Three parallel boxes (stacked vertically, same horizontal position):
+   - Top box: "Model A"
+   - Middle box: "Model B"
+   - Bottom box: "Model N"
+   Small text under each: "Independent — no shared context"
+   Each box receives an arrow from Input.
+
+### Stage 2: Comparison
+3. Box: "Output Comparison"
+   Small text: "Token match / semantic similarity / structured field comparison"
+   Arrows from all model boxes pointing into this box.
+
+### Stage 3: Decision
+4. Diamond shape (decision node): "Agreement?"
+   Arrow from Comparison into this diamond.
+
+### Branching paths:
+
+**Agreement path (main flow, continuing right):**
+5. Label "Agree" on arrow continuing right.
+6. Box: "Confidence Score + Decision Rule"
+   Small text: "Majority vote / confidence-weighted / threshold arbitration"
+   Arrow from Agree path into this box.
+
+**Disagreement path (branches off):**
+7. Label "Disagree" on branching arrow.
+8. Box (off main flow, above or below): "Human Review Queue"
+   Small text: "Disagreement is signal — reviewer resolves"
+   Arrow from disagree branch to this box.
+   Arrow from Human Review Queue rejoining flow before Output.
+
+### Stage 4: Provenance
+9. Box: "Provenance Record"
+   Small text: "Model versions · Prompt version · Decision rule version · Run ID"
+   Arrows from both the Decision Rule box and Human Review Queue into this box.
+
+### Output
+10. Rectangle on far right: "Agreed Output"
+    Small text below: "Every decision traceable to models and decision rule"
+    Arrow from Provenance Record to this box.
+
+### Annotation (below main flow)
+11. Small text annotation: "Store disagreements — they are your quality signal"
+
+## Visual Style
+- Clean, sparse, professional
+- Muted colors: light gray fills, dark gray outlines and text
+- Main pipeline boxes: white fill (#FFFFFF), dark gray outline (#333333)
+- Human Review Queue box: light yellow (#FFFBEB) fill, dark gray outline
+- Decision diamond: white fill, dark gray outline
+- Agreement arrow: solid line with label "Agree"
+- Disagreement branch: dashed line with label "Disagree"
+- Fan-out arrows from Input to models: thin, parallel
+- No decorative elements, no gradients, no shadows
+- Sans-serif font (Inter, Helvetica, or similar)
+- Generous whitespace
+
+## Color Palette
+- Background: white or very light warm gray (#F8F7F5)
+- Main pipeline boxes: white (#FFFFFF) fill, dark gray (#333333) outline
+- Human Review Queue: light yellow (#FFFBEB) fill, dark gray (#333333) outline
+- Decision diamond: white (#FFFFFF) fill
+- Text: black (#1A1A1A)
+- Small annotation text: medium gray (#666666)
+- Main flow arrows: dark gray (#333333)
+- Disagreement branch arrow: medium gray (#888888), dashed
+
+## Dimensions
+- Landscape orientation, roughly 3:2 aspect ratio
+- Suitable for full page width in a book layout
+
+## What This Is NOT
+- Not a swimlane diagram
+- No vendor names, no model names, no tool names
+- No icons or clipart
+- The human review queue REJOINS the main flow — it is not an endpoint
+- The fan-out from Input to N models is parallel, not sequential
+
+## Caption
+"Parallel consensus topology. Input fans out to N independently prompted models. Agreed outputs proceed through the decision rule with a versioned provenance record. Disagreements route to human review and rejoin the flow. The disagreement rate is your primary quality signal."
