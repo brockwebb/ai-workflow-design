@@ -22,9 +22,21 @@ The fundamental tension: extraction is valuable precisely because it produces st
 
 ## The Confidence Laundering Problem
 
-The knowledge graph failure from this chapter's opening is a specific instance of a general pathology: confidence laundering. An LLM extraction pipeline takes unverified, stochastic output and embeds it in a structure that looks authoritative (a graph, a database, a table) without the verification infrastructure to back up that appearance. The structure launders the uncertainty. Downstream users inherit the confidence without the caveats.
+The knowledge graph failure from this chapter's opening is a specific instance of a general pathology: confidence laundering. Confidence laundering occurs when a pipeline converts uncertain, unverified extraction output into a structured artifact whose format implies verification that never occurred. Typed nodes, labeled edges, and clean visualizations create confidence in the content, but the content was produced by a stochastic process. The structure launders the uncertainty out of the presentation without laundering it out of the data. Downstream users inherit the confidence without the caveats.
 
 Tools that generate hierarchical concept maps from documents and label the output a "knowledge graph" are performing confidence laundering at the terminology level. A concept map organizes topics in a tree structure with implicit "is subtopic of" relationships. A knowledge graph requires typed entities, explicit relationship semantics defined by a schema or ontology, entity resolution across sources, and a queryable graph substrate. The concept map is valuable for human sense-making. Calling it a knowledge graph implies machine-actionable, formally verified knowledge that does not exist in the output. The label creates expectations the artifact cannot satisfy.
+
+> Before adopting an extraction tool into your pipeline, ask yourself these questions. If the vendor cannot answer them, that tells you something about the tool's transparency.
+>
+> *What are the chunking boundaries?* Does the tool split text at semantic boundaries (paragraphs, sections, topic shifts) or at mechanical boundaries (page breaks, token counts, character limits)? Mechanical boundaries destroy meaning before extraction begins.
+>
+> *What does the tool call its output?* If the tool labels its output a "knowledge graph," verify whether it produces typed entities with explicit relationships defined by a schema, or a hierarchical concept map with implicit "is related to" links. The label creates expectations. If the output does not meet those expectations, the label is confidence laundering.
+>
+> *Does the tool do entity resolution?* If the same entity appears under different names in different source documents, does the tool merge them or create separate nodes? Unresolved entities proliferate the graph with synonyms masquerading as distinct concepts.
+>
+> *Can you trace every output element to its source passage?* If the tool produces an entity or relationship, can you see which specific text span it was extracted from? If not, you cannot distinguish extraction from inference.
+>
+> *What model does the tool use, and can you swap it?* Extraction quality varies dramatically across models. If the tool locks you into a specific model, you inherit that model's blind spots with no escape path when the model degrades or is deprecated.
 
 The failure modes, stated plainly:
 
