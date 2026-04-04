@@ -25,17 +25,17 @@ The real comparison is total cost of the AI pipeline, including development, ope
 
 | | AI Pipeline | Manual Equivalent |
 |---|---|---|
-| Task | Map 6,987 survey questions to standardized concepts | Same task, same taxonomy |
+| Task | Map 6,954 survey questions to standardized concepts | Same task, same taxonomy |
 | Development cost | ~$3,500 (one-time: pipeline, prompts, evaluation design) | ~$800 (one-time: analyst training) |
-| Per-run cost | ~$15 (inference) | ~$23,300 (analyst labor) |
-| Runtime | ~2 hours | ~233 analyst-hours |
+| Per-run cost | ~$15 (inference) | ~$23,200 (analyst labor) |
+| Runtime | ~2 hours | ~232 analyst-hours |
 | Accuracy | 99.5% (dual-model cross-validated) | Varies by analyst, estimated comparable |
 | Evidence chain | Complete: model versions, confidence scores, agreement rates, disagreements logged | Notes, spreadsheets, institutional memory |
 | Reproducibility | Re-run produces documented results with provenance | Re-assignment produces different results depending on analyst |
-| Year 1 total | ~$3,515 | ~$24,100 |
-| Year 2+ per cycle | ~$15 | ~$23,300 |
+| Year 1 total | ~$3,515 | ~$24,000 |
+| Year 2+ per cycle | ~$15 | ~$23,200 |
 
-The manual equivalent: a trained analyst classifying survey questions against the harmonized taxonomy. Assume 8 hours of training on the taxonomy and classification conventions, then a sustained rate of approximately 30 questions per hour (a reasonable estimate for a skilled analyst making judgment calls on semantic alignment). At 6,987 questions, that is 233 analyst-hours of classification work alone. At a fully loaded labor rate of $100 per hour, the manual equivalent costs approximately $24,100 per cycle (including training). The AI pipeline's $15 inference cost is not the full comparison; development cost was approximately $3,500 in engineering time (roughly 35 hours of pipeline construction, prompt design, evaluation framework development, and iterative debugging, drawing on prior experience with LLM pipeline patterns). But development cost is a one-time investment. The pipeline now runs each new survey wave for $15; the manual process costs $23,300 every time.
+The manual equivalent: a trained analyst classifying survey questions against the harmonized taxonomy. Assume 8 hours of training on the taxonomy and classification conventions, then a sustained rate of approximately 30 questions per hour (a reasonable estimate for a skilled analyst making judgment calls on semantic alignment). At 6,954 questions, that is 232 analyst-hours of classification work alone. At a fully loaded labor rate of $100 per hour, the manual equivalent costs approximately $24,000 per cycle (including training). The AI pipeline's $15 inference cost is not the full comparison; development cost was approximately $3,500 in engineering time (roughly 35 hours of pipeline construction, prompt design, evaluation framework development, and iterative debugging, drawing on prior experience with LLM pipeline patterns). But development cost is a one-time investment. The pipeline now runs each new survey wave for $15; the manual process costs $23,200 every time.
 
 The $15 is the inference cost. The development cost (building the pipeline, designing prompts, creating the evaluation framework) was higher. But it was a one-time investment. The pipeline now runs on each new survey wave for $15, not for three FTEs over four weeks.
 

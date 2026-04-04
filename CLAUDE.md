@@ -103,7 +103,7 @@ Every chapter follows this consistent structure (Feynman pedagogy operationalize
 
 ## Key Source Material
 
-- **Federal Survey Concept Mapper** (`/Users/brock/Documents/GitHub/federal-survey-concept-mapper/`) — Primary case study for ensemble/multi-model patterns. Dual-model cross-validation, confidence-based arbitration, 6,987 questions, 99.5% accuracy, ~$15.
+- **Federal Survey Concept Mapper** (`/Users/brock/Documents/GitHub/federal-survey-concept-mapper/`) — Primary case study for ensemble/multi-model patterns. Dual-model cross-validation, confidence-based arbitration, 6,954 analyzable survey questions (~7,000 raw), 99.5% accuracy, ~$15.
 - **ai4stats** (`/Users/brock/Documents/GitHub/ai4stats/`) — Predecessor book. SFV framework defined in `docs/sfv/SFV_TERMINOLOGY_BASELINE.md`.
 - **AI Agents 101** (`/Users/brock/Documents/GitHub/ai-demos/ai_agents_101/`) — Design principles, failure modes, bounded agency.
 - **Medium article** on AI automation hype — "adapter layer" insight.

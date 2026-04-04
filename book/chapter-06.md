@@ -32,9 +32,11 @@ The Federal Survey Concept Mapper {cite:p}`webb_2026_concept_mapper` classified 
 
 **Rate limiting and exponential backoff.** This is required infrastructure, not optional. The Concept Mapper used exponential backoff (1s, 2s, 4s, 8s, 16s) per worker. Without it, API rate limits cause cascading failures: workers hammer the rate limit, get rejected, retry immediately, get rejected again, and the pipeline grinds to a halt. Exponential backoff with jitter is the standard solution from distributed systems engineering. It applies identically here.
 
-**Checkpoint and resume architecture.** Long-running batch jobs fail. Network drops, API outages, process crashes, laptop lids closing. The pipeline must be resumable from the last successful checkpoint, not from the beginning. The Concept Mapper saved progress every 10 questions with transaction-safe file writes. This section states the requirement; Chapter 7 owns the full checkpoint and recovery architecture.
+**Checkpoint and resume architecture.** Long-running batch jobs fail. Network drops, API outages, process crashes, laptop lids closing. The pipeline must be resumable from the last successful checkpoint, not from the beginning. The Concept Mapper saved progress every 10 questions with transaction-safe file writes. The checkpoint interval is a design decision, not an implementation detail. Too frequent and you spend more time writing checkpoints than processing records. Too infrequent and a failure wastes hours of completed work. A reasonable starting heuristic: checkpoint often enough that losing one interval's work costs less than five minutes of runtime. Adjust based on your tolerance for reprocessing. This section states the requirement; Chapter 7 owns the full checkpoint and recovery architecture.
 
 **Worker count as a two-constraint optimization.** The number of parallel workers is determined by two constraints: available local compute (cores and processes) and API rate limits from the provider. The Concept Mapper used 6 parallel workers, the practical ceiling given both constraints. This is a concrete engineering decision, not a guess. Check your provider's rate limits, check your machine's capacity, take the minimum.
+
+This gives you the tools to estimate runtime before committing. Total records divided by workers, divided by effective calls per minute per worker, equals estimated minutes. For the reflection prompt below: 50,000 records with 6 workers at 10 effective calls per minute per worker means approximately 833 minutes, or about 14 hours. That is the theoretical floor. Add retry budget: if 5% of calls need one retry with backoff, add roughly 40 minutes. Real pipelines take longer than the formula predicts. Run the formula anyway. Knowing whether your pipeline takes 14 hours or 14 days determines whether you can afford the architecture.
 
 > *You are processing 50,000 records through an LLM pipeline. Your provider allows 60 requests per minute. How many parallel workers can you run? What happens when one worker's batch fails at record 3,000: does the whole pipeline restart, or just that worker's batch?*
 
@@ -44,7 +46,7 @@ People spend weeks running comparison experiments over fractional accuracy diffe
 
 **Simpler models earn their place by default.** A smaller, cheaper model is faster to process, has higher rate limits (less resource-intensive on the provider side), and costs less per call. Unless the task demonstrably requires frontier capability, and you should need evidence rather than intuition to make that claim, the simpler model wins on every operational dimension that matters for batch processing.
 
-The engineering time burned on marginal comparison experiments (2-3 percentage points of accuracy, 10-15% cost differences) typically costs more than the difference between the models ever would at production scale. Use available benchmarks and cost tables for a quick tradeoff analysis. Make a decision. Move on.
+The engineering time burned on marginal comparison experiments (2-3 percentage points of accuracy, 10-15% cost differences) typically costs more than the difference between the models ever would at production scale. Use available benchmarks and cost tables for a quick tradeoff analysis. Make a decision. Move on. Chapter 14 provides the full cost accounting framework.
 
 This connects to the evaluation trap from Chapter 1. The rate of model advancement is so fast that extended comparison experiments produce obsolete conclusions. Models update silently. New contenders enter the market. If you spend six months testing five models, those models have already changed by the time you publish results. You do not have six months. Make engineering decisions with available information and design the system to absorb change.
 
@@ -66,15 +68,17 @@ The model is a replaceable component. The architecture is the durable investment
 
 Rob Pike's five rules from *Notes on Programming in C* {cite:p}`pike_1989` are engineering wisdom that maps directly to LLM pipeline design:
 
-**Bottlenecks surprise you.** Profile your pipeline before optimizing. The bottleneck may be JSON parsing, file I/O, or rate-limit backoff sleep time, not the LLM inference itself. Do not assume.
+**Bottlenecks surprise you.** Profile your pipeline before optimizing. The bottleneck may be JSON parsing, file I/O, or rate-limit backoff sleep time, not the LLM inference itself. Do not assume. In one pipeline, 40% of runtime was spent parsing structured JSON output, not waiting for the LLM.
 
-**Measure before tuning.** Instrument first, optimize second. If you are not measuring, you are guessing. This connects to Chapter 8's evaluation-by-design thesis.
+**Measure before tuning.** Instrument first, optimize second. If you are not measuring, you are guessing. This connects to Chapter 8's evaluation-by-design thesis. At minimum, log response time, token count, and error type for every API call.
 
 **Fancy algorithms are slow when N is small, but design as if N will be large.** For federal statistics, invert Pike's caution. If the method works, it will be applied at scale. The Concept Mapper processed approximately 7,000 questions as a proof of concept, but nothing in the pipeline is hardcoded to 7,000. The architecture holds at 70,000 or 700,000.
 
 **Fancy algorithms are buggier than simple ones.** Use simple data structures. Config-driven pipelines with flat JSON schemas over clever object hierarchies. Complexity is where bugs hide.
 
 **Data dominates.** Get your schemas right and the pipeline design follows. This connects directly to Chapter 2's argument for adopting existing domain frameworks {cite:p}`fortier_2011;wolf_2016` as structured output schemas rather than inventing your own.
+
+Pike's rules provide the diagnostic lens. The next question is whether your design holds when the problem gets bigger.
 
 ## Design for Scale from Day One
 
@@ -84,11 +88,15 @@ Design the pipeline as a machine, not a one-off script. No hardcoded batch sizes
 
 **The compounding loop.** Better pipeline infrastructure produces more productive development, which frees time to improve infrastructure, which compounds. Investing in reusable, well-designed batch processing infrastructure pays dividends on every subsequent workflow. The alternative, rebuilding rate limiting, backoff, checkpointing, and parallel dispatch for every new project, is a tax on every new initiative.
 
+A pipeline hardcoded to one survey's schema fails the moment a second survey uses different field names for the same concept. A pipeline hardcoded to 6 workers fails when the provider changes rate limits.
+
+> *Your pipeline processes 7,000 questions successfully. Leadership says "now do this for all 47 surveys, every quarter." What breaks first: your batch sizes, your schema definitions, your checkpoint intervals, or your rate limit budget? What would you need to change in zero of these to handle the scale increase?*
+
 ## The Infrastructure Reinvention Problem
 
 Every new workflow in the Concept Mapper required rebuilding the same infrastructure: rate limiting, backoff, checkpointing, parallel dispatch. The AI coding partner would rebuild from scratch despite being given reference implementations, ignoring configuration files, inventing nonexistent model names, rewriting debugged infrastructure with its own patterns.
 
-This is the stochastic tax applied to the development process, not just the inference process. Your development tool is itself stochastic, and it introduces its own variance into the infrastructure it builds. Reusable pipeline infrastructure is an asset. Rebuilding it per-workflow is waste.
+This is the stochastic tax (Chapter 1 introduced the concept for inference; here it applies to development itself) applied to the development process, not just the inference process. Your development tool is itself stochastic, and it introduces its own variance into the infrastructure it builds. Reusable pipeline infrastructure is an asset. Rebuilding it per-workflow is waste.
 
 The solution is config-driven, importable infrastructure modules: rate limiting, backoff, checkpointing, and parallel dispatch as shared components, not as code that gets rewritten for every project. Chapter 7 provides the architectural pattern. Chapter 11 addresses the meta-level challenge: when your development tool is itself an LLM, the infrastructure reinvention problem is a structural feature of the development process, not a one-time mistake.
 

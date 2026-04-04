@@ -1,0 +1,57 @@
+# fig-06-03: Pike's Rules Pipeline Mapping
+
+## Diagram Type
+Two-column reference table formatted as a figure. NOT a flow diagram. Five rows, one per rule. Left column: Pike's rule (paraphrased). Right column: pipeline design implication. Clean, readable, book-quality.
+
+## Layout
+Table with header row + 5 data rows. Two columns.
+
+## Table Structure
+
+### Header Row
+| Pike's Rule | Pipeline Design Implication |
+
+### Row 1
+| Rule 1: Bottlenecks are where you don't expect them | Profile before optimizing. The constraint is usually rate-limit backoff or output parsing, not inference time. |
+
+### Row 2
+| Rule 2: Measure before tuning | Instrument every API call: response time, token count, error type. You cannot optimize what you have not measured. |
+
+### Row 3
+| Rule 3: N is usually small — but design as if it will be large | If the method works at 7,000, leadership will want it at 700,000. Hardcode nothing. |
+
+### Row 4
+| Rule 4: Fancy algorithms are buggier | Config-driven pipelines with flat schemas. Clever object hierarchies are where bugs hide when you need to debug at 3am. |
+
+### Row 5
+| Rule 5: Data dominates | Get your schema right first. The pipeline design follows from the data contract, not the other way around. |
+
+## Visual Style
+- Clean book-quality table, not a web UI table
+- Header row: dark gray background (#333333), white text
+- Row label column (left): light gray background (#F0F0F0) for rule number/name, dark text
+- Content cells: white background (#FFFFFF)
+- Alternating row shading: odd rows white, even rows very light gray (#FAFAFA)
+- Cell borders: thin light gray (#CCCCCC)
+- Font: same sans-serif as other figures
+- Moderate cell padding — readable, not bloated
+- No icons, no color coding beyond header/label shading
+- Rule names in left column should be concise paraphrases, not Pike's exact words (which are too long for a table cell)
+
+## Dimensions
+- Portrait orientation acceptable (this is a table, not a wide architecture diagram)
+- Or landscape — whatever fits book column width better
+- Full column width in book layout
+
+## What This Is NOT
+- Not a flow diagram showing rules in sequence
+- Not a comparison between rules
+- Do not include Pike's exact quoted language (too long for cells)
+- No vendor names, no product names
+- The right column is the design implication, not a restatement of the rule
+
+## Notes on Usage
+If the production team prefers this as an actual markdown/typst table in the chapter text rather than a rendered figure, that is acceptable. The content is more important than the format. A well-formatted in-text table achieves the same purpose as a figure here.
+
+## Caption
+"Pike's five rules mapped to LLM pipeline design. Each rule surfaces a different class of engineering mistake: unverified assumptions about bottlenecks, premature optimization, failure to design for scale, hidden complexity, and schema-first design. The rules are diagnostic, not prescriptive — they tell you where to look when the pipeline misbehaves."

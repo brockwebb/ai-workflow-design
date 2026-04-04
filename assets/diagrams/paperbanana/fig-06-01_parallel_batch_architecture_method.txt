@@ -1,0 +1,84 @@
+# fig-06-01: Parallel Batch Processing Architecture
+
+## Diagram Type
+Engineering architecture diagram. NOT a flowchart. Clean boxes and arrows showing system components and their relationships. Matches the sparse, professional style of the series.
+
+## Layout
+Left-to-right primary flow with a vertical worker pool in the center. Input queue on the left, rate limiter as a gate before the workers, parallel worker pool in the middle, checkpoint store below the workers, result aggregation on the right, output on the far right.
+
+## Elements
+
+### Input
+1. Rectangle (slightly rough): "Input Queue"
+   Small text: "N records pending classification"
+   Arrow right to Rate Limiter.
+
+### Rate Limiter
+2. Box with distinct styling (acts as a gate): "Rate Limiter"
+   Small text (2 lines):
+   "Max requests per minute enforced"
+   "Exponential backoff: 1s, 2s, 4s, 8s, 16s on rejection"
+   Arrow right into Worker Pool.
+
+### Worker Pool (parallel)
+3. Three parallel boxes (stacked vertically) representing workers:
+   - "Worker 1"
+   - "Worker 2"
+   - "Worker N"
+   All receive arrows from Rate Limiter.
+   Small text under each: "Independent — no shared context"
+   Bracket or brace on left side labeled: "Worker Pool (N = min(cores, rate limit))"
+
+### Checkpoint Store (below Worker Pool)
+4. Box positioned below the worker pool, connected by downward arrows from each worker:
+   "Checkpoint Store"
+   Small text: "Transaction-safe writes every K records"
+   Small annotation: "Failure here = resume, not restart"
+   Double-headed arrow or upward arrow back to Worker Pool: "resume on restart"
+
+### Result Aggregation
+5. Box: "Result Aggregation"
+   Small text: "Merge outputs from all workers"
+   Arrows from all workers pointing right into this box.
+
+### Output
+6. Rectangle: "Output"
+   Small text: "Complete, resumable, provenance-tracked"
+   Arrow from Result Aggregation.
+
+### Annotation (bottom of diagram)
+7. Small text annotation outside main flow:
+   "Runtime estimate: (records ÷ workers) ÷ (effective calls/min per worker) = minutes"
+
+## Visual Style
+- Engineering architecture diagram — rectangular boxes, clean arrows, no diamond decision nodes
+- Main flow boxes: white (#FFFFFF) fill, dark gray (#333333) outline
+- Rate Limiter box: light blue (#EEF4FF) fill — it is a configuration-governed gate, not just a processing step
+- Checkpoint Store: light yellow (#FFFBEB) fill — visually distinct as infrastructure
+- Worker boxes: white (#FFFFFF) fill, grouped visually
+- Parallel workers indicated by stacking — not by simultaneous arrows
+- No decorative elements, no icons, no gradients
+- Sans-serif font throughout
+- Generous whitespace
+
+## Color Palette
+- Background: white or very light warm gray (#F8F7F5)
+- Main boxes: white (#FFFFFF), dark gray outline (#333333)
+- Rate Limiter: light blue (#EEF4FF)
+- Checkpoint Store: light yellow (#FFFBEB)
+- Text: black (#1A1A1A), annotations medium gray (#666666)
+- Arrows: dark gray (#333333)
+
+## Dimensions
+- Landscape orientation, roughly 3:2 aspect ratio
+- Full page width
+
+## What This Is NOT
+- Not a flowchart with decision diamonds
+- Not a sequence diagram
+- No vendor names, no cloud provider logos, no specific technology names
+- The checkpoint store is below the workers, not in the main left-right flow
+- Workers are parallel (same horizontal position), not sequential
+
+## Caption
+"Parallel batch processing architecture. The rate limiter governs throughput against provider constraints; exponential backoff prevents cascading failures on rejection. N independent workers process batches with no shared context. The checkpoint store enables resume-on-failure without restart. Result aggregation merges worker outputs into the final deliverable."

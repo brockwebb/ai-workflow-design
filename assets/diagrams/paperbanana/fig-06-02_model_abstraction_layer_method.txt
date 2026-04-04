@@ -1,0 +1,75 @@
+# fig-06-02: Model Abstraction Layer
+
+## Diagram Type
+Layered architecture diagram. Three horizontal layers stacked vertically. The key visual point: the middle layer (Model Interface / Config) is the boundary that makes models swappable. Matches series style.
+
+## Layout
+Top-to-bottom layered structure. Three layers:
+1. Pipeline Logic (top) — the durable investment
+2. Model Interface — config-driven, the abstraction boundary
+3. Model Options (bottom) — swappable components
+
+Vertical arrows show: Pipeline Logic calls down to Model Interface only. Model Interface resolves to a specific Model based on configuration. Models are interchangeable at the bottom layer.
+
+## Elements
+
+### Layer 1: Pipeline Logic (top)
+1. Wide rectangle spanning full width: "Pipeline Logic"
+   Small text: "Batching, rate limiting, checkpointing, result aggregation"
+   Sub-text: "Does not know which model it is calling"
+   Thick bottom border or separator line below this box.
+
+### Layer 2: Model Interface (middle)
+2. Wide rectangle spanning full width, distinct fill: "Model Interface"
+   Small text (2 lines):
+   "Configuration-driven model selection"
+   "Records: model ID, version, parameters — changes here, not in Pipeline Logic"
+   Arrow from Layer 1 into this layer: "model call (version-agnostic)"
+   Thick bottom border below.
+   Small annotation on right edge: "config change = model swap"
+
+### Layer 3: Model Options (bottom)
+3. Three boxes side by side (same horizontal position):
+   - "Model A" with small text: "current"
+   - "Model B" with small text: "deprecated"
+   - "Model C" with small text: "security-cleared"
+   Arrows from Model Interface downward to each model box — only one arrow is solid (the active model), others are dashed (available but inactive).
+   Small bracket below the three boxes: "swappable — only one active per run"
+
+### Annotation (side or below)
+4. Small annotation:
+   "Model swap: update config → no code change in Pipeline Logic"
+   "Version pinning: each run records exactly which model was used"
+
+## Visual Style
+- Layered architecture diagram — horizontal bands, not boxes-and-arrows flowchart
+- Layer 1 (Pipeline Logic): light gray (#F0F0F0) fill — stable, durable
+- Layer 2 (Model Interface): light blue (#EEF4FF) fill — the abstraction boundary, the important layer
+- Layer 3 (Model Options): white (#FFFFFF) fill — volatile, swappable
+- Active model arrow: solid dark gray
+- Inactive model arrows: dashed medium gray
+- No decorative elements, no icons
+- Sans-serif font
+
+## Color Palette
+- Background: white or very light warm gray (#F8F7F5)
+- Layer 1: light gray (#F0F0F0)
+- Layer 2: light blue (#EEF4FF)
+- Layer 3 boxes: white (#FFFFFF), dark gray outlines
+- Text: black (#1A1A1A), annotations medium gray (#666666)
+- Active model arrow: dark gray (#333333), solid
+- Inactive model arrows: medium gray (#888888), dashed
+
+## Dimensions
+- Landscape orientation, slightly wider than tall
+- Full page width
+
+## What This Is NOT
+- Not a class hierarchy or inheritance diagram
+- Not a deployment diagram showing servers
+- No vendor names, no specific model product names
+- The Model Interface layer is the key insight, not a passing detail
+- The dashed arrows to inactive models show availability, not current connections
+
+## Caption
+"Model abstraction layer. Pipeline logic calls through a configuration-driven model interface that knows nothing about the specific model underneath. When the model changes, only the configuration changes. All pipeline logic, rate limiting, checkpointing, and result handling remains unchanged. Each run records the exact model version used."
