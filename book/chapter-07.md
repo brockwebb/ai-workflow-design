@@ -20,9 +20,9 @@ This is reproducible research discipline applied to LLM pipelines. The audience 
 
 **Never hardcode.** Model names, API endpoints, temperature and other model-specific parameters, batch sizes, worker counts, retry limits, checkpoint intervals: all of these belong in a configuration file. The config file makes settings visible, ranges clear, and modifications trackable. When results change between runs, the config file is your first diagnostic tool: what was the setting, and did you change it, or did the provider change something on their end?
 
-### Parameter Shelf Life
+### Parameter Interfaces Have a Shelf Life
 
-**Model parameters have a shelf life.** Different models expose different tunable parameters: temperature, top-p, frequency penalty, and others. Practitioners should understand what parameters are available for their chosen model and what they control. But those parameters can disappear between model versions. Temperature was a standard parameter in earlier generation models; when OpenAI introduced the o-series reasoning models (o1, o3), temperature was removed as a configurable parameter. Practitioners who had invested time finding optimal temperature settings for specific tasks had that work invalidated by a model version change. The parameter interface itself has a shelf life.
+**Model parameters have a shelf life.** Different models expose different tunable parameters: temperature, top-p, frequency penalty, and others. Practitioners should understand what parameters are available for their chosen model and what they control. But those parameters can disappear between model versions. When providers introduced reasoning-focused model architectures, sampling parameters like temperature were removed entirely. Practitioners who had invested time finding optimal temperature settings for specific tasks had that work invalidated by a model architecture change. The parameter interface itself has a shelf life.
 
 ### Temperature as a Bias-Variance Tradeoff
 
@@ -86,13 +86,13 @@ Long-running batch jobs fail. The engineering question is whether they recover g
 
 Chapter 6 introduced the requirement: the Concept Mapper {cite:p}`webb_2026_concept_mapper` saved progress every 10 questions with transaction-safe file writes. This section provides the full architectural treatment.
 
-**Checkpoint granularity.** How often do you save state? Every record is expensive in I/O overhead. Every 1,000 records means losing up to 999 records of work on failure. The right interval depends on how expensive each record is to process and how often failures occur. For the Concept Mapper's dual-model classification at approximately $0.002 per question, losing 10 questions of work (two cents) was acceptable. For a pipeline processing expensive documents at $0.50 each, checkpoint every record.
+**Checkpoint granularity.** How often do you save state? Every record is expensive in I/O overhead. Every 1,000 records means losing up to 999 records of work on failure. The right interval depends on how expensive each record is to process and how often failures occur. For the Concept Mapper's dual-model classification at approximately \$0.002 per question, losing 10 questions of work (two cents) was acceptable. For a pipeline processing expensive documents at \$0.50 each, checkpoint every record.
 
 **What to checkpoint.** At minimum: which records have been successfully processed, the results for those records, and enough state to resume from the next unprocessed record. The checkpoint file is a recovery contract: it tells the pipeline exactly where to pick up.
 
 **Transaction-safe writes.** Write the new checkpoint to a temporary file, then atomically rename it to the checkpoint file. If the process crashes mid-write, the old checkpoint is still intact. Never write directly to the checkpoint file. A crash during write corrupts it and you lose everything.
 
-:::{figure} ../assets/diagrams/paperbanana/fig-07-02_transaction_safe_checkpoint.png
+:::{figure} ../assets/diagrams/paperbanana/fig-07-02_checkpoint_safe_write.png
 :name: fig-07-02
 :alt: Flow diagram showing the transaction-safe checkpoint write sequence and crash recovery paths
 Transaction-safe checkpoint write pattern. Writing to a temp file and atomically renaming prevents checkpoint corruption on crash. A crash during the write phase leaves the old checkpoint intact. A crash during the rename (atomic on POSIX systems) leaves either the old or new checkpoint intact, never a partial file.
