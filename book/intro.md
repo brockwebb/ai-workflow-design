@@ -62,7 +62,7 @@ The book moves through five phases, from the nature of the instrument to the ins
 
 ### Domain Workflows
 
-**Chapter 2: Classification and Coding Workflows.** 6,954 survey questions, 152 categories, \$15 in API costs. The Federal Survey Concept Mapper case study demonstrates dual-model cross-validation, structured arbitration, confidence routing, and complete evidence chains. Classification is the natural entry point because it has ground truth, making it evaluable in ways that open-ended generation is not.
+**Chapter 2: Classification and Coding Workflows.** 6,954 survey questions, 152 categories, \$15 per-run inference cost. The Federal Survey Concept Mapper case study demonstrates dual-model cross-validation, structured arbitration, confidence routing, and complete evidence chains. Classification is the natural entry point because it has ground truth, making it evaluable in ways that open-ended generation is not.
 
 **Chapter 3: Data Wrangling and Standardization Workflows.** Fixing bad codes, standardizing formats, combining disparate sources, extracting structured data from unstructured input. Where LLMs handle the semantic reasoning parts of the data quality pipeline and where traditional methods (MICE, hot-deck, Fellegi-Holt) still win. The fine-tuning cost trap: most teams do not do the total cost of ownership comparison honestly.
 

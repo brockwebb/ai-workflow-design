@@ -84,11 +84,11 @@ The question is not "which model is smartest?" It is: which model meets the accu
 
 For many classification, coding, and extraction tasks, mid-tier or small models meet the threshold. The evaluation harness from Chapter 8 makes this determination possible: run your task on multiple models, compare accuracy against your ground truth, pick the cheapest one that passes. Model selection becomes a continuous cost optimization, not a one-time architectural decision.
 
-**The $15 vs. $1,500 pipeline.** Same task, same data, same accuracy requirement. The difference is design, not capability.
+**Designed vs. undesigned pipelines.** Same task, same data, same accuracy requirement. The difference is design, not capability. The cost table above shows the Concept Mapper's actual numbers. The underlying design decisions that produced them generalize.
 
-The $1,500 version: frontier model for every call (paying for reasoning capability the task does not require), no batching (individual API calls with latency overhead), no prompt optimization (verbose prompts consuming unnecessary tokens), retry-heavy (poor error handling causing redundant calls), no caching (identical patterns reprocessed every time).
+The undesigned pipeline: frontier model for every call (paying for reasoning capability the task does not require), no batching (individual API calls with latency overhead), no prompt optimization (verbose prompts consuming unnecessary tokens), retry-heavy (poor error handling causing redundant calls), no caching (identical patterns reprocessed every time). Cost compounds at every step.
 
-The $15 version: right-sized model (mid-tier model that meets the accuracy threshold), batch-optimized (queued processing with efficient token use), cached repeated patterns (common inputs processed once), designed prompts (minimal tokens for maximum signal), and the evaluation framework that proved the cheaper model was sufficient.
+The designed pipeline: right-sized model (mid-tier model that meets the accuracy threshold), batch-optimized (queued processing with efficient token use), cached repeated patterns (common inputs processed once), designed prompts (minimal tokens for maximum signal), and the evaluation framework that proved the cheaper model was sufficient.
 
 The difference is the design discipline this book teaches. Every chapter contributes to it: ensemble patterns that validate cheaply (Chapter 5), evaluation infrastructure that proves which model suffices (Chapter 8), checkpoint design that prevents expensive reprocessing (Chapter 7), configuration-driven model selection that makes swapping a config change, not a rewrite.
 
@@ -160,6 +160,6 @@ You have a $50,000 annual budget for AI tools and services. Design a portfolio o
 
 ---
 
-This is the final chapter. The design discipline this book teaches is what separates the $15 pipeline from the $1,500 pipeline, the defensible workflow from the fragile one, the team that ships from the team still in governance review. The patterns in these chapters are the prework. The cost of the prework is real. The cost of skipping it is higher.
+This is the final chapter. The design discipline this book teaches is what separates the designed pipeline from the fragile one, the defensible workflow from the improvised one, the team that ships from the team still in governance review. The patterns in these chapters are the prework. The cost of the prework is real. The cost of skipping it is higher.
 
 The first chapter opened with a claim: LLM-powered research workflows require the same architectural discipline that distributed systems have always required. Fourteen chapters later, you have the patterns, the principles, and the evidence infrastructure to build them. The rest is practice.

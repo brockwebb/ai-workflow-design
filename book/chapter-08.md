@@ -14,7 +14,7 @@ Evaluation is architecture, not afterthought. The system that produces data must
 
 ## Two Frameworks, One Pipeline
 
-When AI participates in federal statistical production, two evaluation regimes apply simultaneously: one for the data product's quality, one for the AI system's trustworthiness. The crosswalk between FCSM 20-04 (federal statistical quality standards) and NIST AI RMF 1.0 (AI risk management framework) provides the evaluation scaffolding {cite:p}`webb_2026_crosswalk`. Neither framework references the other. Neither alone is sufficient.
+When AI participates in federal statistical production, two evaluation regimes apply simultaneously: one for the data product's quality, one for the AI system's trustworthiness. The crosswalk between FCSM 20-04 {cite:p}`fcsm_2020_data_quality` (federal statistical quality standards) and NIST AI RMF 1.0 (AI risk management framework) provides the evaluation scaffolding {cite:p}`webb_2026_crosswalk`. Neither framework references the other. Neither alone is sufficient.
 
 This matters for pipeline design because every design choice maps to quality concerns in both frameworks simultaneously. The multi-model agreement architecture from Chapter 5 addresses accuracy and reliability (FCSM) and valid and reliable (NIST) at the same time. The structured arbitration protocol addresses scientific integrity (FCSM) and accountable and transparent (NIST). Recognizing these dual mappings is not compliance theater. It is a design discipline that forces you to ask the right questions before you build, not after.
 
@@ -38,7 +38,7 @@ The practical value: where existing statistical quality practices already addres
 
 The crosswalk's most important finding for pipeline designers: valid and reliable is a binary gate, not one dimension among many {cite:p}`nist_ai_rmf_2023`. If the AI system confabulates, nothing else matters. You cannot meaningfully evaluate safety, fairness, or explainability of a system that produces wrong outputs with high confidence.
 
-NIST's own architecture shows valid and reliable as the foundation on which all other trustworthiness characteristics rest. The crosswalk confirmed this operationally: in both the survey harmonization pipeline and the statistical consultation system, validity was the prerequisite that every other evaluation depended on {cite:p}`webb_2026_crosswalk`.
+NIST's framework positions valid and reliable as foundational — the characteristic on which all other trustworthiness assessments depend. The crosswalk confirmed this operationally: in both the survey harmonization pipeline and the statistical consultation system, validity was the prerequisite that every other evaluation depended on {cite:p}`webb_2026_crosswalk`.
 
 The design implication: your evaluation architecture must test validity first and continuously, not as one dimension among many. If validity fails, everything downstream is contaminated.
 
@@ -80,6 +80,8 @@ The two tailored crosswalks from the paper illustrate how the same framework str
 
 The key difference: the batch system operates with expert review after the fact, so explainability requirements are low. The real-time system operates with no independent verification, so explainability is operationally critical. The same crosswalk structure, different emphasis. This is exactly how evaluation frameworks should work: stable structure, contextual emphasis.
 
+> *For your own pipeline, take one design choice and map it: what FCSM quality dimension does it address? What NIST trustworthiness characteristic does it satisfy? If a design choice maps to neither, it is either unnecessary or you have not identified the concern yet. Start with your most consequential design choice — the one that, if wrong, would most undermine trust in the output.*
+
 ## Continuous Evaluation, Not Snapshot Testing
 
 Snapshot benchmarks test whether the system works right now. Production pipelines need to know whether the system continues to work over time.
@@ -102,11 +104,13 @@ The same principle applies to data pipelines. A classification model that achiev
 
 Evaluation is not free. Design your evaluation budget alongside your inference budget.
 
-The Concept Mapper evaluation cost under $100 in API fees for the full classification pipeline: 7,000 questions, three models, structured arbitration {cite:p}`webb_2026_concept_mapper`. The evaluation was built into the pipeline. Multi-model agreement, behavioral analysis, and arbitration protocols were not separate evaluation activities; they were the pipeline itself.
+The Concept Mapper evaluation cost under $100 in API fees for the full classification pipeline: 6,954 questions, three models, structured arbitration {cite:p}`webb_2026_concept_mapper`. The per-run inference cost for classification alone was approximately \$15; the full pipeline total reflects three models, structured arbitration, and evaluation across the complete question set. The evaluation was built into the pipeline. Multi-model agreement, behavioral analysis, and arbitration protocols were not separate evaluation activities; they were the pipeline itself.
 
-The Pragmatics evaluation from the crosswalk paper cost approximately $15 in API fees for a three-stage evaluation pipeline: nine LLM judges from three vendors evaluating across five quality dimensions {cite:p}`webb_2026_crosswalk`. Cost is not the barrier to evaluation. Design is the barrier.
+The Pragmatics evaluation from the crosswalk paper cost approximately \$15 in API fees for a three-stage evaluation pipeline: nine LLM judges from three vendors evaluating across five quality dimensions {cite:p}`webb_2026_crosswalk`. Cost is not the barrier to evaluation. Design is the barrier.
 
 The evaluation trap economics: months of model comparison on generic benchmarks produces conclusions that are obsolete by publication. The cost is not API fees; it is researcher time spent on evaluation activities that do not produce actionable results for the specific pipeline. Design evaluation that tests your system on your data, and the economics improve dramatically.
+
+The same agents that scored near-expert on benchmarks achieved 2.5% on real freelance work. Your evaluation infrastructure is what ensures your pipeline is not the statistical production equivalent of that gap.
 
 ## What Evaluation Cannot Do
 
