@@ -153,7 +153,7 @@ Regardless of topology, these principles apply:
 
 **Design for model transience.** Models are deprecated, updated, and replaced. Your pipeline must survive a model swap without architectural redesign. Golden test sets, model-agnostic interfaces, and version pinning with expiration dates are design requirements, not nice-to-haves {cite:p}`webb_2026_concept_mapper`.
 
-**Cost the full cycle, not just the inference call.** A multi-model pipeline's cost includes API calls for all models, retry and refinement iterations, human review for escalated cases, and the engineering time to maintain the orchestration. The \$15 per-run inference cost for the Concept Mapper was real; the human engineering cost dwarfed it.
+**Cost the full cycle, not just the inference call.** A multi-model pipeline's cost includes API calls for all models, retry and refinement iterations, human review for escalated cases, and the engineering time to maintain the orchestration. The \$15 per-run inference cost for the Concept Mapper was real; the human engineering cost dwarfed it. The throughput cost of a multi-model architecture is also real: a dual-model pipeline with arbitration requires roughly twice the API calls of a single-model pipeline. Chapter 6 covers the throughput constraint ladder and the local-versus-API tradeoff that determines whether this overhead is acceptable at your scale.
 
 **Reprocessing advantage.** Unlike manufacturing, reprocessing data costs electrons, not materials. If a model is updated or a rubric is revised, you can rerun the pipeline. Design around this advantage: store inputs, version everything, and build for reproducibility.
 

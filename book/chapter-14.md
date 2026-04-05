@@ -78,6 +78,8 @@ Specific pricing changes constantly. The ratios are more durable: frontier model
 
 The design implication: your evaluation harness (Chapter 8) determines which tier meets your accuracy threshold for each task. Then you use the cheapest tier that passes. This is evaluation-driven model selection, not brand-driven model selection.
 
+Token cost is not the only cost. The time cost of a 20-hour local inference run and the human attention cost of monitoring it are part of the total cost of ownership. Chapter 6 covers the throughput constraint ladder that determines when local inference is a false economy and when it is a compliance necessity.
+
 ## When Cheap Models Win
 
 The question is not "which model is smartest?" It is: which model meets the accuracy threshold for this specific task at the lowest cost?
