@@ -26,6 +26,10 @@ book/images/run_*/
 
 # MyST build output
 book/_build/
+_build/
+
+# Book exports (large generated files)
+book/exports/
 
 # Environment
 .env
