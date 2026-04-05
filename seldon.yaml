@@ -25,6 +25,7 @@ shared_ontology:
   source: /Users/brock/Documents/GitHub/seldon/ontology/
   vocabularies:
     - validity/VALIDITY_VOCABULARY.md
+    - practitioner/PRACTITIONER_VOCABULARY.md
   inheritance: read-only  # This project queries, does not own
 
 conventions:
