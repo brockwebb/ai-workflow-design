@@ -127,11 +127,19 @@ Not every problem needs a multi-model solution. Not every multi-model solution n
 
 This connects directly to Chapter 2's "try the cheap thing first" principle. The Concept Mapper only moved to LLMs after embedding-based matching failed. The LLM solution was the second approach, not the first.
 
-```{figure} ../assets/diagrams/paperbanana/fig-05-04_topology_comparison_table.png
-:name: fig-05-04
-:alt: Table comparing three multi-model topologies across task type, evaluation method, cost, failure modes, and use conditions
-Topology comparison. Three multi-model topologies compared across task type, evaluation method, cost profile, primary failure mode, and use conditions. The right topology depends on task structure, cost constraints, and what signal you are optimizing for.
-```
+:::{table} Topology comparison. Three multi-model topologies compared across task type, evaluation method, cost profile, primary failure mode, and use conditions. The right topology depends on task structure, cost constraints, and what signal you are optimizing for.
+:name: tbl-05-04
+
+| | Parallel Consensus | Generator-Critic Loop | LLM-as-Judge |
+|:--|:--|:--|:--|
+| **Task type** | Classification, coding, categorization with discrete outputs | Complex generation or extraction against a formal schema | Quality gating, model selection, multi-dimensional evaluation |
+| **Output relationship** | N models, same task, independent | Generator produces; critic evaluates (different tasks in sequence) | Judge evaluates a single output against defined criteria |
+| **Evaluation method** | Inter-rater reliability (kappa, alpha) | Schema conformance + trajectory monitoring | Rubric scores per dimension |
+| **Cost profile** | 2-3x inference cost per item | Variable: base cost × iterations; critic adds per-loop overhead | Base cost + judge inference; one pass unless human escalation |
+| **Primary failure mode** | Correlated errors when models share training; low disagreement masks systematic bias | Oscillation (iteration N+1 worse than N); reward hacking if generator games critic | Rubric gaming; judge drift over time; preference leakage from related models |
+| **Use when** | Disagreement is itself the signal; volume justifies 2-3x cost; inter-rater framework applies | Partial correctness is typical; schema conformance is testable; retry cost beats human review cost | Quality gate before production; scalable alternative to human review; prompt optimization experiments |
+| **Do not use when** | Models are correlated on your specific domain; volume is too low to amortize cost | No observable trajectory signal; critic is more expensive than human review; task lacks schema | Domain knowledge exceeds judge capability; rubric cannot be defined precisely; no calibration process in place |
+:::
 
 In practice, pipelines combine topologies. The thought experiment at the end of this chapter asks you to do exactly this: consensus for classification, a critic loop for extraction, a judge gate for quality. The key design question when composing topologies is the interface between stages. Each topology produces output that feeds the next. The consensus stage's agreed classifications become input to the extraction stage. The extraction stage's structured output becomes input to the quality judge. Define the data contract at each interface: what fields, what format, what metadata carries forward, before you build any individual stage.
 

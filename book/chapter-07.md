@@ -76,10 +76,14 @@ Not all errors are the same. Your pipeline's response to a failure should depend
 
 **Data errors: log and continue.** The input is malformed, the model returns an unparseable response, the structured output does not match the expected schema. Log the failure with the input that caused it, skip the record, continue processing. These are quality signals: they tell you something about your data or your prompt, not about the infrastructure. Review them in batch after the run completes.
 
-:::{figure} ../assets/diagrams/paperbanana/fig-07-01_error_classification_table.png
-:name: fig-07-01
-:alt: Error classification table showing three error types, examples, pipeline responses, and priorities
-Error classification and pipeline response. The key design decision is that the pipeline must classify each error type and respond differently. Retrying permanent errors wastes resources. Stopping on data errors prevents completion. Ignoring transient errors produces incomplete results. Error type determines response.
+:::{table} Error classification and pipeline response. The key design decision is that the pipeline must classify each error type and respond differently. Retrying permanent errors wastes resources. Stopping on data errors prevents completion. Ignoring transient errors produces incomplete results. Error type determines response.
+:name: tbl-07-01
+
+| Error Type | Examples | Pipeline Response | Investigation Priority |
+|:-----------|:---------|:------------------|:-----------------------|
+| Transient | HTTP 429 (rate limit), network timeout, HTTP 503 | Retry with exponential backoff and jitter; stop after max retry count | Low — self-resolving; escalate only if max retries exceeded |
+| Permanent | Invalid API key, deprecated model, removed endpoint, malformed request | Log with full context; stop affected batch; alert operator immediately | High — immediate; do not retry |
+| Data | Malformed input, unparseable model response, schema mismatch | Log failure with input; skip record; continue processing | Medium — review in batch after run; quality signal, not infrastructure signal |
 :::
 
 The key design decision: the pipeline should classify each error and respond appropriately, not treat all failures the same way. A pipeline that retries permanent errors wastes resources. A pipeline that stops on data errors never finishes. A pipeline that ignores transient errors produces incomplete results.
