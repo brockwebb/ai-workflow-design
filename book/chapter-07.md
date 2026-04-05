@@ -40,6 +40,12 @@ Config-driven architecture is a defense against both runtime failures and develo
 
 > *Look at a pipeline you have built or are building. How many parameters are hardcoded in the source? If a model name or API endpoint changed tomorrow, how many files would you need to edit?*
 
+```{figure} ../assets/diagrams/paperbanana/fig-07-03_config_validation_flow.png
+:name: fig-07-03
+:alt: Flowchart showing config validation steps from load through model validation, parameter check, smoke test, schema comparison, to pass or stop
+Config validation flow before full pipeline launch. Each check gates the next. A failed model name, unaccepted parameter, or failed smoke test stops the run before it processes 50,000 records on bad configuration. The cost of the smoke test is minutes; the cost of discovering a config error at record 40,000 is hours.
+```
+
 ## Progressive Test Infrastructure
 
 Testing is not a phase after development. It is infrastructure you build alongside the pipeline, incrementally. This is the NIST AI RMF's Test, Evaluation, Verification, and Validation (TEVV) {cite:p}`nist_ai_rmf_2023` operationalized: continuous, not a gate at the end.

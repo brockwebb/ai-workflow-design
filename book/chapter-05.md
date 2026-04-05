@@ -37,6 +37,12 @@ Two-versus-three models is not the point. The point is: more than one look, stor
 
 If full parallel consensus is too expensive, run the second model on a stratified sample of outputs: the lowest-confidence results from the first model, plus a random sample of high-confidence results for calibration. Even partial cross-validation is better than none. The goal is not perfection; it is making hidden uncertainty visible on the cases most likely to be wrong.
 
+```{figure} ../assets/diagrams/paperbanana/fig-05-01_parallel_consensus.png
+:name: fig-05-01
+:alt: Parallel consensus topology showing fan-out to N models, agreement decision, and disagreement routing
+Parallel consensus topology. Input fans out to N independently prompted models. Agreed outputs proceed through the decision rule with a versioned provenance record. Disagreements route to human review and rejoin the flow. The disagreement rate is your primary quality signal.
+```
+
 > *You are designing a classification pipeline and your two models agree on 97% of cases. Is that 3% disagreement rate a sign of success or failure? What would you need to know to decide?*
 
 ## Topology 2: Generator-Critic Loops
@@ -65,6 +71,12 @@ The design implication for statistical production: same-model self-refinement is
 
 **When this topology earns its place.** Complex extraction or generation tasks where the output must conform to a formal schema. Tasks where partial correctness is common: the model gets 8 of 10 fields right, but the remaining 2 need targeted revision. Tasks where the cost of a human review pass exceeds the cost of an automated critique cycle.
 
+```{figure} ../assets/diagrams/paperbanana/fig-05-02_generator_critic_loop.png
+:name: fig-05-02
+:alt: Generator-critic loop showing Model A generating, Model B evaluating, feedback loop, and four termination conditions
+Generator-critic loop topology. Model A generates; Model B evaluates. Failed outputs return to the generator with specific rejection reasons. Four conditions terminate the loop: all checks pass, confidence threshold met, maximum iterations reached, or escalation to human review. All paths carry provenance of the iteration trajectory.
+```
+
 > *You design a generator-critic loop and notice that the critic approves 95% of outputs on the first pass. Is the critic too lenient, or is the generator that good? How would you calibrate?*
 
 ## Topology 3: LLM-as-Judge
@@ -82,6 +94,12 @@ The judge pattern is architecturally distinct from both consensus and refinement
 *Decomposed.* Multi-trait evaluation outperforms holistic scoring. Break the judgment into separate dimensions: accuracy, completeness, format compliance, semantic coherence.
 
 *Versioned and auditable.* The rubric is part of the pipeline configuration. When it changes, the change is tracked.
+
+```{figure} ../assets/diagrams/paperbanana/fig-05-03_llm_as_judge.png
+:name: fig-05-03
+:alt: LLM-as-Judge topology showing rubric input, judge model evaluation, pass/fail gate, and calibration cycle
+LLM-as-Judge topology. A dedicated judge model evaluates generator output against a versioned rubric. Outputs scoring above threshold are accepted with provenance; below-threshold outputs route to human review. Periodic calibration against a golden test set is a design requirement, not optional maintenance.
+```
 
 **Judge pattern variants:**
 
@@ -108,6 +126,12 @@ Not every problem needs a multi-model solution. Not every multi-model solution n
 **When the answer is none of the above.** Sometimes the smart design move is not throwing more models at the problem. {cite:t}`lin_2025` demonstrate this with TWIX, a structured data extraction tool that infers the underlying visual template from templatized documents (invoices, police records, tax forms) and then extracts data based on that template: 520x faster and 3,786x cheaper than GPT-4 Vision, with higher accuracy. TWIX uses LLMs sparingly for semantic disambiguation, not as the primary extractor. The lesson: understand the structure of your problem before reaching for the model. If the documents share a template, exploit the template. If the classification has a fixed taxonomy, a lookup table handles the easy cases. Multi-model designs earn their place when the task genuinely requires judgment under ambiguity, not when a cheaper, more deterministic approach would suffice.
 
 This connects directly to Chapter 2's "try the cheap thing first" principle. The Concept Mapper only moved to LLMs after embedding-based matching failed. The LLM solution was the second approach, not the first.
+
+```{figure} ../assets/diagrams/paperbanana/fig-05-04_topology_comparison_table.png
+:name: fig-05-04
+:alt: Table comparing three multi-model topologies across task type, evaluation method, cost, failure modes, and use conditions
+Topology comparison. Three multi-model topologies compared across task type, evaluation method, cost profile, primary failure mode, and use conditions. The right topology depends on task structure, cost constraints, and what signal you are optimizing for.
+```
 
 In practice, pipelines combine topologies. The thought experiment at the end of this chapter asks you to do exactly this: consensus for classification, a critic loop for extraction, a judge gate for quality. The key design question when composing topologies is the interface between stages. Each topology produces output that feeds the next. The consensus stage's agreed classifications become input to the extraction stage. The extraction stage's structured output becomes input to the quality judge. Define the data contract at each interface: what fields, what format, what metadata carries forward, before you build any individual stage.
 
