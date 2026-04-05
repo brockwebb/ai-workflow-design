@@ -84,6 +84,8 @@ The model is a replaceable component. The architecture is the durable investment
 
 **Versioned configurations.** Every pipeline run records which model, which version, which parameters were used. This is provenance (connects to Chapter 10) and it is also practical: when results change between runs, you need to know whether you changed something or the provider did.
 
+**State has shape; match your storage to it.** Versioned configurations, run logs, and parameter snapshots are tabular. A relational database or structured config files handle them well. But pipeline state that involves typed relationships between entities, artifacts that depend on other artifacts, decisions that supersede prior decisions, evidence chains that connect claims to their sources, is graph-shaped. Forcing graph-shaped state into foreign keys and JOIN tables loses the relationship structure that makes provenance auditable and impact analysis tractable. The design choice is not "relational or graph." It is "what shape is this state?" Tabular state stays tabular. Relationship-rich state gets a relationship-aware data model. Chapter 10 provides the implementation guidance; the point here is that the choice is driven by state shape, not by technology preference.
+
 **Model turnover is the steady state.** Models deprecate. APIs change. New options appear. Pricing shifts. If your pipeline breaks when the model changes, you designed for a moment, not for a system. Design for model turnover as a normal operating condition, not as an exception.
 
 ```{figure} ../assets/diagrams/paperbanana/fig-06-02_model_abstraction_layer.png
