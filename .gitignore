@@ -18,7 +18,11 @@ scripts/typst_cover.typ
 
 # PaperBanana outputs (large generated images)
 assets/diagrams/paperbanana/outputs/
+assets/diagrams/paperbanana/run_*/
 assets/diagrams/paperbanana/.env
+
+# MyST / PaperBanana run directories in book/images
+book/images/run_*/
 
 # MyST build output
 book/_build/
