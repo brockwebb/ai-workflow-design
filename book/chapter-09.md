@@ -20,7 +20,7 @@ This chapter introduces the framework for understanding why this happens and wha
 
 ## State Fidelity Validity
 
-State Fidelity Validity (SFV) is the degree to which an AI-assisted research or analytic pipeline preserves the accuracy and integrity of its accumulated internal state across sequential operations, such that inferences at step N remain warranted by the actual history of steps 1 through N-1 {cite:p}`webb_2026_ai4stats`.
+State Fidelity Validity (SFV) is the degree to which an AI-assisted research or analytic pipeline preserves the accuracy and integrity of its accumulated internal state (decisions, terminology, methodology, and intermediate findings) across sequential operations, such that inferences at step N remain warranted by the actual history of steps 1 through N-1, rather than by degraded, distorted, confabulated, or selectively retained versions of that history {cite:p}`webb_2026_ai4stats`.
 
 The key insight is that this is a validity failure, not a reliability failure. A pipeline can reliably produce the same corrupted provenance. Reliably wrong is still wrong. State degradation does not just add noise, which would be a reliability concern. It structurally alters what is being measured. The pipeline is no longer measuring or analyzing the original construct. The outputs look the same. The provenance chain says they came from the same process. But the process itself has quietly changed.
 
@@ -28,7 +28,39 @@ The instrument, to repeat, is fixed weights plus mutable context window. The con
 
 SFV is a precondition for other validity claims. If the operative history is corrupted, neither construct, internal, external, nor statistical conclusion validity claims are defensible. SFV is not one more validity type to add to a checklist. It is the precondition for all the others in any stateful AI pipeline.
 
-The full formal treatment, including the relationship to Total Survey Error and classical validity theory, is in {cite:t}`webb_2026_ai4stats`, Chapter 20. What follows here is the practitioner's application: the five threats, how they manifest in pipeline design, and how the engineering practices from prior chapters serve as countermeasures.
+The full formal treatment, including the relationship to Total Survey Error and classical validity theory, is in {cite:t}`webb_2026_ai4stats`, Chapter 15. What follows here is the practitioner's application: the five sub-dimensions, the five threats, how they manifest in pipeline design, and how the engineering practices from prior chapters serve as countermeasures.
+
+State degradation in computational systems is not a new phenomenon. Concept drift, the change in statistical properties of a target variable over time, has been studied in machine learning for decades {cite:p}`widmer_kubat_1996`. Surveys of machine learning systems under distribution shift document systematic degradation in model behavior that no single design choice eliminates {cite:p}`gama_2014`. Data provenance tracking addresses a related problem: how to maintain traceable lineage for data transformations in scientific workflows {cite:p}`simmhan_2005`. SFV extends these concepts from model predictions and data lineage to the full pipeline state: the accumulated decisions, terminology, and intermediate findings that determine how the instrument operates at any given moment. Prior frameworks address what the model outputs or what data was transformed. SFV addresses what the pipeline believes about its own history.
+
+## The Five Sub-dimensions
+
+The SFV framework has two structures: five threats (what can go wrong) and five sub-dimensions (what to check). The sub-dimensions provide the operational vocabulary for assessing and monitoring pipeline state.
+
+| Sub-dimension | Shorthand | What It Checks |
+|---------------|-----------|----------------|
+| Terminological Consistency | TC | Vocabulary remains stable and matches externally defined terms across the full execution |
+| State Provenance | SP | Outputs are traceable to actual prior steps; no invented history |
+| Compression Fidelity | CF | Summarization and compaction do not distort meaning of prior decisions |
+| Session Continuity | SC | Information survives thread/session boundaries intact |
+| State Coherence | SCoh | Accumulated state is internally consistent at any given point |
+
+Each sub-dimension maps primarily to one or two threats. TC is the check for T1: if terminology is drifting, terminological consistency will catch it. SP is the check for T2: if the pipeline is confabulating history, provenance tracing will surface the fabrication. CF is the check for T3: if compaction is losing nuance, compression fidelity audits will detect the divergence. SC is the check for T5: session continuity measures whether information survived the boundary. SCoh crosscuts all five threats: accumulated state can be internally inconsistent as a consequence of any of them, and consistency auditing catches compound failures that individual sub-dimension checks might miss.
+
+The threats describe failure modes. The sub-dimensions describe what to monitor. When you suspect a state problem, the sub-dimensions are your diagnostic vocabulary: "Is this a terminological consistency issue (T1) or a provenance issue (T2)?" gives you a more actionable diagnostic question than "Is something wrong with my SFV?"
+
+Each active SFV threat compromises a corresponding classical validity claim:
+
+| SFV Threat Active | Classical Validity Compromised | Why |
+|---|---|---|
+| T1: Semantic Drift | Construct validity | Terminology mutation means the pipeline may no longer be measuring the intended construct |
+| T2: False State Injection | Internal validity | Causal inferences rest on fabricated premises about what decisions were actually made |
+| T3: Compression Distortion | Statistical conclusion validity | Analytic decisions based on lossy summaries of prior methodology |
+| T4: State Supersession Failure | Internal validity | Conclusions drawn from state the pipeline "knows" has been superseded |
+| T5: State Discontinuity | External validity | Findings cannot generalize if the pipeline's operative history is incomplete |
+
+SFV is the precondition the classical validity types assume but do not state. Each classical type assumes the instrument is stable. SFV guards that assumption directly. When it fails, the other validity claims are no longer warranted regardless of how well the pipeline performs on any given batch.
+
+> *Before reading the five threats, think about a multi-session pipeline you have built or used. Which of the five sub-dimensions would be hardest to verify in that pipeline? Why?*
 
 ## The Five Threats
 
@@ -42,9 +74,9 @@ Semantic drift is insidious because it looks like natural language variation. Th
 
 The system confabulates "memory" of decisions or agreements never established. The pipeline "remembers" that the team agreed to exclude records below a threshold, but that agreement never happened. The exclusion criterion was injected by the model from its training data or from a prior, unrelated context.
 
-The colloquial term for this is "hallucination." The precise term, following NIST AI 600-1 {cite:p}`nist_genai_2024`, is confabulation: the generation of content that is presented as factual but is not grounded in the pipeline's actual history. In the context of state management, confabulated state is particularly dangerous because it masquerades as institutional memory. The model presents a fabricated decision with the same confidence and formatting as a real one.
+The colloquial term for this is "hallucination." The precise term, following NIST AI 600-1 {cite:p}`nist_genai_2024`, is confabulation: the production of confidently stated but erroneous or false content, colloquially called hallucination. In the context of state management, confabulated state is particularly dangerous because it masquerades as institutional memory. The model presents a fabricated decision with the same confidence and formatting as a real one.
 
-The "personality problem" documented in the MCP lessons learned {cite:p}`webb_2025_opencensus_mcp` is a variant: the system developing behavioral patterns, excessive caution, editorial choices, rhetorical habits, that were not specified in any prompt or configuration. These emergent behaviors are false state: they did not come from the pipeline's design, but they influence its output.
+A related variant observed in multi-session LLM systems is emergent behavioral drift: the system developing rhetorical habits, excessive caution, or editorial preferences not specified in any prompt or configuration. In the Open Census MCP project {cite:p}`webb_2025_opencensus_mcp`, thread resets to default behavior, memory-influenced context, and system instruction updates outside user control all contributed to behavioral variance across sessions that no single design choice could eliminate. These emergent behaviors are false state: they did not come from the pipeline's design, but they influence its output.
 
 ### T3: Compression Distortion
 
@@ -68,19 +100,23 @@ State discontinuity is the most visible of the five threats because it manifests
 
 ## Where Prior Chapters Were Already Fighting SFV Threats
 
-The engineering practices from Chapters 1 through 8 are SFV countermeasures. They were not framed that way when you learned them. Now you know what they are called.
+The engineering practices from Chapters 1 through 8 are SFV countermeasures. They were not framed that way when you learned them. Now you can see what they address, and what they leave exposed.
 
-**Config-driven architecture (Chapter 7) addresses T1 and T4.** When parameters live in config files rather than context windows, they cannot drift. The model cannot gradually mutate a model name or parameter setting if that setting is enforced by external configuration. Config files are state externalization: moving critical state out of the mutable context window into an immutable, versioned store.
+| Practice | Chapter | Addresses | Mechanism |
+|----------|---------|-----------|-----------|
+| Config-driven architecture | 7 | T1, T4 | Critical state externalized to versioned files; cannot drift or persist undetected |
+| Progressive test infrastructure | 7 | T2, T3 | Smoke tests and regression checks catch confabulated or compressed state before propagation |
+| Checkpoint and recovery | 7 | T5 | Transaction-safe state saves bridge session boundaries |
+| Ensemble patterns | 5 | T2 | Multi-model disagreement surfaces confabulated reasoning a single model would present as fact |
+| Golden test set | 8 | T1, T2 | Periodic benchmark detects drift and confabulation over time |
+| Evaluation by design | 8 | All | Continuous quality metrics surface state degradation as metric movement |
+| Design for change | 6 | T4 | Swap-ready interfaces make model-version changes trackable and reversible |
 
-**Progressive test infrastructure (Chapter 7) addresses T2 and T3.** Smoke tests, regression tests, and parameter validation catch confabulated decisions and compression artifacts before they propagate. The golden test set pattern, running the same benchmark questions periodically to detect drift, is a direct T1/T2 detection mechanism.
+The table shows what is covered. Two gaps remain. First, active state auditing: no chapter teaches you how to inspect accumulated state for coherence at a point in time. The practices above prevent degradation or detect it after the fact; none of them walk you through auditing the current state of a live pipeline against its intended history. Second, threat triage: no chapter provides a symptom-to-threat mapping for diagnosis. When your pipeline is producing unexpected results, distinguishing T1 (semantic drift) from T4 (persisting outdated state) from T2 (confabulated history) requires a diagnostic approach this book has not yet provided.
 
-**Checkpoint and recovery (Chapter 7) addresses T5.** Transaction-safe state saves and explicit resume logic ensure that pipeline state survives interruptions. Handoff documents are the human-readable version of the same pattern.
+State externalization is the common principle across these countermeasures: moving critical state out of the mutable context window into durable, queryable infrastructure. Config files externalize parameters. Test suites externalize expected behavior. Handoff documents externalize session history. When the state being externalized has typed relationships between entities, artifacts that depend on other artifacts, decisions that supersede prior decisions, evidence chains connecting claims to sources, the natural representation is a graph, not a table. Chapter 10 provides the infrastructure for this pattern.
 
-**Ensemble patterns (Chapter 5) address T2.** Multi-model disagreement surfaces confabulated reasoning that a single model would present as fact. If one model "remembers" a decision that never happened and the other does not, the disagreement flags the false state injection.
-
-**Evaluation by design (Chapter 8) addresses all threats.** If your pipeline produces its own quality metrics continuously, state degradation surfaces as metric movement. You do not discover the drift when the final output looks wrong. You detect it when the intermediate metrics shift.
-
-**Design for change (Chapter 6) addresses T4.** Swap-ready model interfaces and versioned configurations mean that when the model changes, introducing new state behaviors, the change is tracked and its effects are measurable.
+> *Which of the countermeasure practices above is weakest in your current pipeline design? What would it take to strengthen it?*
 
 ## Deterministic Retrieval as Stochastic Tax Reduction
 
@@ -92,19 +128,19 @@ The design principle: do not use an LLM where a lookup table will do. Do not use
 
 ## The Training Cutoff as a Validity Boundary
 
-The model's training cutoff date creates a hard knowledge boundary that is itself a state property. The model "knows" things from before the cutoff and confabulates things from after it. This is not a bug. It is a fundamental property of how these systems work.
+The model's training cutoff date is the most pervasive instance of T4 in practice: a permanent state supersession failure embedded in the instrument itself. The model "knows" things from before the cutoff and confabulates things from after it. This is not a bug. It is a fundamental property of how these systems work.
 
 Model parameters disappear between versions (Chapter 7's temperature example). The model does not know they have disappeared. API signatures change. The model suggests deprecated methods from its training data. New models enter the market. The model does not know they exist. Benchmarks and performance characteristics shift. The model's self-assessment of capability is frozen at training time.
 
-The training cutoff is a massive, permanent instance of T4: State Supersession Failure. Everything the model "knows" about available models, APIs, and best practices is from before the cutoff and has been partially superseded by reality. Config-driven architecture (Chapter 7) is the primary countermeasure: do not let the model decide what is current. Tell it via external state. Validate that it used what you told it.
+Everything the model "knows" about available models, APIs, and best practices is from before the cutoff and has been partially superseded by reality. Config-driven architecture (Chapter 7) is the primary countermeasure: do not let the model decide what is current. Tell it via external state. Validate that it used what you told it.
 
 ## Model Selection Drift
 
-The optimal model blend shifts as models update. A model that was the best choice six months ago may have degraded through silent baseline updates, been deprecated, or been surpassed by a new entrant. Selection criteria need versioning: not just "which model" but "why this model, evaluated when, against what criteria."
+Model selection drift is a T4 variant at the system level: the instrument has changed, but the validation claims have not been updated to reflect the change. The optimal model blend shifts as models update. A model that was the best choice six months ago may have degraded through silent baseline updates, been deprecated, or been surpassed by a new entrant. Selection criteria need versioning: not just "which model" but "why this model, evaluated when, against what criteria."
 
 Model selection drift is a validity concern because the instrument itself has changed. If your evaluation results were generated with Model A v2.3 and you are now running Model A v2.7, you do not know whether your evaluation still holds. The model version is part of the instrument specification. Changing it without re-evaluation is running a different instrument and claiming the old validation applies.
 
-The countermeasure: version your model selections in configuration. Record the selection rationale. Schedule periodic re-evaluation using the golden test set pattern from Chapter 7. When results shift, you have a trail to investigate.
+The countermeasure: version your model selections in configuration. Record the selection rationale. Schedule periodic re-evaluation using the golden test set pattern from Chapter 8. When results shift, you have a trail to investigate.
 
 ### Thought Experiment
 
