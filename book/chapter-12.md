@@ -18,7 +18,7 @@ The controls described in this chapter exist so you *can* use these tools. They 
 
 ## The Five Safes Framework
 
-The Five Safes framework {cite:p}`desai_2016`, developed at the UK Office for National Statistics and adopted internationally by the Australian Bureau of Statistics, Statistics New Zealand, Eurostat, and embedded in the UK Digital Economy Act and Australia's Data Availability and Transparency Act, provides the organizing principle for this chapter.
+The Five Safes framework {cite:p}`desai_2016`, developed at the UK Office for National Statistics and adopted by statistical agencies internationally, including the Australian Bureau of Statistics, Statistics New Zealand, and Eurostat, and reflected in UK and Australian data-access legislation, including frameworks consistent with the Five Safes structure in the UK Digital Economy Act 2017 and Australia's Data Availability and Transparency Act 2022, provides the organizing principle for this chapter.
 
 Every agency in the federal statistical system is already doing these things under different names with different processes. The Five Safes provides a common vocabulary: safe projects, safe people, safe settings, safe data, safe outputs. Extending it to cover AI workflows is a natural fit, because the core question is the same: how do you provide access to data for legitimate purposes while managing risk?
 
@@ -38,7 +38,7 @@ The project-level question separates routine use from production workflows that 
 
 | Question | What you're really asking |
 |---|---|
-| Does this project require AI, or would a deterministic method suffice? | Are you paying the stochastic tax unnecessarily? |
+| Does this project require AI, or would a deterministic method suffice? | Are you paying the stochastic tax (Chapter 1) unnecessarily? |
 | What data will the AI system touch? | Determines the control level for every other safe |
 | Is there a lawful basis for processing this data through an AI system? | Which statutory protections apply? |
 | What is the public benefit? | The justification for the risk |
@@ -58,7 +58,7 @@ Training for security staff is equally important and more often neglected. An IT
 | Question | What you're really asking |
 |---|---|
 | Do users understand the difference between public AI services and approved production systems? | Can they self-sort the appropriate tool for the appropriate task? |
-| Can users identify when an LLM output needs verification vs. when it's low-stakes? | Do they understand the stochastic liability concept? |
+| Can users identify when an LLM output needs verification vs. when it's low-stakes? | Do they understand the stochastic liability concept (Chapter 1)? |
 | Do users know what data classifications they work with and what each permits? | Can they make the safe project determination independently? |
 | Are security/IT staff trained on how AI workflows differ from traditional software? | Can they provide useful guidance, or only blanket "no"? |
 | Is there an escalation path when someone isn't sure? | Better to ask than guess wrong |
@@ -70,7 +70,7 @@ Training for security staff is equally important and more often neglected. An IT
 
 Where is the computation happening? Who controls the environment? What network paths does data traverse? Where are the servers physically located, and under whose jurisdiction?
 
-The practical reality is a portfolio of settings, not a single choice. Approved cloud environments (FedRAMP authorized at the appropriate level) for some workloads. On-premises infrastructure for others. Public services for non-sensitive learning and exploration. The setting matches the data classification and the project risk profile.
+The practical reality is a portfolio of settings, not a single choice. Approved cloud environments (FedRAMP (Federal Risk and Authorization Management Program) authorized at the appropriate level) for some workloads. On-premises infrastructure for others. Public services for non-sensitive learning and exploration. The setting matches the data classification and the project risk profile.
 
 "Offline isn't offline" is the recurring lesson. Local model inference that makes network calls for tokenizers, embedding models, configuration files, or telemetry has a network dependency that contradicts the "local" assumption. An air-gapped environment is only air-gapped if you have verified that every component of the pipeline functions without network access. This requires testing, not assuming.
 
@@ -86,7 +86,7 @@ The jurisdiction question matters. A model hosted in a country whose data protec
 | If running locally, what network calls does the system make? | Is your "offline" system actually offline? |
 | What is the provider's incident response and breach notification process? | If something goes wrong, how do you find out? |
 | Are API calls logged and auditable? | Can you demonstrate what data went where? |
-| Is there DLP or equivalent monitoring on outbound data to AI endpoints? | Technical control vs. policy-only control |
+| Is there DLP (data loss prevention) or equivalent monitoring on outbound data to AI endpoints? | Technical control vs. policy-only control |
 
 ## Safe Data: Has Appropriate Protection Been Applied?
 
@@ -98,7 +98,7 @@ The prompt is the data exposure surface. Everything in a prompt is transmitted t
 
 Use synthetic or aggregated data for development and testing. Real data goes into production environments that meet the appropriate authorization level. Development on a laptop with consumer-tier API access uses synthetic data. This is not a new principle; it is the same principle the statistical community applies to research data access, applied to a new context.
 
-"Free isn't free." Consumer-tier AI services typically reserve the right to use inputs for model improvement. Enterprise and government tiers typically do not. Know which tier you are on. Read the terms of service. If you cannot determine the data retention policy for the service you are using, you cannot make a safe data determination.
+"Free isn't free." Consumer-tier AI services have, as of this writing, often reserved the right to use inputs for model improvement, though policies vary by provider and change frequently. Enterprise and government tiers generally offer more restrictive data handling, including options for zero data retention. The specific policies of the provider you use determine your actual exposure — read the current terms of service, not last year's summary.
 
 *What questions should you ask about your data?*
 
@@ -115,7 +115,7 @@ Use synthetic or aggregated data for development and testing. Real data goes int
 
 Agencies already check outputs for disclosure risk. AI-generated outputs need the same scrutiny, with additional considerations specific to how language models produce results.
 
-LLMs can memorize and reproduce fragments of their training data. This is a known property, not a theoretical risk. Classification outputs, generated text summaries, extracted entities: all need the same statistical disclosure control review as any other output derived from protected data. The method of production (human analyst vs. AI pipeline) does not change the disclosure risk of the output.
+LLMs can memorize and reproduce fragments of their training data {cite:p}`carlini_2021_extracting`. This is a known property, not a theoretical risk. Classification outputs, generated text summaries, extracted entities: all need the same statistical disclosure control review as any other output derived from protected data. The method of production (human analyst vs. AI pipeline) does not change the disclosure risk of the output.
 
 Aggregated results from AI classification pipelines need the same suppression rules as any other tabulation. Small cell counts are small cell counts regardless of how they were produced. AI does not change the mathematics of disclosure.
 
@@ -125,7 +125,7 @@ Generated text presents an additional consideration. Text that sounds authoritat
 
 | Question | What you're really asking |
 |---|---|
-| Do AI-generated outputs go through the same SDC review as other outputs? | No special exemption because a machine produced it |
+| Do AI-generated outputs go through the same SDC (statistical disclosure control) review as other outputs? | No special exemption because a machine produced it |
 | Could record-level AI outputs be combined with external data to re-identify? | Same linkage risk as any microdata release |
 | Are generated text outputs reviewed for inadvertent inclusion of identifiable information? | Memorization risk from training data |
 | Are aggregate statistics from AI classification subject to standard suppression rules? | Small cell counts are small cell counts regardless of how they were produced |
@@ -155,6 +155,8 @@ Model integrity verification matters. Checksums, cryptographic signatures, trust
 ## Framework Alignment
 
 For security practitioners who work in NIST frameworks: the AI Risk Management Framework {cite:p}`nist_ai_rmf_2023`, the Generative AI Profile {cite:p}`nist_genai_2024`, and the FCSM/NIST crosswalk {cite:p}`webb_2026_crosswalk` provide formal alignment points. The Five Safes framing maps naturally to the MAP and MANAGE functions of the AI RMF. The crosswalk paper has the detailed mapping between NIST AI RMF and FCSM statistical quality standards. Point to it rather than reproducing it here.
+
+Agentic AI systems -- where the AI autonomously selects and invokes tools at runtime -- introduce additional security considerations around tool authorization, agent identity, and prompt injection via tool outputs. These are covered in {ref}`appendix-security`.
 
 For organizations looking to formalize their AI data access governance, the Five Safes provides a ready-made structure that the international statistical community already recognizes and that maps without great effort to what every agency is already doing, even if they call it something different.
 

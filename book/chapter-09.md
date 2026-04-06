@@ -84,6 +84,8 @@ Context window management, compaction, summarization, truncation, silently strip
 
 Compression distortion is a direct consequence of context window limits. Every LLM has a finite context window. When the accumulated state exceeds it, something must be dropped or compressed. The question is what gets lost, and whether anyone notices.
 
+You will hear the argument that intermediate monitoring should collapse into a single evaluative gate at the end of the pipeline. This argument fails when applied to SFV. SFV's central insight is that the instrument changes during use; a final gate evaluates the output of whatever instrument existed at the end of processing, but it cannot assess whether that instrument was the same instrument throughout. By the time a final gate runs, T1, T2, and T3 have already done their damage: terminology has drifted, state has been confabulated, and compaction has silently stripped nuance from the methodology. The gate can assess the output. It cannot assess the instrument that produced it. Intermediate monitoring exists because the failure mode is silent: if you only check at the end, you are checking the wrong thing.
+
 ### T4: State Supersession Failure
 
 Outdated information persists and influences output despite being explicitly superseded. You correct a classification rule in session 4, but the model continues applying the session 2 version because the correction did not fully override the earlier state. The old rule is still "there" in the context, competing with the new one.

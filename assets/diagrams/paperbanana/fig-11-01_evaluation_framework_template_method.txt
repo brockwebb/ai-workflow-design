@@ -1,0 +1,66 @@
+# fig-11-01: Orchestration Evaluation Framework — Scoring Template
+
+## Diagram Type
+Table-style scoring template. Print-friendly. Designed as a reference tool the reader can fill in.
+
+## Purpose
+Operationalize the four-dimension evaluation framework from Chapter 11 as a concrete scoring tool. Three example rows pre-filled (one per orchestration category: managed platform, code-first framework, CLI/script-based). Two blank rows for the reader's own tools.
+
+## Table Structure
+
+### Header Row
+| Tool / Approach | Coupling (1–5) | Friction (1–5) | Transparency (1–5) | Volatility (1–5) | Notes |
+
+### Legend (displayed below or beside the table)
+**Coupling:** 1 = fully decoupled (swap any component without rewrite) → 5 = tightly coupled (changes to one component require pipeline rewrite)
+**Friction:** 1 = low overhead, fast setup, easy maintenance → 5 = high setup cost, significant maintenance burden, steep learning curve
+**Transparency:** 1 = fully opaque (cannot audit what orchestration layer did) → 5 = fully transparent (every step logged, reproducible, inspectable)
+**Volatility:** 1 = stable foundation, low deprecation risk → 5 = high churn, significant deprecation risk, unclear migration path
+
+Note on scoring direction: higher scores indicate more risk for research pipelines. A tool with low coupling (1), low friction (1), high transparency (5), and low volatility (1) is the target profile.
+
+### Pre-filled Example Rows
+
+Row 1 — Managed Platform (representative example):
+| Managed platform (e.g., low-code visual builder) | 4 | 2 | 2 | 3 | Fast to start; logic locked in platform; limited audit trail; viable if provenance not required |
+
+Row 2 — Code-first Framework (representative example):
+| Code-first framework (e.g., active LLM framework) | 3 | 3 | 3 | 4 | Powerful; moderate coupling via abstractions; transparency depends on implementation; high churn risk |
+
+Row 3 — CLI / Script-based:
+| CLI / script-based (Python + bash + config) | 1 | 3 | 5 | 1 | Maximum transparency and control; front-loaded investment; stable foundations; recommended for audit requirements |
+
+### Blank Rows (for reader)
+Row 4: [Your tool or approach] | _ | _ | _ | _ | |
+Row 5: [Your tool or approach] | _ | _ | _ | _ | |
+
+## Visual Style
+- Clean, high-contrast, print-safe
+- Header row: dark gray fill (#333333), white text
+- Legend section: light gray background (#F2F2F2), smaller text
+- Pre-filled rows: alternating white and very light gray (#FAFAFA)
+- Blank rows: white fill with dashed bottom border to signal "fill in here"
+- Score cells in pre-filled rows: plain number, center-aligned
+- Blank score cells: underscore or light dotted box to invite handwriting
+- Column widths: Tool column widest (~35%); four score columns equal width (~10% each); Notes column remainder
+- No color coding for scores — deliberately neutral so reader applies their own judgment
+- Table border: thin dark gray (#333333)
+- Font: sans-serif (Inter, Helvetica, or similar)
+
+## Accompanying Note (caption or sidebar)
+"Apply this framework before adoption, not after. Rate each dimension for your candidate tool, then compare profiles. A research pipeline with audit requirements needs low coupling, high transparency, and low volatility. The friction score is a practical constraint, not a quality judgment — a high-friction tool may still be the right choice if the other dimensions are favorable."
+
+## What This Is NOT
+- Not a product comparison or endorsement of any specific tool
+- Not a prescriptive decision tree — the framework produces a profile, not a verdict
+- The pre-filled examples are representative of categories, not reviews of specific products
+- Score thresholds ("good" vs. "bad") are intentionally absent — context determines what scores are acceptable
+
+## Placement in Chapter
+After the comparison table in "## Categories of Orchestration" and before "## The 90/10 Rule and the Last Mile."
+
+Suggested cross-reference text to add to chapter (for the author to place when rendering):
+"Figure {number} provides a blank scoring template for applying the four-dimension framework to your own tool choices."
+
+## Batch Render Queue
+Add to next PaperBanana batch. Priority: medium. No blocking dependencies.
