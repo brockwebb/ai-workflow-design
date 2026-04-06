@@ -8,7 +8,7 @@
 
 ## The Last Mile Is Organizational
 
-You have designed the workflow. You have secured it. The pipeline runs on your laptop, costs $47, and finishes in six hours, replacing a task that currently takes three full-time equivalents four weeks each quarter. Now deploy it inside an organization where the cloud service you need is not authorized, the procurement cycle for the one that is takes fourteen months, and the governance review board meets every six weeks.
+You have designed the workflow. You have secured it. The pipeline runs on your laptop, costs less than fifty dollars, and finishes in a single day, replacing a task that currently takes three full-time equivalents four weeks each quarter. Now deploy it inside an organization where the cloud service you need is not authorized, the procurement cycle for the one that is takes fourteen months, and the governance review board meets every six weeks.
 
 Welcome to institutional deployment.
 
@@ -24,21 +24,21 @@ The core tension is real: these institutions exist to produce trusted outputs. T
 
 There are concrete gates between a working prototype and a production deployment, and they are measured in months to years, not weeks.
 
-FedRAMP authorization is the primary gate for cloud services in government environments. A provider must achieve FedRAMP authorization at the appropriate impact level before an agency can use the service for production workloads. This process takes months to years for providers to complete. The newest, most capable AI services are available commercially months before they appear in authorized catalogs.
+FedRAMP authorization is the primary gate for cloud services in U.S. federal environments. A provider must achieve FedRAMP authorization at the appropriate impact level before an agency can use the service for production workloads. Traditional authorization paths have historically taken more than a year, sometimes approaching two years, for providers to complete {cite:p}`knoxsystems_fedramp_2026`. Recent FedRAMP 20x reforms aim to compress this timeline significantly, but most existing authorizations were obtained under the older, slower model. The newest, most capable AI services are available commercially months before they appear in authorized catalogs.
 
 Authority to Operate (ATO) processes for internal systems add another layer. These were designed for a world where you procure and operate a system for five to ten years. The assumption is that the system is relatively stable once authorized. AI workflows violate that assumption: the model landscape changes monthly, prompts are refined continuously, and the evaluation metrics shift as the use case matures.
 
-Government procurement cycles run six to eighteen months for major contracts. The AI tool landscape changes weekly. By the time a procurement is complete, the tool you specified in the requirements document may have been superseded, deprecated, or repriced.
+Government procurement cycles for major IT contracts commonly run many months and can extend to a year or more, with documented timelines ranging from a few months for streamlined awards to well over a year for complex competitive procurements {cite:p}`mitre_aida_timelines`. The AI tool landscape changes weekly. By the time a procurement is complete, the tool you specified in the requirements document may have been superseded, deprecated, or repriced.
 
 This temporal mismatch is structural. It is not fixable by working harder or writing better justifications. It requires architectural and procedural changes.
 
 **Practical paths forward.** Authorize platforms and patterns, not specific model versions. The security controls, data handling procedures, and monitoring infrastructure are what need authorization. Models are components within that authorized envelope, swappable without re-authorization as long as they meet the established security and performance criteria. This is the single highest-leverage change: enterprise-level authorization with tiered risk assessment, rather than per-project authorization for each system.
 
-Use faster procurement vehicles where they exist. Task-order contracts with pre-approved vendors, blanket purchase agreements for AI services, and micro-purchases under simplified acquisition thresholds can get capability in the door while longer-term contracts work through the pipeline.
+Use faster procurement vehicles where they exist. Task-order contracts with pre-approved vendors and blanket purchase agreements can significantly shorten the path from requirement to award compared to running a full and open competition from scratch. For smaller AI pilots purchased as commercial services, simplified acquisition procedures and micro-purchases offer streamlined paths, but the dollar thresholds for these authorities change over time -- teams should consult the current FAR and GSA guidance rather than relying on a fixed number.
 
-Build model-agnostic architectures (Chapter 8's evaluation harness, Chapter 1's principle of model replaceability). If you can swap providers without rewriting code, procurement timelines hurt less. Your architecture should never be coupled to a single vendor's API. The evaluation infrastructure that lets you compare models also lets you respond to procurement constraints.
+Build model-agnostic architectures (Chapter 8's evaluation harness, Chapter 1's model-agnostic design principle). If you can swap providers without rewriting code, procurement timelines hurt less. Your architecture should never be coupled to a single vendor's API. The evaluation infrastructure that lets you compare models also lets you respond to procurement constraints.
 
-Organizations that have moved to enterprise ATO models report authorization timelines dropping from months to weeks for new workloads within the authorized envelope. The pattern works. It requires institutional will to implement it.
+Platform and enterprise ATO models -- such as the Navy's RAISE 2.0 framework, which allows containerized applications to inherit an existing platform ATO rather than obtaining separate authorization -- are designed to cut authorization timelines for in-scope workloads from many months down to weeks {cite:p}`doncio_raise2_2024`. The pattern works where it has been adopted. It requires institutional will to implement it.
 
 *How long would it take you to get a new AI service approved for use in your organization? If you don't know, find out. That number shapes every technical decision you make.*
 
@@ -46,7 +46,7 @@ Organizations that have moved to enterprise ATO models report authorization time
 
 *Tenet in tension: "Infrastructure enables delivery" meets the reality of government cloud availability.*
 
-Government cloud environments, GovCloud, Azure Government, and their equivalents, lag commercial availability by months to over a year. The latest models, features, and APIs arrive in commercial regions first. By the time a service is available in an authorized government environment, it may already be superseded commercially.
+Government cloud environments -- GovCloud, Azure Government, and their equivalents -- lag commercial availability. Cloud providers acknowledge that government regions typically receive new services and capabilities after their commercial counterparts, with government-specific documentation confirming that feature availability is not simultaneous {cite:p}`microsoft_azure_gov_features`. As of this writing, many federal practitioners budget for delays of several months or more between commercial AI service launches and their availability in government cloud regions, though specific lags vary by service and provider. By the time a service is available in an authorized government environment, it may already be superseded commercially.
 
 This is improving, but slowly. The gap is partly a FedRAMP pipeline problem: providers pursue commercial authorization first because the market is larger. Government-specific regions are secondary priorities. The gap is also partly a demand signal problem: if agencies cannot articulate their requirements early in the provider's roadmap process, they get what the commercial market drives.
 
@@ -80,6 +80,12 @@ Both outcomes violate the compressed tenets. The first violates "deliver capabil
 
 This tiering is not novel. It is risk-based controls applied to AI, the same risk-based thinking the statistical community applies to data access through frameworks like the Five Safes (Chapter 12).
 
+| Risk Tier | Example Uses | Review Process | Automated Controls | Typical Timeline |
+|---|---|---|---|---|
+| Low | Literature review, brainstorming, code assistance on non-sensitive data via public LLMs | Self-attestation against published guidelines; no review board | Published acceptable-use policy; no sensitive data in prompts | Days (self-service) |
+| Medium | AI processing on de-identified or public data in approved environments | Documented data handling plan; approved platform; periodic audit | DLP monitoring on outbound data; approved platform list enforcement | Weeks (standard review) |
+| High | Production pipelines on confidential data with automated outputs | Full review with provenance requirements, dual-path verification, evidence chain, ongoing monitoring | Automated lineage tracking; model version pinning; output disclosure review | Weeks to months (full review, but within authorized platform envelope) |
+
 **The governance inversion.** The current state in many organizations: governance is a gate. Every project proves innocence before proceeding. The process is the work. The target state: governance is embedded in tools and automated controls. Systems enforce boundaries in real time. Data loss prevention technology that prevents sensitive data from reaching unapproved endpoints is a concrete example. It is already operational in some organizations. It is a technical control that replaces a manual review step, faster and more reliable than a human reviewer checking a form.
 
 The shift from governance-as-gate to governance-as-infrastructure is where the compressed tenet "governance must enable execution" becomes operational. The gate model asks "should we allow this?" The infrastructure model asks "how do we enable this safely?"
@@ -90,7 +96,7 @@ IT and security teams are measured on uptime, incident prevention, and complianc
 
 The fix is structural: measure governance teams on time-to-capability alongside risk metrics. Make "enabled X teams to deploy safely in Y weeks" a performance metric alongside "zero security incidents." When the incentive structure rewards enabling and protecting simultaneously, the behavior follows.
 
-Organizations that have implemented dual metrics, measuring both protection and enablement, report measurably faster authorization timelines without increased incident rates. The evidence suggests the tradeoff between speed and security is less real than institutional culture assumes.
+Designing AI governance with dual metrics -- tracking both protection (incidents, policy violations) and enablement (authorization throughput, time-to-capability) -- aligns with NIST AI Risk Management Framework guidance on balancing innovation with risk control. When teams are rewarded for both safety and delivery, the incentive structure should produce faster authorization decisions without sacrificing risk management, because the behavioral incentive to block novel capability is counterbalanced by accountability for enabling the mission. Published federal data tying these metrics directly to measured authorization speed and incident rates is still limited, but the structural logic is sound: you get what you measure.
 
 *Think about the last time a governance process prevented you from doing something. Was the risk it was managing real and proportionate? What would a risk-based alternative have looked like?*
 
@@ -100,13 +106,15 @@ Organizations that have implemented dual metrics, measuring both protection and 
 
 Tools without capable people are shelfware. Procurement is the easy part. Building internal capacity to evaluate, operate, and adapt AI workflows is hard and takes years.
 
-Training in this context is not "here's how to write a prompt." Training is methodology: understanding the stochastic nature of the tools (Chapter 1), designing evaluation frameworks (Chapter 8), building evidence chains (Chapters 9-10), knowing when to trust and when to verify (the foreword's Feynman frame). The goal is a workforce that can make sound decisions about AI use independently, not a workforce that follows a script.
+Training in this context is not "here's how to write a prompt." Training is methodology: understanding the stochastic nature of the tools (Chapter 1), designing evaluation frameworks (Chapter 8), building evidence chains (Chapters 9-10), and developing the discipline of forming your own expectation before looking at what the model produced. The goal is a workforce that can make sound decisions about AI use independently, not a workforce that follows a script.
 
 Build distributed capability, not a centralized AI team. A centralized unit that "does AI" for everyone becomes a bottleneck indistinguishable from the governance bottleneck described above. The goal is distributed capability: the people doing the mission work can use the tools effectively. The centralized team, if one exists, provides standards, training, shared infrastructure, and consulting, not a service window.
 
 The goal is auditable, defensible work at scale by the workforce, not by a specialized unit. This is what "adoption determines impact" means operationally. A tool that ten people can use expertly has less organizational impact than a tool that two hundred people can use competently. Design training and infrastructure for the two hundred.
 
 Do not outsource understanding. Vendors will always outpace internal teams on capability. That is fine. But if the organization does not build internal capacity to *evaluate* what vendors offer, it cannot make good procurement decisions, cannot assess whether outputs are defensible, and cannot adapt when the vendor relationship changes. Understanding is the one thing you cannot outsource.
+
+*If your organization's AI capability disappeared tomorrow -- the tools, the vendor access, the trained staff -- how quickly could you rebuild it? The answer tells you how much of your capability is actually internal.*
 
 ## Earning Trust Incrementally
 
@@ -135,6 +143,8 @@ There is a deeper dynamic. Organizations that fought hard to acquire infrastruct
 Transience as a design principle, the willingness to let go of infrastructure and tools when something better exists, is the hardest cultural shift this chapter describes. It requires not just different processes but different institutional values. And it requires the procurement and authorization environment to support it, because nobody will let go of working infrastructure if they believe they cannot replace it.
 
 This is the hardest part. Name it honestly. It is a culture problem, and culture changes slowly. But it changes. Organizations that five years ago could not imagine cloud deployment now run production workloads in authorized cloud environments. The trajectory matters more than the current state.
+
+The pipeline that costs less than fifty dollars and finishes in a day? Teams are running it. Not everywhere, not without friction, and not without the obstacles described in this chapter. But the trajectory is real: institutions that started with a single pilot on non-sensitive data are now running production workloads. The gaps in this chapter are closable. They close faster when you name them honestly and build the evidence that earns trust.
 
 ### Thought Experiment
 
