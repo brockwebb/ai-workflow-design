@@ -44,7 +44,7 @@ handoffs/
 audits/
 
 # Working docs (research notes, perplexity results, design notes — not for public repo)
-docs/
+/docs/
 
 # IDE
 .vscode/

@@ -31,6 +31,7 @@ project:
     - file: chapter-13.md
     - file: chapter-14.md
     - file: appendix-principles.md
+    - file: appendix-security.md
     - file: glossary.md
     - file: index.md
     - file: bibliography.md
