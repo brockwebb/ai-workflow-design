@@ -58,7 +58,7 @@ Each active SFV threat compromises a corresponding classical validity claim:
 | T4: State Supersession Failure | Internal validity | Conclusions drawn from state the pipeline "knows" has been superseded |
 | T5: State Discontinuity | External validity | Findings cannot generalize if the pipeline's operative history is incomplete |
 
-SFV is the precondition the classical validity types assume but do not state. Each classical type assumes the instrument is stable. SFV guards that assumption directly. When it fails, the other validity claims are no longer warranted regardless of how well the pipeline performs on any given batch.
+SFV is the precondition the classical validity types assume but do not state {cite:p}`groves_2009`. Each classical type assumes the instrument is stable. SFV guards that assumption directly. When it fails, the other validity claims are no longer warranted regardless of how well the pipeline performs on any given batch.
 
 > *Before reading the five threats, think about a multi-session pipeline you have built or used. Which of the five sub-dimensions would be hardest to verify in that pipeline? Why?*
 
