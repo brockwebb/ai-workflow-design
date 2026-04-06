@@ -1,8 +1,12 @@
 # Appendix: Compressed Tenets & Working Principles
 
-<!-- STATUS: Placeholder -->
+<!-- STATUS: Draft -->
 <!-- PURPOSE: Standalone reference page — designed to be pinned above a desk or referenced in a team standup -->
 <!-- These originated from Census AI program strategy work (March 2026) but are stated universally -->
+
+The people this book is for are not waiting for the field to stabilize. They are the interdisciplinary thinkers: the ones who see connections across domains, who understand flows and algorithms at an intuitive level, who can think in terms of design and systems but may never have written production code at scale. The shift this book supports is from executing tasks to designing systems, from producing outputs to producing evidence, from controlling every step to knowing which steps require your judgment. That shift is what makes AI useful in high-stakes, accountable work -- not speed, not automation for its own sake, but comprehension and accountability at the point where it matters.
+
+The tenets and principles that follow operationalize that shift. They are not a checklist. They are a frame for thinking about design decisions when the right answer is not obvious. Use them as a lens, not a recipe.
 
 ## Compressed Tenets
 

@@ -32,9 +32,9 @@ project:
     - file: chapter-14.md
     - file: appendix-principles.md
     - file: appendix-security.md
+    - file: bibliography.md
     - file: glossary.md
     - file: index.md
-    - file: bibliography.md
 site:
   options:
     folders: true
