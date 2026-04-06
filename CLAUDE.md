@@ -6,7 +6,7 @@ An open-source book on designing reliable AI/LLM workflows for statistical resea
 
 **Audience:** Data scientists, statisticians, and researchers in federal statistical agencies (Census, BLS, NCHS, BEA, NASS) and similar organizations who are building — not just evaluating — AI workflows.
 
-**Thesis:** LLM-powered research workflows require the same architectural discipline that distributed systems have always required. The design patterns matter more than the model choice. Most people building these systems are learning by trial and error; this book codifies the patterns.
+**Scope:** The book covers design patterns for LLM-powered data processing pipelines in official statistics environments. It emphasizes architectural discipline, evaluation infrastructure, and evidence chains over model selection. The content is practice-oriented, not theoretical.
 
 **Repo:** `brockwebb/ai-workflow-design`
 **Author:** Brock Webb
@@ -63,7 +63,7 @@ The book is structured around two paired layers that originate from Census AI pr
 
 ## Chapter Pedagogical Pattern
 
-Every chapter follows this consistent structure (Feynman pedagogy operationalized):
+Every chapter follows this consistent structure:
 
 - **Opening hook:** A concrete scenario or problem that motivates the chapter's topic. Grounded, not abstract.
 - **Core content:** Technical material, design patterns, principles.

@@ -35,9 +35,7 @@ The real comparison is total cost of the AI pipeline, including development, ope
 | Year 1 total | ~$3,515 | ~$24,000 |
 | Year 2+ per cycle | ~$15 | ~$23,200 |
 
-The manual equivalent: a trained analyst classifying survey questions against the harmonized taxonomy. Assume 8 hours of training on the taxonomy and classification conventions, then a sustained rate of approximately 30 questions per hour (a reasonable estimate for a skilled analyst making judgment calls on semantic alignment). At 6,954 questions, that is 232 analyst-hours of classification work alone. At a fully loaded labor rate of $100 per hour, the manual equivalent costs approximately $24,000 per cycle (including training). The AI pipeline's $15 inference cost is not the full comparison; development cost was approximately $3,500 in engineering time (roughly 35 hours of pipeline construction, prompt design, evaluation framework development, and iterative debugging, drawing on prior experience with LLM pipeline patterns). But development cost is a one-time investment. The pipeline now runs each new survey wave for $15; the manual process costs $23,200 every time.
-
-The $15 is the inference cost. The development cost (building the pipeline, designing prompts, creating the evaluation framework) was higher. But it was a one-time investment. The pipeline now runs on each new survey wave for $15, not for three FTEs over four weeks.
+The manual equivalent: a trained analyst classifying survey questions against the harmonized taxonomy. Assume 8 hours of training on the taxonomy and classification conventions, then a sustained rate of approximately 30 questions per hour. Published productivity benchmarks for this exact task are scarce, but survey coding and content analysis practice supports a rate in the range of a few dozen items per hour when quality is prioritized. Your agency may have different classification rates depending on analyst experience and taxonomy complexity; use your own historical data if available. At 6,954 questions, that is 232 analyst-hours of classification work alone. At a fully loaded labor rate of approximately \$100 per hour (a mid-career federal analyst in the Washington, DC area at roughly GS-12 equivalent, with standard benefits and overhead multiplier; exact figures vary by grade, step, and agency), the manual equivalent costs approximately $24,000 per cycle (including training). The AI pipeline's $15 inference cost is not the full comparison; development cost was approximately $3,500 in engineering time (roughly 35 hours of pipeline construction, prompt design, evaluation framework development, and iterative debugging, drawing on prior experience with LLM pipeline patterns). But development cost is a one-time investment. The pipeline now runs each new survey wave for $15; the manual process costs $23,200 every time.
 
 ## The Cost Taxonomy
 
@@ -49,6 +47,8 @@ People conflate four different cost categories when they talk about "AI costs." 
 | **Development costs** | Pipeline construction, prompt engineering, evaluation design, testing | Project managers, technical leads |
 | **Operational costs** | Monitoring, maintenance, prompt updates, model swaps, re-evaluation | Operations teams, IT |
 | **Opportunity costs** | What you are NOT doing while people do repetitive work, or while waiting for procurement and governance | Leadership, program offices |
+
+*Think about the last AI-related budget conversation in your organization. Which of these four cost categories dominated the discussion? Which ones were never mentioned?*
 
 Most conversations about "AI costs" address only inference costs. That is often the smallest category. Development costs dominate for complex workflows: the time to build the pipeline, design the evaluation framework, test against ground truth, and iterate on prompts is measured in person-weeks, not API dollars. Operational costs are ongoing and often underestimated: models change, prompts need updating, evaluation metrics need re-running. Opportunity costs are the largest but hardest to quantify: what is the cost of three senior researchers spending 60% of their time on data wrangling that a well-designed pipeline could handle?
 
@@ -74,7 +74,9 @@ Statistical workflows are naturally cost-advantaged for AI processing. Most stat
 | Mid-tier (standard) | 0.1x - 0.3x | Moderate | Most classification, coding, extraction tasks |
 | Small/fast | 0.01x - 0.05x | Lowest | Simple classification, high-volume filtering, pre-screening |
 
-Specific pricing changes constantly. The ratios are more durable: frontier models typically cost 10-30x more per token than mid-tier models, and 50-100x more than small models. Check current pricing before estimating any specific job, but use the ratios for architectural planning.
+Specific pricing changes constantly. The ratios are more durable: as of early 2026, frontier models typically cost 10-30x more per token than mid-tier models, and 20-100x more than small models. Check current pricing before estimating any specific job, but use the ratios for architectural planning. These ratios reflect the pricing landscape as of this writing. Frontier model prices have been declining; check current provider pricing pages before using ratios for budget planning.
+
+The Concept Mapper's cost profile is favorable because batch classification is a cost-advantaged workflow type: high volume, structured output, no latency requirement. Generative, retrieval-augmented, and agentic workflows have different cost structures. The four-category cost taxonomy applies to all workflow types, but the specific ratios between categories will vary.
 
 The design implication: your evaluation harness (Chapter 8) determines which tier meets your accuracy threshold for each task. Then you use the cheapest tier that passes. This is evaluation-driven model selection, not brand-driven model selection.
 
@@ -130,11 +132,14 @@ PROPOSED AI PIPELINE
   Human review time per run: [estimate]
   Error rate: [X]% (with evaluation evidence)
   Delivery timeline: [Y] hours/days per cycle
-  Annual operating cost: [inference + review + maintenance]
+  Year 1 total: [development + first-cycle inference + review]
+  Year 2+ per cycle: [inference + review + maintenance]
+  Operational cost (annual): [monitoring, maintenance, prompt updates, re-evaluation]
 
 NET IMPACT
   FTE time reallocated: [N] hours per cycle
   Annual cost comparison: [current] vs [proposed]
+  Break-even point: [Year 1 cost vs. cumulative savings]
   Quality: [comparison with evidence]
   Speed: [comparison]
   Evidence chain: [available / not available for current process]
@@ -162,6 +167,6 @@ You have a $50,000 annual budget for AI tools and services. Design a portfolio o
 
 ---
 
-This is the final chapter. The design discipline this book teaches is what separates the designed pipeline from the fragile one, the defensible workflow from the improvised one, the team that ships from the team still in governance review. The patterns in these chapters are the prework. The cost of the prework is real. The cost of skipping it is higher.
+The field will keep changing. Models that do not exist yet will make some of what is in this book easier. Some patterns will become unnecessary. The evaluation infrastructure will not. The evidence chain will not. The requirement to produce defensible, reproducible outputs for high-stakes decisions will not. Whether you build the pipeline yourself or future tools assemble it for you, the outputs still need to be auditable, the quality still needs to be documented, and the human making the decision still needs to understand what the system did and why.
 
-The first chapter opened with a claim: LLM-powered research workflows require the same architectural discipline that distributed systems have always required. Fourteen chapters later, you have the patterns, the principles, and the evidence infrastructure to build them. The rest is practice.
+Design for that. The rest adapts around it.
