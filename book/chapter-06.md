@@ -110,6 +110,8 @@ Rob Pike's five rules from *Notes on Programming in C* {cite:p}`pike_1989` are e
 
 **Data dominates.** Get your schemas right and the pipeline design follows. This connects directly to Chapter 2's argument for adopting existing domain frameworks {cite:p}`fortier_2011;wolf_2016` as structured output schemas rather than inventing your own.
 
+**Normalize formats at the gate.** Raw document formats, PDF, DOCX, HTML, scanned images, are unfit for direct LLM consumption. A pipeline that feeds raw PDF bytes into a prompt is conflating two problems: format interpretation and content analysis. Separate them. The first stage of any pipeline that ingests documents should convert everything to a canonical text format (clean Markdown or plain text with preserved structure) before any LLM processes the content. This is infrastructure, not a prompt concern. The LLM's token budget should be spent on reasoning about content, not on parsing layout artifacts, decoding table structures from positional whitespace, or interpreting OCR noise. Format normalization also makes your pipeline format-agnostic downstream: once everything is canonical text, the classification, extraction, or analysis stages do not need to know whether the source was a PDF, a spreadsheet, or a web page. The conversion step is deterministic (or nearly so), testable independently of the LLM, and cacheable. Build it once, validate it against your specific document types, and every downstream stage benefits.
+
 ```{figure} images/fig-06-03_pike_rules_pipeline_mapping.png
 :name: fig-06-03
 :alt: Table mapping Pike's five rules to LLM pipeline design implications
