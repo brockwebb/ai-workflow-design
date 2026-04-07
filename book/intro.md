@@ -52,6 +52,8 @@ Apply that standard to this book. If something does not make sense, do not take 
 
 The learning curve is not linear. You grind through manual processes at a pace that feels slow, then something clicks (a process improvement, a conceptual shift) and you are operating at a fundamentally different velocity. These velocity shifts are real and they compound. The levels of AI automation in research in Chapter 1 describe those thresholds. You will look back at what you were doing three months ago and it will seem impossibly slow. That is the trajectory.
 
+The chapters that follow are organized around the practical question of how to get there. Each one addresses a specific design challenge, from classification workflows and ensemble patterns to evaluation infrastructure and institutional deployment. The sequence is deliberate: the book builds from concrete pipeline problems to cross-cutting patterns to the validity and governance questions that determine whether your work survives contact with institutional reality.
+
 ## How This Book Is Organized
 
 The book moves through five phases, from the nature of the instrument to the institutional reality of deploying it.
@@ -105,3 +107,5 @@ If you are a manager or program leader, Chapter 13 (institutional deployment) an
 If you already build LLM pipelines, Chapter 9 (SFV) is probably the most novel content. It names the validity problem that practitioners discover empirically but rarely have a framework for reasoning about. Chapter 5 (multi-model) and Chapter 10 (provenance) will challenge assumptions about single-model sufficiency and ad-hoc state tracking.
 
 If you are coming from *AI for Official Statistics*, the predecessor to this book: that book built the foundation, what AI is, how it works, where it applies. This book picks up with a different question: now that you know what it is, how do you build systems with it that you can trust and defend? If you are new to this work entirely, Chapter 1 is self-contained. No prerequisites required.
+
+Whatever your starting point, the core premise is the same: these tools have opened a design space that rewards disciplined engineering. The rest of this book teaches you how to work in it.
