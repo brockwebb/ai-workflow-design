@@ -75,7 +75,7 @@ The LLM only sees metadata: variable names, types, categories. Not the actual mi
 
 This is a good design for several reasons. The LLM never sees sensitive data, satisfying the safe data principle from Chapter 12. The LLM proposes, humans review: it does not execute anonymization decisions. The output as inspectable code means the recommendation is transparent and auditable. And the metadata-only pattern reduces both security risk and confabulation risk: the model cannot confabulate relationships in data it never saw.
 
-The metadata-only input pattern is a broader design principle. Every field you do not include in the prompt is a field that cannot be confabulated about. Every dimension of input you withhold from the model is a dimension of stochastic tax you do not pay. Less input surface means less room for confabulation, which means more reliable output. This is stochastic tax reduction applied to extraction pipeline design.
+The metadata-only input pattern is a broader design principle. Every field you do not include in the prompt is a field that cannot be confabulated about. Every dimension of input you withhold from the model is a dimension of stochastic tax you do not pay. Less input surface means less room for confabulation, which means more reliable output. This is confabulation risk reduction applied to extraction pipeline design: fewer input dimensions mean fewer opportunities for the model to generate plausible-sounding wrong answers about fields it should never have seen.
 
 > *What happens if the LLM misclassifies a direct identifier as a non-identifying variable? What is the downstream consequence for disclosure risk? How would you detect this error before the data product is released?*
 

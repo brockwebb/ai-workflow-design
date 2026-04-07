@@ -112,6 +112,8 @@ Transaction-safe checkpoint write pattern. Writing to a temp file and atomically
 
 **When the checkpoint itself fails.** If the checkpoint is corrupted or missing (disk failure, manual deletion, an incomplete write that the rename protection did not cover), the recovery path is the results file. Design your pipeline to write completed results independently of checkpoints: a separate, append-only results file that captures every successfully processed record. A corrupted checkpoint then costs you only the delta between what is in the results file and what was in the checkpoint. You resume from the last record in the results file, not from the beginning. The results file is your backstop when the checkpoint fails.
 
+Recovery answers whether the pipeline resumes. It does not answer whether the resumed run produces equivalent output. A checkpoint restart changes the model's context state: the prompt history, the sequence of prior outputs, even the random seed path may differ from an uninterrupted run. Chapter 8's golden test set is the validation mechanism: run your recovered output against the same reference set you use for regression testing, and verify that the agreement metrics hold.
+
 Parallel workers each maintain their own checkpoint. If one worker's batch fails, only that worker restarts. The other workers' completed work is preserved. This is the answer to Chapter 6's reflection prompt: the whole pipeline does not restart, just the failed worker's batch.
 
 ## The Recursive Problem: Your Development Tools Are Also Stochastic
