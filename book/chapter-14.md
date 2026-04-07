@@ -47,8 +47,11 @@ People conflate four different cost categories when they talk about "AI costs." 
 | **Development costs** | Pipeline construction, prompt engineering, evaluation design, testing | Project managers, technical leads |
 | **Operational costs** | Monitoring, maintenance, prompt updates, model swaps, re-evaluation | Operations teams, IT |
 | **Opportunity costs** | What you are NOT doing while people do repetitive work, or while waiting for procurement and governance | Leadership, program offices |
+| **Institutional overhead** | Security authorization (ATO, FedRAMP), compliance documentation, environment provisioning, procurement cycles | Security teams, CISOs, contracting officers |
 
-*Think about the last AI-related budget conversation in your organization. Which of these four cost categories dominated the discussion? Which ones were never mentioned?*
+*Think about the last AI-related budget conversation in your organization. Which of these five cost categories dominated the discussion? Which ones were never mentioned?*
+
+Institutional overhead is the cost category federal practitioners recognize immediately but rarely see in AI cost analyses written for commercial audiences. An Authority to Operate can take 12 months or longer. FedRAMP compliance requires dedicated staff and documentation effort measured in person-months. Environment provisioning in government networks often means working with infrastructure that lags commercial equivalents by years. These are direct costs -- staff time, consultant fees, calendar time -- not opportunity costs. For federal teams, institutional overhead often exceeds all other cost categories combined, not because the security work is unnecessary, but because the processes were not designed for the pace at which AI tooling evolves. Security that functions as a mission enabler rather than a gate looks different from security that optimizes for compliance paperwork.
 
 Most conversations about "AI costs" address only inference costs. That is often the smallest category. Development costs dominate for complex workflows: the time to build the pipeline, design the evaluation framework, test against ground truth, and iterate on prompts is measured in person-weeks, not API dollars. Operational costs are ongoing and often underestimated: models change, prompts need updating, evaluation metrics need re-running. Opportunity costs are the largest but hardest to quantify: what is the cost of three senior researchers spending 60% of their time on data wrangling that a well-designed pipeline could handle?
 
@@ -76,7 +79,7 @@ Statistical workflows are naturally cost-advantaged for AI processing. Most stat
 
 Specific pricing changes constantly. The ratios are more durable: as of early 2026, frontier models typically cost 10-30x more per token than mid-tier models, and 20-100x more than small models. Check current pricing before estimating any specific job, but use the ratios for architectural planning. These ratios reflect the pricing landscape as of this writing. Frontier model prices have been declining; check current provider pricing pages before using ratios for budget planning.
 
-The Concept Mapper's cost profile is favorable because batch classification is a cost-advantaged workflow type: high volume, structured output, no latency requirement. Generative, retrieval-augmented, and agentic workflows have different cost structures. The four-category cost taxonomy applies to all workflow types, but the specific ratios between categories will vary.
+The Concept Mapper's cost profile is favorable because batch classification is a cost-advantaged workflow type: high volume, structured output, no latency requirement. Generative, retrieval-augmented, and agentic workflows have different cost structures. The five-category cost taxonomy applies to all workflow types, but the specific ratios between categories will vary.
 
 The design implication: your evaluation harness (Chapter 8) determines which tier meets your accuracy threshold for each task. Then you use the cheapest tier that passes. This is evaluation-driven model selection, not brand-driven model selection.
 

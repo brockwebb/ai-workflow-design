@@ -80,7 +80,7 @@ The data harmonization literature provides a useful framework for evaluating LLM
 
 > *Two datasets both have a column called "employment_status." Survey A codes it as 1=employed, 2=unemployed, 3=not in labor force. Survey B codes it as full-time, part-time, unemployed, retired, student, disabled, other. An LLM proposes mapping both to a unified schema. What information is lost? What crosswalk assumptions are you making? How do you document those assumptions so that downstream analysts know what they are working with?*
 
-Log the schema mapping decisions. When someone asks six months later why Field A was joined to Field B, the evidence chain exists (Chapter 10). This is a high-value, low-risk LLM application: the LLM proposes, the human reviews, the cost of the proposal is trivial, and the cost of getting it wrong is caught at review before it propagates.
+Log the schema mapping decisions. When someone asks six months later why Field A was joined to Field B, the evidence chain exists (Chapter 10). This is a high-value, low-risk LLM application: the LLM proposes, the human reviews, the cost of the proposal is trivial, and the cost of getting it wrong is caught at review before it propagates. This is also the working principle "Reuse data before collecting more" applied to schema design: established harmonization frameworks and controlled vocabularies are reusable infrastructure. Building a new taxonomy when a usable one already exists is waste.
 
 ## Format Extraction and Standardization
 

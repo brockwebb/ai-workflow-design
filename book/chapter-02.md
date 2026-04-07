@@ -123,7 +123,7 @@ The models you use today will not be the models you use in six months. They may 
 
 **Golden questions.** Maintain a small, human-validated set of classification examples with known correct answers. Run them through your pipeline on a regular schedule; weekly is cheap. Compare results to your baseline. If agreement degrades, investigate before the drift propagates through your production outputs.
 
-**Model-agnostic pipeline design.** Your pipeline should specify roles, rater and arbitrator, not specific model names. Swapping one model for another should be a configuration change, not a code rewrite. The evaluation harness from Chapter 8 determines which model currently fills each role.
+**Model-agnostic pipeline design.** Your pipeline should specify roles, rater and arbitrator, not specific model names. Swapping one model for another should be a configuration change, not a code rewrite. The evaluation harness from Chapter 8 determines which model currently fills each role. Chapter 3 examines the fine-tuning versus API tradeoff for classification tasks directly, including the cost and maintenance implications that affect which side of this design constraint you land on.
 
 **Version pinning with expiration dates.** Pin your model versions for reproducibility within a production run. But schedule regular reviews. A model version that is a year old may no longer be available, or may have been quietly updated by the provider.
 

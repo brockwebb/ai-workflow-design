@@ -49,9 +49,13 @@ There is a structural resemblance between inference-time self-refinement degrada
 
 The mechanisms are different. Training-time collapse involves weight updates on synthetic data eroding the learned distribution. Inference-time degradation involves context window pollution and the model's inability to reliably evaluate its own output; no weights change. But the pattern is shared: recursive self-consumption degrades output quality. The practical implication is the same in both cases: external signal is the remedy. Fresh training data prevents model collapse; external evaluation prevents self-refinement degradation. Design accordingly.
 
+> *Have you built a refinement loop that seemed to improve output at first, then plateaued or got worse? What signal finally told you the iterations were no longer helping? If you have not experienced this yet, consider: how would you know?*
+
 Five degradation pathways are now documented in the literature. *Diminishing returns*: self-refinement gains concentrate in the first iteration and plateau rapidly ({cite:p}`madaan_2023`). *Convergence ceiling*: a mathematical bound on achievable accuracy regardless of iteration count ({cite:p}`yang_2025`). *Self-bias amplification*: models systematically overrate their own output, and the bias grows with each iteration ({cite:p}`xu_2024`). *Reward hacking*: when generator and evaluator are the same model, the generator exploits the evaluator's preferences ({cite:p}`pan_2024`). *Recursive self-consumption*: the structural parallel to training-time model collapse, where iterative self-refinement degrades output diversity and quality ({cite:p}`shumailov_2024;alemohammad_2023`). All five pathways share one remedy: external signal.
 
 There is a sixth failure mode that operates at a different level. The *evaluation trap* is not about self-refinement loops but about how teams allocate evaluation effort. The pattern: a team spends months comparing five models on generic benchmarks, producing a detailed comparison report. By the time the report is ready, two of the models have been updated, one has been deprecated, and a new contender has entered the market. The conclusions are obsolete before publication. The cost is not API fees; it is researcher time consumed by evaluation activities that do not produce actionable results for the specific pipeline. Chapter 6 addresses this directly through model selection as an engineering decision, and Chapter 8 inverts it: instead of exhaustive comparison on generic benchmarks, build evaluation infrastructure that tests *your* pipeline on *your* data after every change.
+
+> *Think about the last time your team compared AI tools or models. How long did the evaluation take? Were the results still valid by the time the report was finished? What would have happened if you had spent that time building evaluation infrastructure for your specific pipeline instead?*
 
 ## The Systems Engineering Gap
 
@@ -148,6 +152,8 @@ The conventional wisdom is that humans must be in the loop. This is correct but 
 The design discipline is identifying *where* in the loop human judgment is irreplaceable, and building automation for everything else. The goal is not to remove human accountability. It is to remove human busywork so that expert attention goes where it provides the most value: the ambiguous cases, the disagreements, the edge conditions that require domain knowledge no model has.
 
 This requires prework. You can only step back from the loop *because* you built the systems that make stepping back safe: dual-path verification that catches discrepancies before they reach you, evidence chains that let you audit any result after the fact, provenance tracking that tells you exactly what happened and why, statistical quality checks that flag anomalies without requiring you to read every record. Level 3 is earned, not assumed. You get there by doing the prework.
+
+> *Where in your current workflow are you the bottleneck -- reviewing every output because you do not trust the system to flag its own problems? What would it take to build enough infrastructure that you could step back from that loop and focus on the cases that actually need your judgment?*
 
 ## The Prework
 
