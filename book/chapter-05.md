@@ -143,11 +143,15 @@ This connects directly to Chapter 2's "try the cheap thing first" principle. The
 
 In practice, pipelines combine topologies. The thought experiment at the end of this chapter asks you to do exactly this: consensus for classification, a critic loop for extraction, a judge gate for quality. The key design question when composing topologies is the interface between stages. Each topology produces output that feeds the next. The consensus stage's agreed classifications become input to the extraction stage. The extraction stage's structured output becomes input to the quality judge. Define the data contract at each interface: what fields, what format, what metadata carries forward, before you build any individual stage.
 
+**When models disagree, the arbitration strategy matters as much as the topology.** Three common approaches, each with different cost and quality profiles: Use confidence-weighted arbitration when both models produce calibrated confidence scores and the task has a clear correct answer (classification into a fixed taxonomy). Use a third-model tiebreaker when the disagreement is semantic rather than probabilistic, when the question is "which interpretation is right" rather than "which model is more confident." Use human review when the disagreement rate is low enough to be tractable (under 5-10% of records), when the stakes of a wrong answer are high, or when the disagreements themselves are the research finding you need to examine. The Concept Mapper used human review for its ~3% disagreement cases because the disagreements revealed genuine taxonomic ambiguity that no automated rule could resolve {cite:p}`webb_2026_concept_mapper`. The arbitration strategy is a design decision that belongs in your pipeline configuration alongside the topology choice, not an afterthought.
+
 ## Cross-Cutting Design Principles
 
 Regardless of topology, these principles apply:
 
 **Version everything.** Model identifiers, prompt versions, rubric versions, confidence thresholds, decision rules. When any component changes, the change is tracked and the pipeline can be rerun with the prior configuration for comparison.
+
+**Define a minimum provenance record.** Every pipeline output record should carry at minimum: a unique input record identifier, the model identifier and version used, the prompt template version, a timestamp, the raw output, the final classified/extracted value, a confidence or agreement flag, and the decision rule that produced the final value (majority vote, confidence-weighted, human override). For multi-model topologies, add each model's individual output and the arbitration path taken. This is the minimum set that allows you to answer "why did this record get this result?" six months later. Chapter 10 provides the infrastructure for storing and querying these records at scale; this section defines what to capture.
 
 **Store the disagreements, not just the resolutions.** The cases where models disagree are your most valuable data for understanding pipeline behavior. Discarding disagreement metadata is discarding your quality signal.
 

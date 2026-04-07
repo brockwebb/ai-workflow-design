@@ -154,6 +154,18 @@ The default authority model: the AI partner writes artifacts as "proposed" and t
 
 The human intervenes at decision points: state transitions to "published," changes that affect multiple downstream artifacts, and situations where risk is elevated (novel configurations, first-time model deployments, results that will be cited externally). All state transitions are logged: who changed what, when, and the rationale. The audit trail captures human decisions at the points where they matter, without burdening the human with bookkeeping at every intermediate step. This operationalizes Tenet 5, humans remain accountable, without creating a bottleneck that slows delivery.
 
+## Where to Start
+
+The infrastructure described in this chapter can seem daunting. Graph databases, dual-layer architectures, shared ontologies, authority models. If you are starting from nothing, do not build all of it at once. Start with the minimum viable provenance setup and add layers as the pain points emerge.
+
+**Start with a JSONL event log.** One append-only file. Every pipeline run appends a JSON object with: run ID, timestamp, model identifier and version, prompt template version, input file hash, record count, configuration snapshot (or hash of the config file), and outcome summary (records processed, error count, disagreement rate). This file lives in version control alongside your code. It is append-only: you never edit prior entries, only add new ones. This single file, maintained consistently, answers most of the "what happened and when" questions that arise in the first six months of a pipeline's life.
+
+**Add per-record provenance when volume justifies it.** Once your pipeline processes enough records that you need to answer "why did this specific record get this specific result," extend the event log to per-record granularity. The minimum fields from Chapter 5 apply: input record ID, model output, final value, decision rule, agreement flag. Store this as structured output (JSONL or a relational table) alongside the run-level log. At this stage you have two layers: run-level events and record-level provenance, both append-only, both in version control or a simple database.
+
+**Add a graph when you need traversal.** The signal that you need a graph model is when your questions become relational: "what downstream artifacts are affected if I change this prompt template?" or "which results were produced by the configuration that was in effect before the March update?" If you are doing multi-table JOINs to answer these questions, or worse, grepping through log files manually, the query pattern has outgrown the storage model. Move the relationship-rich state into a graph; keep the event logs as the immutable source of truth that feeds it.
+
+The migration path is additive, not replacement. The JSONL log does not go away when you add a database. The database does not go away when you add a graph. Each layer serves a different query pattern. Most research pipelines in their first year need only the first layer. Know what the next layer looks like so you recognize the pain point when it arrives.
+
 ### Thought Experiment
 
 Your agency's occupation coding pipeline processes survey responses and classifies them into occupational categories for official statistical releases. The pipeline ran for three consecutive quarters, with results published each quarter in official statistical releases. Six months after the final quarter's release, a reviewer challenges one specific classification in the published data. They want to know:

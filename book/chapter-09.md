@@ -116,6 +116,24 @@ The engineering practices from Chapters 1 through 8 are SFV countermeasures. The
 
 The table shows what is covered. Two gaps remain. First, active state auditing: no chapter teaches you how to inspect accumulated state for coherence at a point in time. The practices above prevent degradation or detect it after the fact; none of them walk you through auditing the current state of a live pipeline against its intended history. Second, threat triage: no chapter provides a symptom-to-threat mapping for diagnosis. When your pipeline is producing unexpected results, distinguishing T1 (semantic drift) from T4 (persisting outdated state) from T2 (confabulated history) requires a diagnostic approach this book has not yet provided.
 
+The second gap, symptom-to-threat mapping, can be partially addressed with a diagnostic starting point. When pipeline behavior changes unexpectedly, these observable symptoms suggest which threats to investigate first:
+
+:::{table} Symptom-to-threat diagnostic guide. Observable pipeline symptoms mapped to the SFV threats most likely responsible and initial investigation steps.
+:name: tbl-09-01
+
+| Observable Symptom | Most Likely Threat(s) | First Investigation Step |
+|:--|:--|:--|
+| Output vocabulary shifts (new terms, changed phrasing patterns) | T1 (Semantic Drift) | Compare golden test set results before and after the change window |
+| Pipeline produces confident but factually wrong outputs | T2 (False State Injection) | Check whether the model is citing information not present in its input or configuration |
+| Nuance or qualifications disappearing from outputs | T3 (Compression Distortion) | Compare full expert judgment text against what the pipeline actually delivered to the model |
+| Known-fixed issue reappears | T4 (State Supersession Failure) | Verify config file versions; check whether a session reset loaded stale defaults |
+| Results differ between identical reruns | T5 (State Discontinuity) | Check temperature settings, API version pinning, and whether context window carried state from a prior run |
+| "Other" or default category volume increases | T1 or T4 | Run golden test set; compare model version against last validated version |
+| Disagreement rate between models changes sharply | T1, T2, or T4 | Isolate which model changed behavior; check provider release notes |
+:::
+
+This table is a starting point, not a decision tree. Multiple threats can produce similar symptoms, and real failures often involve compound causes. The value is in narrowing the investigation: instead of checking everything, start with the most probable threat and follow the evidence.
+
 State externalization is the common principle across these countermeasures: moving critical state out of the mutable context window into durable, queryable infrastructure. Config files externalize parameters. Test suites externalize expected behavior. Handoff documents externalize session history. When the state being externalized has typed relationships between entities, artifacts that depend on other artifacts, decisions that supersede prior decisions, evidence chains connecting claims to sources, the natural representation is a graph, not a table. Chapter 10 provides the infrastructure for this pattern.
 
 > *Which of the countermeasure practices above is weakest in your current pipeline design? What would it take to strengthen it?*

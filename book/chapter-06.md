@@ -54,6 +54,8 @@ The Federal Survey Concept Mapper {cite:p}`webb_2026_concept_mapper` classified 
 
 This gives you the tools to estimate runtime before committing. Total records divided by workers, divided by effective calls per minute per worker, equals estimated minutes. For the reflection prompt below: 50,000 records with 6 workers at 10 effective calls per minute per worker means approximately 833 minutes, or about 14 hours. That is the theoretical floor. Add retry budget: if 5% of calls need one retry with backoff, add roughly 40 minutes. Real pipelines take longer than the formula predicts. Run the formula anyway. Knowing whether your pipeline takes 14 hours or 14 days determines whether you can afford the architecture.
 
+The runtime formula above assumes roughly uniform processing time per record. Real inputs vary: a one-sentence survey question and a three-paragraph open-ended response do not take the same number of tokens to process, and token count drives both latency and cost. Two practical adjustments: first, sort inputs by estimated token count and assign similar-length records to the same batch, so workers finish at roughly the same time instead of one worker stalling on a batch of long records while others sit idle. Second, use a conservative effective_calls estimate based on your longest records, not your average. Over-estimating runtime is a scheduling inconvenience; under-estimating it means your "overnight" job is still running at 9 AM.
+
 ```{figure} images/fig-06-01_parallel_batch_architecture.png
 :name: fig-06-01
 :alt: Parallel batch processing architecture with rate limiter, worker pool, checkpoint store, and result aggregation
