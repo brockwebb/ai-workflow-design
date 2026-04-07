@@ -100,7 +100,7 @@ Model abstraction layer. Pipeline logic calls through a configuration-driven mod
 
 Rob Pike's five rules from *Notes on Programming in C* {cite:p}`pike_1989` are engineering wisdom that maps directly to LLM pipeline design:
 
-**Bottlenecks surprise you.** Profile your pipeline before optimizing. The bottleneck may be JSON parsing, file I/O, or rate-limit backoff sleep time, not the LLM inference itself. Do not assume. In one pipeline, 40% of runtime was spent parsing structured JSON output, not waiting for the LLM.
+**Bottlenecks surprise you.** Profile your pipeline before optimizing. The bottleneck may be JSON parsing, file I/O, or rate-limit backoff sleep time, not the LLM inference itself. Do not assume. In the Concept Mapper pipeline, 40% of runtime in one workflow was spent parsing structured JSON output, not waiting for the LLM.
 
 **Measure before tuning.** Instrument first, optimize second. If you are not measuring, you are guessing. This connects to Chapter 8's evaluation-by-design thesis. At minimum, log response time, token count, and error type for every API call.
 

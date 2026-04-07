@@ -111,7 +111,7 @@ Three independent arbitrator models, higher-capability models from the same thre
 
 The pattern: moderate initial agreement converging to near-perfect after structured arbitration. This validates that the task is well-defined and that independent models can reach consensus when given a protocol for resolving ambiguity.
 
-**Why three vendors, not three models from one vendor?** Vendor diversity is a stronger independence guarantee than model diversity within a single vendor's family. Models from the same vendor share training pipelines, alignment approaches, and organizational biases. Cross-vendor agreement is harder to achieve and more meaningful when it occurs. This is the methodological equivalent of requiring independent expert raters from different institutions.
+**Why three vendors, not three models from one vendor?** Vendor diversity is a stronger independence guarantee than model diversity within a single vendor's family. Models from the same vendor likely share training pipelines, alignment approaches, and organizational biases. Cross-vendor agreement is harder to achieve and, in the author's experience, more meaningful when it occurs. This is the methodological equivalent of requiring independent expert raters from different institutions.
 
 **Why not just take the majority vote?** Majority vote discards reasoning. The arbitration protocol requires the arbitrator to select or synthesize a verdict and provide reasoning. That reasoning is a traceable artifact: you can audit *why* a particular classification was made. Majority vote gives you an answer. Arbitration gives you an answer with a justification.
 

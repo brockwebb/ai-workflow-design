@@ -90,7 +90,7 @@ You will hear the argument that intermediate monitoring should collapse into a s
 
 Outdated information persists and influences output despite being explicitly superseded. You correct a classification rule in session 4, but the model continues applying the session 2 version because the correction did not fully override the earlier state. The old rule is still "there" in the context, competing with the new one.
 
-State supersession failure is common in multi-session workflows where accumulated context from earlier sessions carries forward. The model does not have a clean "update" operation. It has a context window where old and new information coexist, and the model's attention mechanism determines which one wins on any given query.
+In the author's experience, state supersession failure is common in multi-session workflows where accumulated context from earlier sessions carries forward. The model does not have a clean "update" operation. It has a context window where old and new information coexist, and the model's attention mechanism determines which one wins on any given query.
 
 ### T5: State Discontinuity
 
