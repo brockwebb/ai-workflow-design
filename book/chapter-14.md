@@ -7,7 +7,7 @@
 
 ## The Right Answer Is a Comparison
 
-Your program office asks: "How much does this AI thing cost?" You answer "$15." They look skeptical. You explain it replaced a quarterly process that takes three people four weeks. Now they are interested. Then they ask: "What are the risks?" And you pull out the evidence chain, the evaluation metrics, the dual-model agreement scores. That is the difference between a cost conversation and a value conversation.
+Your program office asks: "How much does this AI thing cost?" You answer "\$15." They look skeptical. You explain it replaced a quarterly process that takes three people four weeks. Now they are interested. Then they ask: "What are the risks?" And you pull out the evidence chain, the evaluation metrics, the dual-model agreement scores. That is the difference between a cost conversation and a value conversation.
 
 Every cost discussion in this chapter is framed as a comparison: AI pipeline cost versus the status quo alternative. The status quo has costs too. They are just already in the budget, and therefore invisible.
 
@@ -26,16 +26,16 @@ The real comparison is total cost of the AI pipeline, including development, ope
 | | AI Pipeline | Manual Equivalent |
 |---|---|---|
 | Task | Map 6,954 survey questions to standardized concepts | Same task, same taxonomy |
-| Development cost | ~$3,500 (one-time: pipeline, prompts, evaluation design) | ~$800 (one-time: analyst training) |
-| Per-run cost | ~$15 (inference) | ~$23,200 (analyst labor) |
+| Development cost | ~\$3,500 (one-time: pipeline, prompts, evaluation design) | ~\$800 (one-time: analyst training) |
+| Per-run cost | ~\$15 (inference) | ~\$23,200 (analyst labor) |
 | Runtime | ~2 hours | ~232 analyst-hours |
 | Accuracy | 99.5% (dual-model cross-validated) | Varies by analyst, estimated comparable |
 | Evidence chain | Complete: model versions, confidence scores, agreement rates, disagreements logged | Notes, spreadsheets, institutional memory |
 | Reproducibility | Re-run produces documented results with provenance | Re-assignment produces different results depending on analyst |
-| Year 1 total | ~$3,515 | ~$24,000 |
-| Year 2+ per cycle | ~$15 | ~$23,200 |
+| Year 1 total | ~\$3,515 | ~\$24,000 |
+| Year 2+ per cycle | ~\$15 | ~\$23,200 |
 
-The manual equivalent: a trained analyst classifying survey questions against the harmonized taxonomy. Assume 8 hours of training on the taxonomy and classification conventions, then a sustained rate of approximately 30 questions per hour. Published productivity benchmarks for this exact task are scarce, but survey coding and content analysis practice supports a rate in the range of a few dozen items per hour when quality is prioritized. Your agency may have different classification rates depending on analyst experience and taxonomy complexity; use your own historical data if available. At 6,954 questions, that is 232 analyst-hours of classification work alone. At a fully loaded labor rate of approximately \$100 per hour (a mid-career federal analyst in the Washington, DC area at roughly GS-12 equivalent, with standard benefits and overhead multiplier; exact figures vary by grade, step, and agency), the manual equivalent costs approximately $24,000 per cycle (including training). The AI pipeline's $15 inference cost is not the full comparison; development cost was approximately $3,500 in engineering time (roughly 35 hours of pipeline construction, prompt design, evaluation framework development, and iterative debugging, drawing on prior experience with LLM pipeline patterns). But development cost is a one-time investment. The pipeline now runs each new survey wave for $15; the manual process costs $23,200 every time.
+The manual equivalent: a trained analyst classifying survey questions against the harmonized taxonomy. Assume 8 hours of training on the taxonomy and classification conventions, then a sustained rate of approximately 30 questions per hour. Published productivity benchmarks for this exact task are scarce, but survey coding and content analysis practice supports a rate in the range of a few dozen items per hour when quality is prioritized. Your agency may have different classification rates depending on analyst experience and taxonomy complexity; use your own historical data if available. At 6,954 questions, that is 232 analyst-hours of classification work alone. At a fully loaded labor rate of approximately \$100 per hour (a mid-career federal analyst in the Washington, DC area at roughly GS-12 equivalent, with standard benefits and overhead multiplier; exact figures vary by grade, step, and agency), the manual equivalent costs approximately \$24,000 per cycle (including training). The AI pipeline's \$15 inference cost is not the full comparison; development cost was approximately \$3,500 in engineering time (roughly 35 hours of pipeline construction, prompt design, evaluation framework development, and iterative debugging, drawing on prior experience with LLM pipeline patterns). But development cost is a one-time investment. The pipeline now runs each new survey wave for \$15; the manual process costs \$23,200 every time.
 
 ## The Cost Taxonomy
 
@@ -52,7 +52,7 @@ People conflate four different cost categories when they talk about "AI costs." 
 
 Most conversations about "AI costs" address only inference costs. That is often the smallest category. Development costs dominate for complex workflows: the time to build the pipeline, design the evaluation framework, test against ground truth, and iterate on prompts is measured in person-weeks, not API dollars. Operational costs are ongoing and often underestimated: models change, prompts need updating, evaluation metrics need re-running. Opportunity costs are the largest but hardest to quantify: what is the cost of three senior researchers spending 60% of their time on data wrangling that a well-designed pipeline could handle?
 
-The Concept Mapper illustrates the typical distribution. Inference cost: $15. Development cost: approximately 35 hours of engineering time: pipeline construction, prompt design, evaluation framework, and iterative debugging. This was not a cold start; the developer brought prior experience with LLM pipeline patterns, which substantially compressed the timeline. A team building its first pipeline should expect development measured in person-weeks, not person-days. Operational costs are ongoing but modest for a batch pipeline: prompt updates when model behavior shifts, re-running the evaluation suite after model version changes, maintaining the orchestration code. The precise hours vary, but the pattern holds: inference is the smallest cost category, development dominates the initial investment, and operational costs are the long tail that organizations chronically underestimate.
+The Concept Mapper illustrates the typical distribution. Inference cost: \$15. Development cost: approximately 35 hours of engineering time: pipeline construction, prompt design, evaluation framework, and iterative debugging. This was not a cold start; the developer brought prior experience with LLM pipeline patterns, which substantially compressed the timeline. A team building its first pipeline should expect development measured in person-weeks, not person-days. Operational costs are ongoing but modest for a batch pipeline: prompt updates when model behavior shifts, re-running the evaluation suite after model version changes, maintaining the orchestration code. The precise hours vary, but the pattern holds: inference is the smallest cost category, development dominates the initial investment, and operational costs are the long tail that organizations chronically underestimate.
 
 ## Batch Economics
 
@@ -163,7 +163,7 @@ The strongest version of this argument: we are already paying for this work. The
 
 ### Thought Experiment
 
-You have a $50,000 annual budget for AI tools and services. Design a portfolio of AI workflows that maximizes mission impact within that budget. What do you build first? What model tiers do you use for which tasks? Where do you invest in development versus where do you use off-the-shelf? How much of the budget goes to inference costs versus evaluation infrastructure versus training your team? What is the expected return in FTE-hours reallocated?
+You have a \$50,000 annual budget for AI tools and services. Design a portfolio of AI workflows that maximizes mission impact within that budget. What do you build first? What model tiers do you use for which tasks? Where do you invest in development versus where do you use off-the-shelf? How much of the budget goes to inference costs versus evaluation infrastructure versus training your team? What is the expected return in FTE-hours reallocated?
 
 ---
 
