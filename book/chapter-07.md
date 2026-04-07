@@ -40,7 +40,7 @@ Config-driven architecture is a defense against both runtime failures and develo
 
 > *Look at a pipeline you have built or are building. How many parameters are hardcoded in the source? If a model name or API endpoint changed tomorrow, how many files would you need to edit?*
 
-```{figure} ../assets/diagrams/paperbanana/fig-07-03_config_validation_flow.png
+```{figure} images/fig-07-03_config_validation_flow.png
 :name: fig-07-03
 :alt: Flowchart showing config validation steps from load through model validation, parameter check, smoke test, schema comparison, to pass or stop
 Config validation flow before full pipeline launch. Each check gates the next. A failed model name, unaccepted parameter, or failed smoke test stops the run before it processes 50,000 records on bad configuration. The cost of the smoke test is minutes; the cost of discovering a config error at record 40,000 is hours.
@@ -102,7 +102,7 @@ Chapter 6 introduced the requirement: the Concept Mapper {cite:p}`webb_2026_conc
 
 **Transaction-safe writes.** Write the new checkpoint to a temporary file, then atomically rename it to the checkpoint file. If the process crashes mid-write, the old checkpoint is still intact. Never write directly to the checkpoint file. A crash during write corrupts it and you lose everything.
 
-:::{figure} ../assets/diagrams/paperbanana/fig-07-02_checkpoint_safe_write.png
+:::{figure} images/fig-07-02_checkpoint_safe_write.png
 :name: fig-07-02
 :alt: Flow diagram showing the transaction-safe checkpoint write sequence and crash recovery paths
 Transaction-safe checkpoint write pattern. Writing to a temp file and atomically renaming prevents checkpoint corruption on crash. A crash during the write phase leaves the old checkpoint intact. A crash during the rename (atomic on POSIX systems) leaves either the old or new checkpoint intact, never a partial file.

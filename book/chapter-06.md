@@ -54,7 +54,7 @@ The Federal Survey Concept Mapper {cite:p}`webb_2026_concept_mapper` classified 
 
 This gives you the tools to estimate runtime before committing. Total records divided by workers, divided by effective calls per minute per worker, equals estimated minutes. For the reflection prompt below: 50,000 records with 6 workers at 10 effective calls per minute per worker means approximately 833 minutes, or about 14 hours. That is the theoretical floor. Add retry budget: if 5% of calls need one retry with backoff, add roughly 40 minutes. Real pipelines take longer than the formula predicts. Run the formula anyway. Knowing whether your pipeline takes 14 hours or 14 days determines whether you can afford the architecture.
 
-```{figure} ../assets/diagrams/paperbanana/fig-06-01_parallel_batch_architecture.png
+```{figure} images/fig-06-01_parallel_batch_architecture.png
 :name: fig-06-01
 :alt: Parallel batch processing architecture with rate limiter, worker pool, checkpoint store, and result aggregation
 Parallel batch processing architecture. The rate limiter governs throughput against provider constraints; exponential backoff prevents cascading failures on rejection. N independent workers process batches with no shared context. The checkpoint store enables resume-on-failure without restart. Result aggregation merges worker outputs into the final deliverable.
@@ -88,7 +88,7 @@ The model is a replaceable component. The architecture is the durable investment
 
 **Model turnover is the steady state.** Models deprecate. APIs change. New options appear. Pricing shifts. If your pipeline breaks when the model changes, you designed for a moment, not for a system. Design for model turnover as a normal operating condition, not as an exception.
 
-```{figure} ../assets/diagrams/paperbanana/fig-06-02_model_abstraction_layer.png
+```{figure} images/fig-06-02_model_abstraction_layer.png
 :name: fig-06-02
 :alt: Three-layer architecture showing Pipeline Logic, Model Interface, and swappable Model Options below
 Model abstraction layer. Pipeline logic calls through a configuration-driven model interface that knows nothing about the specific model underneath. When the model changes, only the configuration changes. All pipeline logic, rate limiting, checkpointing, and result handling remains unchanged. Each run records the exact model version used.
@@ -108,7 +108,7 @@ Rob Pike's five rules from *Notes on Programming in C* {cite:p}`pike_1989` are e
 
 **Data dominates.** Get your schemas right and the pipeline design follows. This connects directly to Chapter 2's argument for adopting existing domain frameworks {cite:p}`fortier_2011;wolf_2016` as structured output schemas rather than inventing your own.
 
-```{figure} ../assets/diagrams/paperbanana/fig-06-03_pike_rules_pipeline_mapping.png
+```{figure} images/fig-06-03_pike_rules_pipeline_mapping.png
 :name: fig-06-03
 :alt: Table mapping Pike's five rules to LLM pipeline design implications
 Pike's five rules mapped to LLM pipeline design. Each rule surfaces a different class of engineering mistake: unverified assumptions about bottlenecks, premature optimization, failure to design for scale, hidden complexity, and schema-first design. The rules are diagnostic, not prescriptive.

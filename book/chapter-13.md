@@ -90,6 +90,12 @@ This tiering is not novel. It is risk-based controls applied to AI, the same ris
 
 The shift from governance-as-gate to governance-as-infrastructure is where the compressed tenet "governance must enable execution" becomes operational. The gate model asks "should we allow this?" The infrastructure model asks "how do we enable this safely?"
 
+```{figure} images/fig-13-01_governance_models.png
+:name: fig-13-01
+:alt: Side-by-side process diagrams comparing Governance as Gate and Governance as Infrastructure models
+Governance as Gate versus Governance as Infrastructure. Left: the gate model routes every project through a review board (6-week cycle), creating a months-long bottleneck where the failure mode is teams stopping or going around the process. Right: the infrastructure model replaces the review queue with automated policy checks and platform envelope validation, compressing timelines to days or weeks and embedding controls in the platform itself. Same risk managed. Different cost. Different speed.
+```
+
 **The incentive problem.** Governance-as-gate is also governance-as-power, and this is a structural observation, not a personal criticism. The people running review processes are protecting something real. Eliminating the gate redistributes authority. That is why "common sense" arguments for streamlining governance never gain traction. The argument is not about common sense. It is about institutional authority.
 
 IT and security teams are measured on uptime, incident prevention, and compliance. They are not measured on how quickly capability ships. The incentive structure rewards saying no and penalizes saying yes to anything novel. This is not malice. It is rational behavior in a misaligned incentive structure.

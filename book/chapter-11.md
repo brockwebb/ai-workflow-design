@@ -49,6 +49,12 @@ Friction has two components: initial setup friction (getting the tool running at
 | **Volatility** | Moderate | High (rapid landscape change) | Low (stable foundations) | Low (you control it) |
 | **Best for** | Simple repeatable workflows | Rapid prototyping, complex chains | Research pipelines, audit needs | Domain-specific requirements |
 
+```{figure} images/fig-11-01_evaluation_framework_template.png
+:name: fig-11-01
+:alt: Evaluation framework scoring template with rows for tool approaches and columns for Coupling, Friction, Transparency, and Volatility dimensions
+Orchestration evaluation framework template. Score any tool or approach on four dimensions (1–5 scale): Coupling (1 = fully decoupled, 5 = pipeline rewrite required), Friction (1 = low overhead, 5 = high setup cost), Transparency (1 = opaque, 5 = fully auditable), Volatility (1 = stable, 5 = high churn risk). Target profile for research pipelines: low coupling, low friction, high transparency, low volatility. The blank rows support direct evaluation of tools under consideration.
+```
+
 ## The 90/10 Rule and the Last Mile
 
 The author has observed a consistent pattern across multiple tool adoption cycles. Call it the 90/10 rule: getting the first 90% of capability from any orchestration tool is straightforward. The last 10%, the edge cases, the error handling, the integration with your specific infrastructure, the compliance requirements your agency imposes, consumes 90% of the effort. Every demo works. Every tutorial succeeds. The question is what happens when the input data is malformed, the API returns an unexpected error, the model changes its output format, or the security review requires logging that the tool does not support.

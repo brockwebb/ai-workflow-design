@@ -37,7 +37,7 @@ Two-versus-three models is not the point. The point is: more than one look, stor
 
 If full parallel consensus is too expensive, run the second model on a stratified sample of outputs: the lowest-confidence results from the first model, plus a random sample of high-confidence results for calibration. Even partial cross-validation is better than none. The goal is not perfection; it is making hidden uncertainty visible on the cases most likely to be wrong.
 
-```{figure} ../assets/diagrams/paperbanana/fig-05-01_parallel_consensus.png
+```{figure} images/fig-05-01_parallel_consensus.png
 :name: fig-05-01
 :alt: Parallel consensus topology showing fan-out to N models, agreement decision, and disagreement routing
 Parallel consensus topology. Input fans out to N independently prompted models. Agreed outputs proceed through the decision rule with a versioned provenance record. Disagreements route to human review and rejoin the flow. The disagreement rate is your primary quality signal.
@@ -71,7 +71,7 @@ The design implication for statistical production: same-model self-refinement is
 
 **When this topology earns its place.** Complex extraction or generation tasks where the output must conform to a formal schema. Tasks where partial correctness is common: the model gets 8 of 10 fields right, but the remaining 2 need targeted revision. Tasks where the cost of a human review pass exceeds the cost of an automated critique cycle.
 
-```{figure} ../assets/diagrams/paperbanana/fig-05-02_generator_critic_loop.png
+```{figure} images/fig-05-02_generator_critic_loop.png
 :name: fig-05-02
 :alt: Generator-critic loop showing Model A generating, Model B evaluating, feedback loop, and four termination conditions
 Generator-critic loop topology. Model A generates; Model B evaluates. Failed outputs return to the generator with specific rejection reasons. Four conditions terminate the loop: all checks pass, confidence threshold met, maximum iterations reached, or escalation to human review. All paths carry provenance of the iteration trajectory.
@@ -95,7 +95,7 @@ The judge pattern is architecturally distinct from both consensus and refinement
 
 *Versioned and auditable.* The rubric is part of the pipeline configuration. When it changes, the change is tracked.
 
-```{figure} ../assets/diagrams/paperbanana/fig-05-03_llm_as_judge.png
+```{figure} images/fig-05-03_llm_as_judge.png
 :name: fig-05-03
 :alt: LLM-as-Judge topology showing rubric input, judge model evaluation, pass/fail gate, and calibration cycle
 LLM-as-Judge topology. A dedicated judge model evaluates generator output against a versioned rubric. Outputs scoring above threshold are accepted with provenance; below-threshold outputs route to human review. Periodic calibration against a golden test set is a design requirement, not optional maintenance.
