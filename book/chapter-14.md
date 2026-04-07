@@ -29,7 +29,7 @@ The real comparison is total cost of the AI pipeline, including development, ope
 | Development cost | ~\$3,500 (one-time: pipeline, prompts, evaluation design) | ~\$800 (one-time: analyst training) |
 | Per-run cost | ~\$15 (inference) | ~\$23,200 (analyst labor) |
 | Runtime | ~2 hours | ~232 analyst-hours |
-| Accuracy | 99.5% (dual-model cross-validated) | Varies by analyst, estimated comparable |
+| Automated resolution | 99.5% classified without human review; kappa = 0.839 topic-level agreement | Varies by analyst, estimated comparable |
 | Evidence chain | Complete: model versions, confidence scores, agreement rates, disagreements logged | Notes, spreadsheets, institutional memory |
 | Reproducibility | Re-run produces documented results with provenance | Re-assignment produces different results depending on analyst |
 | Year 1 total | ~\$3,515 | ~\$24,000 |
