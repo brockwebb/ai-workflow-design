@@ -13,7 +13,7 @@ This distinction matters because it changes how you design around the problem. Y
 
 Statisticians already work with stochastic processes, of course. But the stochasticity of LLMs is qualitatively different from the stochastic processes in the statistical toolkit:
 
-*Seeded stochastic processes* (Monte Carlo simulation, bootstrap resampling, MCMC) are reproducible via seed, numerical in output, characterizable in distribution, and bounded in uncertainty. Statisticians have decades of theory and practice for designing around these. Set the seed, run it again, get the same result.
+*Seeded stochastic processes* (Monte Carlo simulation, bootstrap resampling, Markov Chain Monte Carlo (MCMC)) are reproducible via seed, numerical in output, characterizable in distribution, and bounded in uncertainty. Statisticians have decades of theory and practice for designing around these. Set the seed, run it again, get the same result.
 
 *LLM stochastic processes* are irreproducible across runs (even at temperature=0 on many APIs), produce *language* rather than numbers, exhibit error distributions that are not characterizable in classical terms, and fail in a particularly dangerous way: they produce *coherent-sounding wrong answers*. The failure mode is not noise around a signal. It is a confident, fluent, plausible-looking wrong answer that passes casual inspection.
 
@@ -45,7 +45,7 @@ The pathologies go deeper than diminishing returns. {cite:t}`xu_2024` documented
 
 Machines can overthink problems too. The design implication is clear: self-refinement loops need explicit stopping criteria, external validation signals, and architectural awareness that the model's critic shares the model's blind spots. This connects directly to the ensemble approach in Chapter 5. Use *different* models to evaluate each other, not the same model evaluating itself.
 
-There is a structural resemblance between inference-time self-refinement degradation and training-time model collapse. Model collapse occurs when models are trained recursively on their own outputs, progressively degrading until the model becomes useless {cite:p}`shumailov_2024`. Self-consuming generative models, as {cite:t}`alemohammad_2023` demonstrated, go "MAD," they lose diversity and converge on a narrow subset of their output space. At inference time, iterative self-refinement exhibits a structurally similar dynamic: the system consumes its own output, amplifies its own biases, and converges on increasingly confident but not increasingly correct answers.
+There is a structural resemblance between inference-time self-refinement degradation and training-time model collapse. Model collapse occurs when models are trained recursively on their own outputs, progressively degrading until the model becomes useless {cite:p}`shumailov_2024`. Self-consuming generative models, as {cite:t}`alemohammad_2023` demonstrated, go "MAD" (Model Autophagy Disorder), they lose diversity and converge on a narrow subset of their output space. At inference time, iterative self-refinement exhibits a structurally similar dynamic: the system consumes its own output, amplifies its own biases, and converges on increasingly confident but not increasingly correct answers.
 
 The mechanisms are different. Training-time collapse involves weight updates on synthetic data eroding the learned distribution. Inference-time degradation involves context window pollution and the model's inability to reliably evaluate its own output; no weights change. But the pattern is shared: recursive self-consumption degrades output quality. The practical implication is the same in both cases: external signal is the remedy. Fresh training data prevents model collapse; external evaluation prevents self-refinement degradation. Design accordingly.
 
@@ -191,15 +191,17 @@ These tenets and principles map to specific chapters. Each chapter operationaliz
 
 ## What This Book Covers
 
-The chapters that follow are organized in four clusters.
+The chapters that follow are organized in five phases.
 
-**Chapters 2 through 4** cover domain workflow patterns: classification and coding (with the Federal Survey Concept Mapper as anchor case study), data wrangling and standardization, and detection and extraction. These chapters are about specific types of work that statistical agencies do, and the design patterns that make LLM-assisted versions of that work reliable.
+**Chapter 1** (this chapter) is the Foundations phase: the nature of the instrument, the stochastic liabilities that shape every design decision, and the organizing framework of tenets and working principles.
 
-**Chapters 5 through 8** cover cross-cutting engineering patterns: ensemble and multi-model architectures, parallelism and batch design, checkpoint and recovery, and evaluation infrastructure. These are the "how" chapters that apply across every domain workflow.
+**Chapters 2 through 4**, the Domain Workflows phase, cover domain workflow patterns: classification and coding (with the Federal Survey Concept Mapper as anchor case study), data wrangling and standardization, and detection and extraction. These chapters are about specific types of work that statistical agencies do, and the design patterns that make LLM-assisted versions of that work reliable.
 
-**Chapters 9 and 10** cover state and provenance: the SFV framework applied to workflow design, and the engineering of state management and research artifact tracking. These chapters address the question of how you know your system is still doing what you think it's doing, and how you prove it.
+**Chapters 5 through 8**, the Cross-Cutting Patterns phase, cover cross-cutting engineering patterns: ensemble and multi-model architectures, parallelism and batch design, checkpoint and recovery, and evaluation infrastructure. These are the "how" chapters that apply across every domain workflow.
 
-**Chapters 11 through 14** cover operational concerns: workflow orchestration and the tool landscape, security and supply chain risks, deploying in institutional environments, and cost engineering. These chapters address the reality that building a working pipeline is only half the problem; operating it in a real organization with real constraints is the other half.
+**Chapters 9 and 10**, the Validity phase, cover state and provenance: the SFV framework applied to workflow design, and the engineering of state management and research artifact tracking. These chapters address the question of how you know your system is still doing what you think it's doing, and how you prove it.
+
+**Chapters 11 through 14**, the Delivery phase, cover operational concerns: workflow orchestration and the tool landscape, security and supply chain risks, deploying in institutional environments, and cost engineering. These chapters address the reality that building a working pipeline is only half the problem; operating it in a real organization with real constraints is the other half.
 
 Each chapter is designed to stand alone. You can read them in order for the full argument, or jump to the chapter that addresses your immediate problem. The tenets and working principles provide the connective tissue.
 

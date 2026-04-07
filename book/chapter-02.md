@@ -91,6 +91,8 @@ The dual-model classification of 6,954 questions cost approximately \$15 in API 
 
 Position bias: the order in which options or question pairs are presented to a model affects its output. This is well-documented in survey methodology as primacy and recency effects, and it is equally present in LLM behavior.
 
+ABBA counterbalancing is a standard technique from repeated-measures experimental design: by reversing presentation order across conditions, order-dependent variance is exposed rather than hidden.
+
 The ABBA design addresses this directly. For every evaluation, randomize the presentation order. If the model's judgment changes when Question A is presented before Question B versus after, the judgment is unstable and should not be trusted. Instability under order permutation is a measurement quality signal, not a classification quality signal.
 
 In the Concept Mapper's harmonization stage, all three rater models received question pairs with randomized A/B order. All three arbitrator models received prior judgments in randomized order with blind masking, vendor identities removed, to prevent anchoring on whichever judgment appeared first.

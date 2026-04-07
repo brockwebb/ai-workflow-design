@@ -62,7 +62,7 @@ Since no off-the-shelf benchmark exists for your pipeline, you must build one. T
 
 The Concept Mapper used this approach: golden questions that anchored evaluation across model updates {cite:p}`webb_2026_concept_mapper`. The principle is general: any production pipeline needs a regression suite that runs automatically when the pipeline changes and that produces a go/no-go signal before deployment.
 
-**Multi-model agreement as evaluation.** When you run N models on the same input, the agreement rate is an evaluation metric. The Concept Mapper's inter-rater reliability statistics (Fleiss' κ = 0.537 pre-arbitration, κ = 0.843 post-arbitration) are not just accuracy measures. They are evidence of construct validity. If independently trained models converge on the same classification through a structured protocol, the task is well-defined {cite:p}`webb_2026_concept_mapper`.
+**Multi-model agreement as evaluation.** When you run N models on the same input, the agreement rate is an evaluation metric. The Concept Mapper's inter-rater reliability statistics (Fleiss' κ = 0.537 pre-arbitration, κ = 0.843 post-arbitration) are not just accuracy measures. They are evidence of construct validity. If independently trained models converge on the same classification through a structured protocol, the task is well-defined {cite:p}`webb_2026_concept_mapper`. These Fleiss' κ values come from the three-rater harmonization stage, where three independent rater models from three vendors evaluated question pairs; they are distinct from the two-model classification stage that produced Cohen's κ = 0.839 for topic-level agreement.
 
 > *You inherit a pipeline with no golden test set. How do you build one? What is your minimum viable test set, and what is the difference between "good enough to start" and "good enough to ship"?*
 
@@ -123,6 +123,8 @@ Evaluation frameworks are not validation studies. The crosswalk is an evaluation
 Multi-model agreement is not ground truth. Models sharing training corpora are not statistically independent. High agreement may reflect correlated bias, not correctness. Behavioral analysis showing genuinely different decision patterns across vendors is evidence against, but not proof against, correlated failure.
 
 Evaluation is continuous, not complete. There is no point at which you have "finished" evaluating. Models update, requirements change, edge cases emerge. Evaluation is an operating cost, not a one-time capital expenditure.
+
+---
 
 ### Thought Experiment
 

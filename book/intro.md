@@ -50,7 +50,7 @@ The thought experiments and reflection prompts throughout the book are not acade
 
 Apply that standard to this book. If something does not make sense, do not take it on authority. Work through it. Break it. That is how you learn.
 
-The learning curve is not linear. You grind through manual processes at a pace that feels slow, then something clicks (a process improvement, a conceptual shift) and you are operating at a fundamentally different velocity. These velocity shifts are real and they compound. The maturity levels in Chapter 1 describe those thresholds. You will look back at what you were doing three months ago and it will seem impossibly slow. That is the trajectory.
+The learning curve is not linear. You grind through manual processes at a pace that feels slow, then something clicks (a process improvement, a conceptual shift) and you are operating at a fundamentally different velocity. These velocity shifts are real and they compound. The levels of AI automation in research in Chapter 1 describe those thresholds. You will look back at what you were doing three months ago and it will seem impossibly slow. That is the trajectory.
 
 ## How This Book Is Organized
 
@@ -66,7 +66,7 @@ The book moves through five phases, from the nature of the instrument to the ins
 
 **Chapter 3: Data Wrangling and Standardization Workflows.** Fixing bad codes, standardizing formats, combining disparate sources, extracting structured data from unstructured input. Where LLMs handle the semantic reasoning parts of the data quality pipeline and where traditional methods (MICE, hot-deck, Fellegi-Holt) still win. The fine-tuning cost trap: most teams do not do the total cost of ownership comparison honestly.
 
-**Chapter 4: Detection and Extraction Workflows.** Entity extraction, pattern detection, and disclosure review assistance. Knowledge graphs as "confidence laundering machines": extraction pipelines that look authoritative and are structurally wrong due to garbage chunking, lazy entity resolution, and no validation against source. SFV sub-dimensions applied to extraction fidelity: compression fidelity, terminological stability, and state provenance.
+**Chapter 4: Detection and Extraction Workflows.** Entity extraction, pattern detection, and disclosure review assistance. Knowledge graphs as "confidence laundering machines": extraction pipelines that look authoritative and are structurally wrong due to garbage chunking, lazy entity resolution, and no validation against source. SFV sub-dimensions applied to extraction fidelity: compression fidelity, Terminological Consistency (TC), and state provenance.
 
 ### Cross-Cutting Patterns
 
@@ -78,15 +78,15 @@ The book moves through five phases, from the nature of the instrument to the ins
 
 **Chapter 8: Evaluation by Design.** No benchmark exists for your pipeline. The FCSM/NIST crosswalk provides the scaffolding: two evaluation frameworks apply simultaneously, one for data quality, one for AI system trustworthiness. Valid and Reliable is a binary gate, not one dimension among many. Golden test sets, continuous regression testing, and evaluation economics.
 
-### Validity and Infrastructure
+### Validity
 
 **Chapter 9: State, Drift, and Validity.** The instrument that changes itself. State Fidelity Validity (SFV): when the composite instrument (fixed weights plus mutable context window) degrades, it silently becomes a different instrument. Five threats (T1 through T5) with concrete pipeline examples. The engineering practices from prior chapters revealed as SFV countermeasures.
 
 **Chapter 10: State Management and Research Provenance.** Defensible by design: can you prove your pipeline's chain from input to output under independent audit? Eight requirements for research provenance, from typed artifacts to automated integrity verification. DOORS had the right requirements decades ago; AI partners change the cost equation that killed traceability systems. The graph-of-artifacts pattern as a worked example.
 
-**Chapter 11: Workflow Orchestration and the Tool Landscape.** The orchestration tool researchers need largely does not exist as a product. Four evaluation dimensions: coupling, friction, transparency, volatility. The 90/10 rule and the last mile. Tool design for observability in agentic systems. The full treatment of recursive stochasticity: building with LLM tools introduces the same variance you are trying to control. Patterns are durable, products are volatile.
+### Delivery
 
-### Institutional Context
+**Chapter 11: Workflow Orchestration and the Tool Landscape.** The orchestration tool researchers need largely does not exist as a product. Four evaluation dimensions: coupling, friction, transparency, volatility. The 90/10 rule and the last mile. Tool design for observability in agentic systems. The full treatment of recursive stochasticity: building with LLM tools introduces the same variance you are trying to control. Patterns are durable, products are volatile.
 
 **Chapter 12: Security, Supply Chain, and Model Provenance.** Security controls exist so you *can* use these tools, not so you cannot. The Five Safes framework applied to AI workflows: safe projects, safe people, safe settings, safe data, safe outputs. Agencies already do these things under different names; the Five Safes provides a common vocabulary. Model provenance as a trust decision, not just a performance decision.
 
@@ -96,7 +96,7 @@ The book moves through five phases, from the nature of the instrument to the ins
 
 ### Where to Start
 
-If you are a statistician or domain expert new to pipeline engineering, start at Chapter 1 and read through. The domain chapters (2 through 4) will be familiar territory; the cross-cutting chapters (5 through 8) are where you will learn the most new material. The validity and infrastructure chapters (9 through 11) formalize the engineering discipline in terms that connect to measurement theory you already know.
+If you are a statistician or domain expert new to pipeline engineering, start at Chapter 1 and read through. The domain chapters (2 through 4) will be familiar territory; the cross-cutting chapters (5 through 8) are where you will learn the most new material. The validity chapters (9 and 10) formalize the engineering discipline in terms that connect to measurement theory you already know.
 
 If you are a software engineer or data scientist new to official statistics, Chapter 1 provides the stochastic framing, then Chapter 8 (evaluation) and Chapter 12 (security and the Five Safes) give the institutional context that changes everything about how you design. The governance and cost chapters (13 and 14) explain constraints you may not have encountered in commercial software development.
 
