@@ -40,7 +40,7 @@ Tools that generate hierarchical concept maps from documents and label the outpu
 
 The failure modes, stated plainly:
 
-**Garbage chunking.** Text split at arbitrary boundaries (by character count or token count rather than semantic structure) instead of natural semantic divisions. A paragraph about household income split across two chunks becomes two incomplete fragments, neither containing the full concept. Downstream extraction from either chunk is necessarily degraded. The chunk boundary destroyed meaning before the extraction even started.
+**Garbage chunking.** Text split at arbitrary boundaries (by character count or token count rather than semantic structure) instead of natural semantic divisions. A paragraph about household income split across two chunks becomes two incomplete fragments, neither containing the full concept. Downstream extraction from either chunk is necessarily degraded. The chunk boundary destroyed meaning before the extraction even started {cite:p}`chroma_2024_chunking`.
 
 **Lazy entity resolution.** "Census Bureau," "the Bureau," "Census," "U.S. Census Bureau" all become separate nodes in the graph. No coreference handling. The graph now has four entities where there should be one, and every relationship attached to each variant is disconnected from the others. The graph proliferates synonyms as distinct entities.
 

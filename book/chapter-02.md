@@ -89,7 +89,7 @@ The dual-model classification of 6,954 questions cost approximately \$15 in API 
 
 ## Order Effects and the ABBA Design
 
-Position bias: the order in which options or question pairs are presented to a model affects its output. This is well-documented in survey methodology as primacy and recency effects, and it is equally present in LLM behavior.
+Position bias: the order in which options or question pairs are presented to a model affects its output. This is well-documented in survey methodology as primacy and recency effects, and it is equally present in LLM behavior {cite:p}`li_2023_order_sensitivity`.
 
 ABBA counterbalancing is a standard technique from repeated-measures experimental design: by reversing presentation order across conditions, order-dependent variance is exposed rather than hidden.
 
@@ -105,7 +105,7 @@ The practical takeaway is general: any time you ask a model to compare, rank, or
 
 What happens when the raters do not agree? The Concept Mapper uses a structured protocol that mirrors best practices in human inter-rater reliability studies.
 
-Three independent rater models, one per vendor (OpenAI, Anthropic, Google), evaluate each pair on feasibility and barrier type. Initial agreement: Fleiss' κ = 0.537 for feasibility, 0.611 for barrier classification. Moderate, which is expected at the rater stage.
+Three independent rater models, one per vendor (OpenAI, Anthropic, Google), evaluate each pair on feasibility and barrier type. Initial agreement: Fleiss' κ = 0.537 for feasibility, 0.611 for barrier classification. Moderate {cite:p}`landis_1977`, which is expected at the rater stage.
 
 Three independent arbitrator models, higher-capability models from the same three vendors, review all pairs with access to all prior judgments. Blind masking prevents anchoring on any particular vendor's output. Order randomization prevents position bias. Post-arbitration agreement: κ = 0.843 for feasibility, 0.796 for barrier classification. Near-perfect.
 

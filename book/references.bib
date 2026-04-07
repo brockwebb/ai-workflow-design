@@ -23,6 +23,14 @@
   year      = {2014},
   doi       = {10.1145/2523813}
 }
+@misc{gotel_1994,
+  author       = {Gotel, Orlena C. Z. and Finkelstein, Anthony C. W.},
+  title        = {An Analysis of the Requirements Traceability Problem},
+  year         = {1994},
+  booktitle    = {Proceedings of the 1st International Conference on Requirements Engineering},
+  pages        = {94--101},
+  note         = {Canonical academic reference on requirements traceability. Defines the traceability problem and its pre/post-requirements dimensions.}
+}
 
 @article{simmhan_2005,
   author    = {Simmhan, Yogesh L. and Plale, Beth and Gannon, Dennis},
@@ -33,6 +41,14 @@
   pages     = {31--36},
   year      = {2005},
   doi       = {10.1145/1084805.1084812}
+}
+@inproceedings{song_2025_correlated_errors,
+  author    = {Song, Zhi and others},
+  title     = {Correlated Errors in Large Language Models},
+  booktitle = {ICML 2025},
+  year      = {2025},
+  url       = {https://icml.cc/virtual/2025/poster/44225},
+  note      = {Models agree 60\% of the time when both err. Shared providers drive correlation. Larger/more accurate models have highly correlated errors even across vendors.}
 }
 
 @inproceedings{huang_2024,
@@ -112,6 +128,14 @@
   booktitle = {Proceedings of the ACM on Management of Data},
   year      = {2025},
   url       = {https://arxiv.org/abs/2501.06659}
+}
+@article{liu_2024_chatgpt_behavior,
+  author    = {Liu, Lingjiao and Ren, Zhitao and others},
+  title     = {How Is {ChatGPT}'s Behavior Changing over Time?},
+  journal   = {Harvard Data Science Review},
+  year      = {2024},
+  url       = {https://hdsr.mitpress.mit.edu/pub/y95zitmz},
+  note      = {GPT-4 prime-number accuracy dropped from 97.6\% to 2.4\% between March and June 2023. Large shifts in safety refusal rates and response lengths. Backend updates opaque to users. Originally arXiv:2307.09009 (2023).}
 }
 
 @article{kamen_2025,
@@ -247,6 +271,13 @@
   url       = {https://arxiv.org/abs/2603.03823},
   note      = {Sun Yat-sen University and Alibaba Group. 18 models from 8 providers. 100 tasks, avg 233 days / 71 commits per task. 75\% of models break previously working code during long-term maintenance. Introduces EvoScore metric.}
 }
+@inproceedings{chroma_2024_chunking,
+  author    = {{Chroma}},
+  title     = {Evaluating Chunking Strategies for Retrieval},
+  year      = {2024},
+  url       = {https://www.trychroma.com/research/evaluating-chunking},
+  note      = {Chunking choice significantly impacts retrieval accuracy. Default settings for common strategies can perform poorly.}
+}
 
 @article{lee_2026_metaharness,
   author    = {Lee, Yoonho and Nair, Roshen and Zhang, Qizheng and Khattab, Omar and Lee, Kangwook and Finn, Chelsea},
@@ -254,7 +285,15 @@
   journal   = {arXiv preprint arXiv:2603.28052},
   year      = {2026},
   url       = {https://arxiv.org/abs/2603.28052},
-  note      = {Stanford, MIT, KRAFTON. Harness optimization (prompt construction, context management, retrieval strategy). +7.7 points on text classification with 4x fewer context tokens. +4.7 points avg on 200 IMO-level math problems across 5 held-out models. Cross-model generalization confirmed. arXiv preprint, March 2026. PERPLEXITY: verify before publication.}
+  note      = {Stanford, MIT, KRAFTON. Harness optimization (prompt construction, context management, retrieval strategy). +7.7 points on text classification with 4x fewer context tokens. +4.7 points avg on 200 IMO-level math problems across 5 held-out models. Cross-model generalization confirmed. arXiv preprint, March 2026.}
+}
+@inproceedings{li_2023_order_sensitivity,
+  author    = {Li, Peiwen and Chen, Tao and others},
+  title     = {Large Language Models Sensitivity to the Order of Options in Multiple-Choice Questions},
+  year      = {2023},
+  journal   = {arXiv preprint arXiv:2308.11483},
+  url       = {https://arxiv.org/abs/2308.11483},
+  note      = {Systematic study of GPT-3.5/4 on MCQ benchmarks. Permuting answer options changes accuracy and choice distributions substantially. Position bias interacts with model uncertainty.}
 }
 
 @article{digiuseppe_2026,
@@ -380,6 +419,13 @@
   number       = {FCSM 25-03},
   institution  = {Federal Committee on Statistical Methodology},
   note         = {Proposes extending FCSM Data Quality Framework for AI/LLM consumption. Distinguishes machine-readable from machine-understandable data. Recommends structured experiments with metadata-enhanced APIs, including MCP as integration protocol.}
+}
+@misc{fedramp_20x_2025,
+  author       = {{General Services Administration}},
+  title        = {{GSA} Announces {FedRAMP} 20x},
+  year         = {2025},
+  url          = {https://www.gsa.gov/about-us/newsroom/news-releases/gsa-announces-fedramp-20x-03242025},
+  note         = {March 24, 2025. GSA-led FedRAMP modernization backed by OMB M-24-15. Goals: automate 80\%+ of security requirements, shrink authorization to weeks instead of months/years.}
 }
 
 @article{fagerberg_2025,
@@ -600,6 +646,14 @@
   doi       = {10.1038/s41586-026-10251-x},
   note      = {PERPLEXITY: verify DOI, page range, author list, and key statistics before publication}
 }
+@article{brodeur_2025_ssrp,
+  author    = {Brodeur, Abel and others},
+  title     = {Assessing Reproducibility in Economics Using Standardized Crowd-sourced Analysis},
+  journal   = {NBER Working Paper No. 33753},
+  year      = {2025},
+  url       = {https://www.nber.org/system/files/working_papers/w33753/w33753.pdf},
+  note      = {487 reproductions via Social Science Reproduction Platform. ~30\% meet basic computational reproducibility standard.}
+}
 
 @article{van_buuren_2011,
   author    = {van Buuren, Stef and Groothuis-Oudshoorn, Karin},
@@ -618,6 +672,16 @@
   year         = {2026},
   url          = {https://knoxsystems.com/resources/fedramp-authorization-timeline}
 }
+@article{landis_1977,
+  author    = {Landis, J. Richard and Koch, Gary G.},
+  title     = {The Measurement of Observer Agreement for Categorical Data},
+  journal   = {Biometrics},
+  volume    = {33},
+  number    = {1},
+  pages     = {159--174},
+  year      = {1977},
+  note      = {Standard kappa interpretation scale: poor (<0.00), slight (0.00--0.20), fair (0.21--0.40), moderate (0.41--0.60), substantial (0.61--0.80), almost perfect (0.81--1.00).}
+}
 
 @misc{mitre_aida_timelines,
   author       = {{MITRE Corporation}},
@@ -625,6 +689,14 @@
   year         = {2026},
   url          = {https://aida.mitre.org/demystifying-dod/timelines/},
   note         = {Government procurement timeline guidance}
+}
+@misc{morris_2025_verasight,
+  author       = {Morris, David},
+  title        = {The Risks of Using {LLM} Imputation of Survey Data to Produce ``Synthetic Samples''},
+  year         = {2025},
+  institution  = {Verasight},
+  url          = {https://www.verasight.io/reports/synthetic-sampling-2},
+  note         = {LLM-generated survey data: topline error ~4pp on polarized questions, but mean absolute subgroup error >10 percentage points vs real crosstabs. Chain-of-thought and anchors did not reliably fix population totals.}
 }
 
 @misc{doncio_raise2_2024,
@@ -701,3 +773,13 @@
   note         = {Published December 9, 2025; peer-reviewed by 100+ experts},
   url          = {https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/}
 }
+
+@inproceedings{ouyang_2025_nondeterminism,
+  author    = {Ouyang, Siyuan and others},
+  title     = {Non-Determinism of ``Deterministic'' {LLM} System Settings in Hosted {LLMs}},
+  booktitle = {Eval4NLP 2025},
+  year      = {2025},
+  url       = {https://aclanthology.org/2025.eval4nlp-1.12.pdf},
+  note      = {Systematic study: GPT, Llama, Mixtral families show substantial variance across 10 runs at temperature=0. Causes: FP non-determinism, batching effects, infrastructure differences, provider-side changes.}
+}
+

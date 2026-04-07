@@ -15,7 +15,7 @@ Statisticians already work with stochastic processes, of course. But the stochas
 
 *Seeded stochastic processes* (Monte Carlo simulation, bootstrap resampling, Markov Chain Monte Carlo (MCMC)) are reproducible via seed, numerical in output, characterizable in distribution, and bounded in uncertainty. Statisticians have decades of theory and practice for designing around these. Set the seed, run it again, get the same result.
 
-*LLM stochastic processes* are irreproducible across runs (even at temperature=0 on many APIs), produce *language* rather than numbers, exhibit error distributions that are not characterizable in classical terms, and fail in a particularly dangerous way: they produce *coherent-sounding wrong answers*. The failure mode is not noise around a signal. It is a confident, fluent, plausible-looking wrong answer that passes casual inspection.
+*LLM stochastic processes* are irreproducible across runs (even at temperature=0 on many APIs, as systematic studies have confirmed {cite:p}`ouyang_2025_nondeterminism`), produce *language* rather than numbers, exhibit error distributions that are not characterizable in classical terms, and fail in a particularly dangerous way: they produce *coherent-sounding wrong answers*. The failure mode is not noise around a signal. It is a confident, fluent, plausible-looking wrong answer that passes casual inspection.
 
 This is why we call them *stochastic liabilities*, not bugs. A bug is a defect you fix. A stochastic liability is a property of the system you design around. You don't fix the weather; you build a roof.
 

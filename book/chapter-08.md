@@ -28,7 +28,7 @@ The crosswalk identifies five types of mappings between the two frameworks:
 
 *Distributed (3 pairs):* One framework does the work without naming it explicitly. Requires assembly: collecting scattered practices and naming them as a coherent evaluation activity.
 
-*FCSM-only (4 dimensions):* No NIST equivalent. Data fitness concerns, relevance, timeliness, accessibility, coherence, that AI trustworthiness frameworks do not address.
+*FCSM-only (4 of the framework's 11 dimensions):* No NIST equivalent. Data fitness concerns, relevance, timeliness, accessibility, coherence, that AI trustworthiness frameworks do not address.
 
 The practical value: where existing statistical quality practices already address an AI trustworthiness concern, agencies should not build a parallel evaluation process. The crosswalk identifies targeted additional work rather than wholesale duplication.
 
@@ -90,7 +90,7 @@ Snapshot benchmarks test whether the system works right now. Production pipeline
 
 The same principle applies to data pipelines. A classification model that achieves κ = 0.843 today may drift as model updates change the underlying behavior. A consultation system that grounds correctly today may smear semantics after a model version change. Continuous evaluation means:
 
-*Scheduled regression runs.* Run the golden test set on a fixed cadence, not just when you think something changed. Model providers push silent updates.
+*Scheduled regression runs.* Run the golden test set on a fixed cadence, not just when you think something changed. Model providers push silent updates {cite:p}`liu_2024_chatgpt_behavior`.
 
 *Drift detection.* Monitor agreement rates, confidence distributions, and failure mode patterns over time. A gradual shift in agreement rate is a signal, not noise.
 

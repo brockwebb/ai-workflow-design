@@ -138,7 +138,7 @@ Everything the model "knows" about available models, APIs, and best practices is
 
 ## Model Selection Drift
 
-Model selection drift is a T4 variant at the system level: the instrument has changed, but the validation claims have not been updated to reflect the change. The optimal model blend shifts as models update. A model that was the best choice six months ago may have degraded through silent baseline updates, been deprecated, or been surpassed by a new entrant. Selection criteria need versioning: not just "which model" but "why this model, evaluated when, against what criteria."
+Model selection drift is a T4 variant at the system level: the instrument has changed, but the validation claims have not been updated to reflect the change. The optimal model blend shifts as models update. A model that was the best choice six months ago may have degraded through silent baseline updates {cite:p}`liu_2024_chatgpt_behavior`, been deprecated, or been surpassed by a new entrant. Selection criteria need versioning: not just "which model" but "why this model, evaluated when, against what criteria."
 
 Model selection drift is a validity concern because the instrument itself has changed. If your evaluation results were generated with Model A v2.3 and you are now running Model A v2.7, you do not know whether your evaluation still holds. The model version is part of the instrument specification. Changing it without re-evaluation is running a different instrument and claiming the old validation applies.
 
