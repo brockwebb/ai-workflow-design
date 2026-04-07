@@ -104,6 +104,38 @@ The Concept Mapper's dual-model design illustrates the selection principle: mode
 
 **Configuration-driven model selection.** Design the pipeline so that swapping models is a configuration change, not a code rewrite. Then model selection becomes continuous: as new models release or pricing changes, you re-run your evaluation suite, update the config, and the pipeline uses the new optimal model. This is cost optimization as architecture, not as a one-time decision.
 
+## The Fine-Tuning Crossover
+
+Chapter 3 introduced the qualitative tradeoffs between API access and fine-tuning. This section provides the cost accounting framework to make that comparison rigorous.
+
+**API cost scales linearly.** Every call costs tokens. Double the volume, double the cost. The Concept Mapper's \$15 inference run scales predictably: 10x the questions costs roughly 10x the tokens. There is no economy of scale on per-call pricing (though negotiated enterprise rates and batch API discounts can reduce the per-token rate at high volume). The advantage is zero upfront investment, no infrastructure to maintain, and operational simplicity. The disadvantage is that you pay the full per-token rate on every run, forever.
+
+**Fine-tuning cost has a different shape.** The upfront investment is substantial: training data curation (who labels the training set, and how do you verify label quality?), compute for training runs (GPU hours, whether cloud or on-premises), evaluation harness development to prove the fine-tuned model outperforms the baseline, and MLOps infrastructure to serve the model. After that upfront cost, per-call inference on a self-hosted fine-tuned model is dramatically cheaper than API calls to a frontier provider. The cost curve starts high and flattens. API cost starts low and climbs linearly.
+
+**The crossover point depends on four variables:**
+
+1. **Annual inference volume.** How many tokens per year does your workload consume? Low-volume workloads (a few thousand records per quarter) rarely justify fine-tuning. High-volume workloads (millions of records per year across multiple survey products) shift the math.
+
+2. **Workload stability.** Fine-tuning amortizes well when the task is stable. If your classification taxonomy revises annually (NAICS, SOC), each revision triggers retraining: new training data, new evaluation pass, new deployment. Frequent revisions erode the cost advantage because the upfront investment partially resets.
+
+3. **MLOps maturity.** Does your agency already operate GPU infrastructure, manage model deployments, and maintain ML pipelines? If yes, the marginal cost of adding a fine-tuned model is lower. If no, the infrastructure buildout cost, including staff expertise, is part of the fine-tuning price tag. Chapter 3 covers this in detail.
+
+4. **Federal infrastructure overhead.** Self-hosted models require an Authority to Operate (ATO) or equivalent security authorization. New authorizations typically take 12 months or longer. Even if the cost crossover favors fine-tuning on paper, the 12-month delay before processing a single production record is a real cost: the opportunity cost of the work not done during that year, plus the risk that the model landscape shifts before your deployment is operational.
+
+**A rough framework for the comparison:**
+
+| Cost Category | API Path | Fine-Tuning Path |
+|:--|:--|:--|
+| Development (one-time) | Prompt engineering, evaluation harness, pipeline construction | All of API path PLUS training data curation, model training, serving infrastructure |
+| Per-run inference | Provider token pricing x volume | Self-hosted compute (amortized GPU + electricity + maintenance) |
+| Maintenance (annual) | Prompt updates, re-evaluation on model changes, API cost monitoring | All of API path PLUS retraining on taxonomy changes, infrastructure maintenance, MLOps staffing |
+| Institutional overhead | Minimal (API access under existing cloud agreements) | ATO/security review, hardware procurement, staff training, infrastructure queue priority |
+| Timeline to first production run | Weeks to low months | 6-18 months (Chapter 3) |
+
+The table makes visible what intuition often misses: the fine-tuning path includes every cost the API path has, plus additional costs at every level. Fine-tuning does not replace prompt engineering or evaluation infrastructure. You still need both. Fine-tuning adds training data management, compute infrastructure, and MLOps on top of the baseline pipeline engineering.
+
+For most federal statistical workloads at current pricing, the API path is the correct starting point. Build the pipeline, prove the method, establish the evaluation framework, and run in production via API. If and when annual API costs grow large enough to justify the infrastructure investment, the pipeline you built is the same pipeline you deploy on a fine-tuned model. The architecture does not change; only the model endpoint does. This is why Chapter 6's design-for-change principle matters: if your pipeline is model-agnostic, the API-to-fine-tuning migration is a configuration change, not a rewrite.
+
 ## Making the Case
 
 Federal program offices think in FTEs, labor hours, and budget cycles, not tokens and API calls. The pitch is not "AI is cheap." The pitch is "AI reallocates human effort from low-judgment work to high-judgment work, with documented quality metrics and a defensible evidence chain."
