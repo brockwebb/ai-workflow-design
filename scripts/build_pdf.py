@@ -486,6 +486,11 @@ def main():
     toc_files = read_toc(myst_yml)
     print(f"\nTOC: {len(toc_files)} files")
 
+    # Ensure bibliography.md is last so pandoc's --citeproc references append there
+    if "bibliography.md" in toc_files:
+        toc_files.remove("bibliography.md")
+        toc_files.append("bibliography.md")
+
     cover_typ_path = write_typst_cover()
     if cover_typ_path:
         print(f"Cover template: {cover_typ_path}")
@@ -562,6 +567,9 @@ margin-bottom: 1in
     if table_map:
         print(f"\nApplying table map ({len(table_map)} entries)...")
         combined_text = apply_table_map(combined_text, table_map, numbering_queues)
+
+    # Move any ## headings immediately preceding a landscape page block inside it
+    combined_text = move_headings_into_landscape(combined_text)
 
     # Convert remaining numbered markdown tables to Typst (pops from same queues)
     combined_text = inject_table_numbers(combined_text, numbering_queues)
@@ -903,6 +911,22 @@ def md_table_to_typst(header_cells, data_rows, columns, caption=None,
         lines.append("]")  # close #page(flipped: true)
     lines.append("```")
     return "\n".join(lines)
+
+
+def move_headings_into_landscape(text):
+    """Move ## headings into following landscape page blocks.
+
+    When a landscape table follows a section heading, the heading ends up
+    orphaned on the portrait page because #page(flipped: true) forces a new
+    page. This post-processing pass detects that pattern and moves the heading
+    inside the landscape block so it renders alongside its table.
+    """
+    pattern = r'(^## (.+?)$\n\n*)(```\{=typst\}\n#page\(flipped: true\)\[)'
+    def replacer(match):
+        heading_text = match.group(2)
+        typst_start = match.group(3)
+        return typst_start + f'\n#heading(level: 2)[{heading_text}]\n#v(1em)\n'
+    return re.sub(pattern, replacer, text, flags=re.MULTILINE)
 
 
 def apply_table_map(text, table_map, numbering_queues=None):

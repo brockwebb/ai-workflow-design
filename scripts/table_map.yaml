@@ -64,3 +64,8 @@ tables:
     columns: ["2fr", "3fr", "3fr"]
     landscape: true
     breakable: true
+
+  # Index: keyword-to-chapter mapping (2 cols, breakable across pages)
+  - header_match: "Keyword | Chapters"
+    columns: ["3fr", "1fr"]
+    breakable: true
