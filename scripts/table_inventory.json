@@ -1,1 +1,17 @@
-[]
+[
+  {"file": "chapter-04.md", "header_match": "Failure Mode | SFV Sub-dimension | Consequence"},
+  {"file": "chapter-04.md", "header_match": "Use pairwise comparison when... | Use absolute scoring when..."},
+  {"file": "chapter-05.md", "header_match": " | Parallel Consensus | Generator-Critic Loop | LLM-as-Judge"},
+  {"file": "chapter-07.md", "header_match": "Error Type | Examples | Pipeline Response | Investigation Priority"},
+  {"file": "chapter-09.md", "header_match": "Sub-dimension | Shorthand | What It Checks"},
+  {"file": "chapter-09.md", "header_match": "SFV Threat Active | Classical Validity Compromised | Why"},
+  {"file": "chapter-09.md", "header_match": "Practice | Chapter | Addresses | Mechanism"},
+  {"file": "chapter-09.md", "header_match": "Observable Symptom | Most Likely Threat(s) | First Investigation Step"},
+  {"file": "chapter-11.md", "header_match": "Dimension | Managed Platforms | Code-First Frameworks | CLI/Script-Based"},
+  {"file": "chapter-11.md", "header_match": "If you encounter this term | The book's concept | Chapter | Where the divergence is instructive"},
+  {"file": "chapter-13.md", "header_match": "Risk Tier | Example Uses | Review Process | Automated Controls"},
+  {"file": "chapter-14.md", "header_match": " | AI Pipeline | Manual Equivalent"},
+  {"file": "chapter-14.md", "header_match": "Cost Category | What It Includes | Who Cares"},
+  {"file": "chapter-14.md", "header_match": "Model Tier | Relative Cost per Token | Est. Cost for 50K Records | When to Use"},
+  {"file": "chapter-14.md", "header_match": "Cost Category | API Path | Fine-Tuning Path"}
+]

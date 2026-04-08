@@ -1,3 +1,60 @@
 # Table column width overrides for PDF export
-# See ai4stats/scripts/table_map.yaml for format reference
-tables: []
+# fr = fractional units; columns must sum to a sensible ratio
+# Tables not listed here render with equal 1fr columns
+
+tables:
+  # Ch 4: Extraction failure modes (3 cols, 3rd col wide)
+  - header_match: "Failure Mode | SFV Sub-dimension | Consequence"
+    columns: ["1.5fr", "1.5fr", "3fr"]
+
+  # Ch 5: Topology comparison (4 cols, all content-heavy)
+  - header_match: " | Parallel Consensus | Generator-Critic Loop | LLM-as-Judge"
+    columns: ["1.2fr", "2fr", "2fr", "2fr"]
+
+  # Ch 7: Error classification (4 cols, last col wide)
+  - header_match: "Error Type | Examples | Pipeline Response | Investigation Priority"
+    columns: ["1fr", "2fr", "2fr", "1.5fr"]
+
+  # Ch 9: SFV sub-dimensions (3 cols, 3rd col wide)
+  - header_match: "Sub-dimension | Shorthand | What It Checks"
+    columns: ["1.5fr", "0.8fr", "3fr"]
+
+  # Ch 9: SFV threats to classical validity (3 cols)
+  - header_match: "SFV Threat Active | Classical Validity Compromised | Why"
+    columns: ["1.5fr", "1.5fr", "3fr"]
+
+  # Ch 9: Practice cross-reference (4 cols)
+  - header_match: "Practice | Chapter | Addresses | Mechanism"
+    columns: ["1.5fr", "0.7fr", "0.8fr", "3fr"]
+
+  # Ch 9: Diagnostic symptom table (3 cols, all wide)
+  - header_match: "Observable Symptom | Most Likely Threat(s) | First Investigation Step"
+    columns: ["2fr", "1.5fr", "2.5fr"]
+
+  # Ch 11: Orchestration comparison (4 cols + lead col)
+  - header_match: "Dimension | Managed Platforms | Code-First Frameworks | CLI/Script-Based"
+    columns: ["1.5fr", "2fr", "2fr", "1.5fr"]
+
+  # Ch 11: Terminology crosswalk (4 cols)
+  - header_match: "If you encounter this term | The book's concept | Chapter | Where the divergence is instructive"
+    columns: ["1.5fr", "1.5fr", "0.6fr", "2.5fr"]
+
+  # Ch 13: Risk tier table (4 cols + lead col)
+  - header_match: "Risk Tier | Example Uses | Review Process | Automated Controls"
+    columns: ["1fr", "2fr", "2fr", "2fr"]
+
+  # Ch 14: Cost comparison (3 cols)
+  - header_match: " | AI Pipeline | Manual Equivalent"
+    columns: ["1.5fr", "2.5fr", "2.5fr"]
+
+  # Ch 14: Cost taxonomy (3 cols)
+  - header_match: "Cost Category | What It Includes | Who Cares"
+    columns: ["1.5fr", "3fr", "2fr"]
+
+  # Ch 14: Model tier pricing (4 cols)
+  - header_match: "Model Tier | Relative Cost per Token | Est. Cost for 50K Records | When to Use"
+    columns: ["1.2fr", "1.2fr", "1.2fr", "2.5fr"]
+
+  # Ch 14: API vs fine-tuning TCO (3 cols)
+  - header_match: "Cost Category | API Path | Fine-Tuning Path"
+    columns: ["1.2fr", "2.5fr", "2.5fr"]

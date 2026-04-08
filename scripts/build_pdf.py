@@ -41,7 +41,29 @@ UNNUMBERED_FILES = {
     "foreword.md",
     "intro.md",
     "appendix-principles.md",
+    "appendix-security.md",
     "bibliography.md",
+    "glossary.md",
+    "index.md",
+}
+
+# Figure ID -> display number map for PDF numbering
+FIGURE_NUMBER_MAP = {
+    "fig-01-01a": "Figure 1.1a",
+    "fig-01-01b": "Figure 1.1b",
+    "fig-02-01":  "Figure 2.1",
+    "fig-03-01":  "Figure 3.1",
+    "fig-04-01":  "Figure 4.1",
+    "fig-05-01":  "Figure 5.1",
+    "fig-05-02":  "Figure 5.2",
+    "fig-05-03":  "Figure 5.3",
+    "fig-06-01":  "Figure 6.1",
+    "fig-06-02":  "Figure 6.2",
+    "fig-06-03":  "Figure 6.3",
+    "fig-07-02":  "Figure 7.1",
+    "fig-07-03":  "Figure 7.2",
+    "fig-11-01":  "Figure 11.1",
+    "fig-13-01":  "Figure 13.1",
 }
 
 
@@ -210,6 +232,79 @@ def convert_code_block(match):
     return f"```{lang}\n{content}\n```"
 
 
+def convert_citations(text):
+    """Convert MyST citation roles to pandoc citeproc syntax.
+
+    {cite:t}`key`        -> @key           (narrative: Huang et al. (2024))
+    {cite:p}`key`        -> [@key]         (parenthetical: (Huang et al., 2024))
+    {cite:p}`key1;key2`  -> [@key1; @key2] (multiple)
+    """
+    # Narrative citations
+    text = re.sub(r'\{cite:t\}`([^`]+)`', r'@\1', text)
+
+    # Parenthetical citations (possibly multiple keys separated by ;)
+    def convert_parens(match):
+        keys = match.group(1)
+        parts = [k.strip() for k in keys.split(';')]
+        return '[' + '; '.join(f'@{k}' for k in parts) + ']'
+
+    text = re.sub(r'\{cite:p\}`([^`]+)`', convert_parens, text)
+    return text
+
+
+def convert_myst_colon_fence_figure(match):
+    """Convert :::{figure} path ... ::: to pandoc image syntax."""
+    full_block = match.group(0)
+    lines = full_block.split("\n")
+
+    # First line: :::{figure} path
+    path_match = re.search(r'\{figure\}\s+(.+)', lines[0])
+    if not path_match:
+        return full_block
+    path = path_match.group(1).strip()
+
+    width = ""
+    caption_lines = []
+    past_options = False
+    for line in lines[1:]:
+        stripped = line.strip()
+        if stripped.startswith(":::"):
+            break
+        if stripped.startswith(":") and not past_options:
+            w = re.match(r':width:\s*(.+)', stripped)
+            if w:
+                val = w.group(1).strip()
+                width = f"{{ width={val} }}"
+            continue
+        if stripped == "" and not past_options:
+            past_options = True
+            continue
+        if past_options or not stripped.startswith(":"):
+            past_options = True
+            caption_lines.append(line)
+
+    caption = " ".join(caption_lines).strip()
+    return f"![{caption}]({path}){width}"
+
+
+def convert_myst_colon_fence_table(match):
+    """Convert :::{table} caption ... ::: to plain markdown table (let numbering handle it)."""
+    full_block = match.group(0)
+    lines = full_block.split("\n")
+
+    # Extract inner content (skip directive line, :name: options, and closing :::)
+    content_lines = []
+    for line in lines[1:]:
+        stripped = line.strip()
+        if stripped.startswith(":::"):
+            break
+        if stripped.startswith(":"):
+            continue  # skip :name: etc.
+        content_lines.append(line)
+
+    return "\n".join(content_lines)
+
+
 def convert_glossary(match):
     full_block = match.group(0)
     lines = full_block.split("\n")
@@ -224,6 +319,9 @@ def convert_glossary(match):
 def process_directives(text):
     text = re.sub(r'```\{contents\}.*?```', '', text, flags=re.DOTALL)
     text = re.sub(r'```\{tableofcontents\}.*?```', '', text, flags=re.DOTALL)
+
+    # Strip {bibliography} directive — pandoc --citeproc generates its own references
+    text = re.sub(r'```\{bibliography\}.*?```', '', text, flags=re.DOTALL)
 
     text = re.sub(
         r'```\{code-block\}\s+\w+\n.*?```',
@@ -249,6 +347,19 @@ def process_directives(text):
         r'```\{dropdown\}\s+.+?\n.*?```',
         convert_dropdown, text, flags=re.DOTALL
     )
+
+    # Colon-fence directives (:::)
+    text = re.sub(
+        r':::\{figure\}\s+.+?\n.*?:::',
+        convert_myst_colon_fence_figure, text, flags=re.DOTALL
+    )
+    text = re.sub(
+        r':::\{table\}.*?\n.*?:::',
+        convert_myst_colon_fence_table, text, flags=re.DOTALL
+    )
+
+    # MyST citation roles -> pandoc citeproc syntax
+    text = convert_citations(text)
 
     return text
 
@@ -475,6 +586,8 @@ margin-bottom: 1in
         "--pdf-engine=typst",
         f"--include-in-header={os.path.join(SCRIPTS_DIR, 'typst_header.typ')}",
         f"--resource-path={BOOK_DIR}:{os.path.join(BOOK_DIR, 'images')}:{os.path.join(REPO_ROOT, 'assets', 'diagrams')}:{REPO_ROOT}",
+        "--citeproc",
+        f"--bibliography={os.path.join(BOOK_DIR, 'references.bib')}",
     ]
 
     print(f"\nRunning pandoc + typst...")
@@ -534,11 +647,22 @@ margin-bottom: 1in
 
 
 def escape_typst(text):
-    """Escape Typst special characters in user-facing content text."""
-    text = text.replace('\\', '\\\\')
+    r"""Escape Typst special characters in table cell / caption content.
+
+    Rules:
+    - Convert **bold** and *italic* markdown to Typst equivalents (*bold*, _italic_)
+    - Do NOT escape backslash itself: \$ in source is already a valid Typst dollar escape
+    - Escape bare $ (not preceded by \) so they don't open Typst math mode
+    - ~ is Typst non-breaking space — leave as-is (don't produce invalid \~)
+    - Escape # @ < > for Typst content mode
+    """
+    # Markdown bold/italic -> Typst equivalents (bold=*, italic=_)
+    text = re.sub(r'\*\*(.+?)\*\*', r'*\1*', text)
+    text = re.sub(r'(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)', r'_\1_', text)
+
     text = text.replace('#', '\\#')
-    text = text.replace('$', '\\$')
-    text = text.replace('~', '\\~')
+    # Escape bare $ but not already-escaped \$
+    text = re.sub(r'(?<!\\)\$', r'\\$', text)
     text = text.replace('<', '\\<')
     text = text.replace('>', '\\>')
     text = text.replace('@', '\\@')
@@ -707,8 +831,19 @@ def inject_table_numbers(text, numbering_queues):
 
 
 def number_figures(text, filename):
-    """Add figure numbers. No figures yet — placeholder for future use."""
-    return text
+    """Prepend figure numbers to image alt text based on FIGURE_NUMBER_MAP."""
+    def add_number(match):
+        alt = match.group(1)
+        path = match.group(2)
+        attrs = match.group(3) or ''
+        for fig_id, fig_num in FIGURE_NUMBER_MAP.items():
+            if fig_id in path:
+                if not alt.startswith('Figure'):
+                    alt = f'{fig_num}: {alt}' if alt else fig_num
+                break
+        return f'![{alt}]({path}){attrs}'
+
+    return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)(\{[^}]*\})?', add_number, text)
 
 
 def load_table_map():
@@ -738,7 +873,10 @@ def md_table_to_typst(header_cells, data_rows, columns, caption=None):
         f"  stroke: 0.5pt + luma(180),",
         f"  table.header(",
     ]
-    header_typst = ", ".join(f"[*{escape_typst(c.strip())}*]" for c in header_cells)
+    header_typst = ", ".join(
+        f"[*{escape_typst(c.strip())}*]" if c.strip() else "[]"
+        for c in header_cells
+    )
     lines.append(f"    {header_typst},")
     lines.append("  ),")
     for row in data_rows:
