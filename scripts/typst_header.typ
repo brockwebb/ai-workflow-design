@@ -57,6 +57,9 @@
 // No admonition exceeds 40 lines, so breakable: false is safe here
 #show quote.where(block: true): set block(breakable: false)
 
+// Prevent orphaned headings (heading stranded at bottom of page with no following content)
+#show heading: set block(below: 1.5em, above: 2em, breakable: false)
+
 // Style level 2 headings
 #show heading.where(level: 2): it => {
   v(1.5em)

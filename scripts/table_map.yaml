@@ -58,3 +58,9 @@ tables:
   # Ch 14: API vs fine-tuning TCO (3 cols)
   - header_match: "Cost Category | API Path | Fine-Tuning Path"
     columns: ["1.2fr", "2.5fr", "2.5fr"]
+
+  # Appendix: Chapter-to-Principle Mapping (3 cols, landscape, breakable)
+  - header_match: "Chapter | Primary Working Principle(s) | Primary Tenet(s)"
+    columns: ["2fr", "3fr", "3fr"]
+    landscape: true
+    breakable: true

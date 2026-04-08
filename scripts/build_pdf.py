@@ -856,12 +856,17 @@ def load_table_map():
     return data.get("tables", []) if data else []
 
 
-def md_table_to_typst(header_cells, data_rows, columns, caption=None):
+def md_table_to_typst(header_cells, data_rows, columns, caption=None,
+                       breakable=False, landscape=False):
     """Convert a markdown table to a raw Typst table block with custom column widths.
 
-    Wraps caption + table in #block(breakable: false) to prevent page splits.
+    breakable=False: wrap in #block(breakable: false) to prevent page splits.
+    landscape=True: wrap entire block in #page(flipped: true)[...].
     """
-    lines = ["```{=typst}", "#block(breakable: false)["]
+    lines = ["```{=typst}"]
+    if landscape:
+        lines.append("#page(flipped: true)[")
+    lines.append(f"#block(breakable: {'true' if breakable else 'false'})[")
     if caption:
         lines.append(f"#align(left)[#text(weight: \"bold\")[{escape_typst(caption)}]]")
         lines.append("#v(0.3em)")
@@ -885,6 +890,8 @@ def md_table_to_typst(header_cells, data_rows, columns, caption=None):
         lines.append(f"  {row_typst},")
     lines.append(")")
     lines.append("]")  # close #block
+    if landscape:
+        lines.append("]")  # close #page(flipped: true)
     lines.append("```")
     return "\n".join(lines)
 
@@ -930,7 +937,12 @@ def apply_table_map(text, table_map, numbering_queues=None):
                 sep_idx = 1  # skip separator row
                 data_rows = [r for r in table_lines[sep_idx + 1:]
                              if not re.match(r'^\|[\s\-|:]+\|$', r)]
-                typst_block = md_table_to_typst(header_cells, data_rows, entry["columns"], caption=caption)
+                landscape = entry.get("landscape", False)
+                breakable = entry.get("breakable", False)
+                typst_block = md_table_to_typst(
+                    header_cells, data_rows, entry["columns"],
+                    caption=caption, breakable=breakable, landscape=landscape
+                )
                 result.append(typst_block)
                 replaced += 1
             else:
