@@ -7,7 +7,8 @@ Keywords mapped to chapters where they are substantively discussed. Chapter numb
 | counterbalancing (ABBA notation) | 2, 4, 5 |
 | agreement scoring | 2, 5, 8 |
 | arbitration (structured) | 2, 5 |
-| ATO (Authority to Operate) | 13 |
+| ATO (Authority to Operate) | 13, 14 |
+| automated resolution rate | 2, 14 |
 | batch economics | 6, 14 |
 | batch processing | 6, 7, 14 |
 | bounded agency | 1, 11, 13 |
@@ -28,6 +29,7 @@ Keywords mapped to chapters where they are substantively discussed. Chapter numb
 | data wrangling | 3 |
 | disagreement as signal | 2, 3, 4, 5 |
 | disclosure review assistance | 4, 12 |
+| dual-modal assignment | 2 |
 | dual-model cross-validation | 2, 3, 5 |
 | ensemble | 2, 5 |
 | error classification (transient/permanent/data) | 7 |
@@ -39,19 +41,21 @@ Keywords mapped to chapters where they are substantively discussed. Chapter numb
 | extraction pipeline | 4, 10 |
 | FCSM | 8 |
 | FCSM/NIST crosswalk | 8, 12 |
-| FedRAMP | 12, 13 |
+| FedRAMP | 12, 13, 14 |
 | Federal Survey Concept Mapper | 2, 5, 6, 8, 10, 14 |
-| fine-tuning | 3 |
+| fine-tuning | 2, 3 |
 | fine-tuning cost trap | 3 |
 | Five Safes | 12, 13 |
 | Fleiss' kappa | 2, 5 |
 | format extraction | 3 |
+| format normalization | 6 |
 | generator-critic loop | 5 |
 | golden test set | 2, 7, 8, 9 |
 | governance | 1, 12, 13 |
 | governance-as-gate vs. governance-as-enabler | 13 |
 | handoff document | 7, 10 |
 | human-in-the-loop | 1, 2, 5, 10 |
+| institutional overhead | 14 |
 | idempotent operation | 7 |
 | imputation | 3 |
 | inference-time degradation (self-refinement) | 1, 5 |
@@ -61,6 +65,7 @@ Keywords mapped to chapters where they are substantively discussed. Chapter numb
 | last mile problem | 11, 13 |
 | LLM-as-judge | 5 |
 | maturity levels (AI automation) | 1, 13 |
+| model mix (per-stage selection) | 14 |
 | MCP (Model Context Protocol) | 11 |
 | model card | 12 |
 | model collapse | 1 |
@@ -77,6 +82,7 @@ Keywords mapped to chapters where they are substantively discussed. Chapter numb
 | parallel consensus | 2, 5 |
 | parallel processing | 6 |
 | position bias | 2, 5 |
+| pilot specification | 13 |
 | procurement (government) | 13 |
 | provenance chain | 4, 9, 10 |
 | quantization | 3 |
@@ -93,6 +99,7 @@ Keywords mapped to chapters where they are substantively discussed. Chapter numb
 | SFV (State Fidelity Validity) | 9, 10 |
 | small language model (SLM) | 3 |
 | smoke test | 7 |
+| soup spoon principle | 8 |
 | SOC coding | 2, 3 |
 | State Coherence (SCoh) | 9 |
 | State Discontinuity (T5) | 9 |
