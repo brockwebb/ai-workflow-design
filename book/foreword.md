@@ -28,7 +28,7 @@ The design discipline in this book exists because the stakes are different. Not 
 
 ## On How This Book Was Written
 
-This book was designed and authored using the same discipline it teaches. The intellectual architecture, editorial decisions, and all judgment calls are the author's. AI tools did execution work: drafting prose from detailed specifications, research assistance, citation verification, and build automation. This is itself a design decision consistent with the book's philosophy.
+This book was written with the assistance of AI tools. The pedagogical decisions, domain expertise, audience framing, and all editorial judgments are the author's. AI did execution work: drafting prose from detailed specifications, research assistance, citation verification, and build automation. The author did the authoring: deciding what to teach, how to frame it, what to cut, and what to validate.
 
 ---
 
