@@ -23,7 +23,6 @@
 | fig-07-03 | Ch 7 | Config Validation Flow | fig-07-03_config_validation_flow.md | Deployed |
 | fig-11-01 | Ch 11 | Evaluation Framework Template | fig-11-01_evaluation_framework_template_method.txt | Deployed |
 | fig-13-01 | Ch 13 | Governance Models | fig-13-01_governance_models.md | Deployed |
-| fig-14-01 | Ch 14 | Cost Trajectory | fig-14-01_cost_trajectory.md | Method only — needs PaperBanana render |
 
 ## Tables
 
