@@ -649,23 +649,29 @@ margin-bottom: 1in
 def escape_typst(text):
     r"""Escape Typst special characters in table cell / caption content.
 
-    Rules:
-    - Convert **bold** and *italic* markdown to Typst equivalents (*bold*, _italic_)
-    - Do NOT escape backslash itself: \$ in source is already a valid Typst dollar escape
-    - Escape bare $ (not preceded by \) so they don't open Typst math mode
-    - ~ is Typst non-breaking space — leave as-is (don't produce invalid \~)
-    - Escape # @ < > for Typst content mode
+    The source markdown already has \$ for dollar signs (from prior sweeps).
+    This function handles remaining Typst-special characters.
     """
     # Markdown bold/italic -> Typst equivalents (bold=*, italic=_)
     text = re.sub(r'\*\*(.+?)\*\*', r'*\1*', text)
     text = re.sub(r'(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)', r'_\1_', text)
 
+    # Escape # for Typst content mode
     text = text.replace('#', '\\#')
-    # Escape bare $ but not already-escaped \$
-    text = re.sub(r'(?<!\\)\$', r'\\$', text)
+
+    # Dollar signs: protect existing \$ pairs, escape bare $, restore
+    text = text.replace('\\$', '\x00PROTECTED_DOLLAR\x00')
+    text = text.replace('$', '\\$')
+    text = text.replace('\x00PROTECTED_DOLLAR\x00', '\\$')
+
+    # Escape < > @ for Typst content mode
     text = text.replace('<', '\\<')
     text = text.replace('>', '\\>')
     text = text.replace('@', '\\@')
+
+    # Safety: ensure ~ is never backslash-escaped (valid Typst as-is)
+    text = text.replace('\\~', '~')
+
     return text
 
 
@@ -878,10 +884,13 @@ def md_table_to_typst(header_cells, data_rows, columns, caption=None,
         f"  stroke: 0.5pt + luma(180),",
         f"  table.header(",
     ]
-    header_typst = ", ".join(
-        f"[*{escape_typst(c.strip())}*]" if c.strip() else "[]"
-        for c in header_cells
-    )
+    def format_header_cell(c):
+        cleaned = c.strip()
+        if not cleaned or cleaned in ('**', '***', '*'):
+            return "[]"
+        return f"[*{escape_typst(cleaned)}*]"
+
+    header_typst = ", ".join(format_header_cell(c) for c in header_cells)
     lines.append(f"    {header_typst},")
     lines.append("  ),")
     for row in data_rows:
