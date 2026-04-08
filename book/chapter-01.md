@@ -215,6 +215,8 @@ The chapters that follow are organized in five phases.
 
 Each chapter is designed to stand alone. You can read them in order for the full argument, or jump to the chapter that addresses your immediate problem. The tenets and working principles provide the connective tissue.
 
+---
+
 ### Thought Experiment
 
 Your team has built an LLM pipeline that classifies survey responses into standardized categories. It ran overnight on 50,000 records. The summary statistics look reasonable: the distribution across categories matches historical patterns, the processing cost was within budget, and no errors were logged.

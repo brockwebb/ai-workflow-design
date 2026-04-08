@@ -166,6 +166,8 @@ The infrastructure described in this chapter can seem daunting. Graph databases,
 
 The migration path is additive, not replacement. The JSONL log does not go away when you add a database. The database does not go away when you add a graph. Each layer serves a different query pattern. Most research pipelines in their first year need only the first layer. Know what the next layer looks like so you recognize the pain point when it arrives.
 
+---
+
 ### Thought Experiment
 
 Your agency's occupation coding pipeline processes survey responses and classifies them into occupational categories for official statistical releases. The pipeline ran for three consecutive quarters, with results published each quarter in official statistical releases. Six months after the final quarter's release, a reviewer challenges one specific classification in the published data. They want to know:

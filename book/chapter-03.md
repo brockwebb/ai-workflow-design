@@ -120,6 +120,8 @@ Knowing where not to use LLMs is as important as knowing where to use them. The 
 
 The thesis: LLMs handle the *semantic reasoning* parts of the data quality pipeline. Traditional methods handle the *statistical* parts. The design discipline is routing each sub-task to the right tool.
 
+---
+
 ### Thought Experiment
 
 You receive a dataset of 500,000 business registrations with self-reported NAICS codes and free-text business descriptions. Quality audit of a sample suggests approximately 25% of NAICS codes are wrong. Design the correction pipeline:

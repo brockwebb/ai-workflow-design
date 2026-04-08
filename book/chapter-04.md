@@ -140,6 +140,8 @@ Entity resolution is an escalation problem, not a single technique. Exact string
 
 > *You have budget and engineering time for three of these seven design principles in your first release. Which three do you implement, and why? What risk does each omission create? Which omission is most likely to produce a failure that appears only after the output is in use?*
 
+---
+
 ### Thought Experiment
 
 You are building an entity extraction pipeline to identify organizations mentioned in 10,000 public comments submitted to your agency during a rulemaking. The extracted entities will be used to characterize who commented. Your extraction pipeline identifies "American Medical Association" in 47 comments. An analyst reports this to leadership.

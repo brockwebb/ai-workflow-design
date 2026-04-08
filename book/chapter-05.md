@@ -163,6 +163,8 @@ Regardless of topology, these principles apply:
 
 > *You have budget and engineering time for three of these five principles in your first release. Which three do you choose, and what risk does each omission create?*
 
+---
+
 ### Thought Experiment
 
 Your agency produces an annual statistical report that requires extracting structured data from 5,000 administrative records (PDF forms from state agencies), classifying each record into one of 12 program categories, and flagging records with potential data quality issues.

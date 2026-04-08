@@ -162,6 +162,8 @@ Model selection drift is a validity concern because the instrument itself has ch
 
 The countermeasure: version your model selections in configuration. Record the selection rationale. Schedule periodic re-evaluation using the golden test set pattern from Chapter 8. When results shift, you have a trail to investigate.
 
+---
+
 ### Thought Experiment
 
 You are running a quarterly survey processing pipeline. It has been stable for three quarters. In Q4, you notice that the "Other" category for occupation coding has grown from 3% to 12% of records. Nothing in your config, code, or input data format has changed. The provider released a model update two weeks before the Q4 run. You did not re-run your golden test set because the update was described as "minor performance improvements."

@@ -137,6 +137,8 @@ This is a common pattern in early LLM projects. Output quality and process trace
 
 The lesson: build traceability from the start. Log your model versions, prompt templates, input hashes, confidence scores, and arbitration decisions as pipeline artifacts, not as afterthoughts. Every classification should be traceable to the specific models that produced it, the prompts they received, the confidence scores they returned, and the decision rule that accepted the result. Chapter 10 provides the full treatment of provenance engineering.
 
+---
+
 ### Thought Experiment
 
 You are tasked with coding 500,000 job descriptions into Standard Occupation Classification (SOC) codes. You have budget for 10,000 human-coded training examples and access to two LLM APIs. Design the workflow:

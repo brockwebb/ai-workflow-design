@@ -154,6 +154,8 @@ This is the hardest part. Name it honestly. It is a culture problem, and culture
 
 The pipeline that costs less than fifty dollars and finishes in a day? Teams are running it. Not everywhere, not without friction, and not without the obstacles described in this chapter. But the trajectory is real: institutions that started with a single pilot on non-sensitive data are now running production workloads. The gaps in this chapter are closable. They close faster when you name them honestly and build the evidence that earns trust.
 
+---
+
 ### Thought Experiment
 
 Your organization has ten teams that want to use AI for different tasks, from literature review to production data classification. Under current governance, each team files a separate request, each goes through full review, and the average time from request to approval is nine months. Three teams give up before approval. Two start using public tools without telling anyone.

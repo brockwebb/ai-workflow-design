@@ -198,6 +198,8 @@ The strongest version of this argument: we are already paying for this work. The
 
 *Pick one recurring task in your workflow that takes significant human effort. Estimate its true cost: not just the labor hours, but the calendar time, the error rate, the rework, and what those people could be doing instead. Now estimate what an AI pipeline for that task would cost to develop and run. Is the comparison closer than you expected, or further apart?*
 
+---
+
 ### Thought Experiment
 
 You have a \$50,000 annual budget for AI tools and services. Design a portfolio of AI workflows that maximizes mission impact within that budget. What do you build first? What model tiers do you use for which tasks? Where do you invest in development versus where do you use off-the-shelf? How much of the budget goes to inference costs versus evaluation infrastructure versus training your team? What is the expected return in FTE-hours reallocated?

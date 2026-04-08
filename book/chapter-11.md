@@ -121,6 +121,8 @@ The AI engineering community is independently arriving at many of the same desig
 
 > *Look at your current pipeline architecture. What fraction of your code is pipeline logic versus orchestration glue? If you had to migrate to a different orchestration approach next quarter, how much of your code survives?*
 
+---
+
 ### Thought Experiment
 
 You designed a survey processing pipeline eighteen months ago using Framework X for orchestration. Framework X provided model chaining, retry logic, output parsing, and a visual dashboard for monitoring. Your pipeline processes 50,000 records quarterly for an official statistical release. It is embedded in a production workflow with downstream dependencies: other teams consume your output.

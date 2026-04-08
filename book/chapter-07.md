@@ -128,6 +128,8 @@ The implication: your pipeline's checkpoint and recovery architecture must survi
 
 Chapter 11 provides the full treatment of the development toolchain as part of the workflow architecture, including the specific protocol: specification before execution, verification before commit, regression testing after every AI-assisted change. This section states the problem and its immediate engineering consequences.
 
+---
+
 ### Thought Experiment
 
 Your pipeline has been running in production for four months, processing 5,000 records weekly. You get a Monday morning alert: the weekend batch produced 5,000 results, zero errors, but spot-checking reveals that 30% of classifications have shifted categories compared to the same records processed three months ago. Your config file has not changed. Your code has not changed. Your data format has not changed.

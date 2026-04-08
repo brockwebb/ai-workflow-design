@@ -160,6 +160,8 @@ Agentic AI systems -- where the AI autonomously selects and invokes tools at run
 
 For organizations looking to formalize their AI data access governance, the Five Safes provides a ready-made structure that the international statistical community already recognizes and that maps without great effort to what every agency is already doing, even if they call it something different.
 
+---
+
 ### Thought Experiment
 
 Your team wants to use a new open-source model from a public repository. It scores well on benchmarks relevant to your task. The model card says it was trained on "internet data." The repository is hosted by an organization incorporated in a jurisdiction with different data protection laws than yours.

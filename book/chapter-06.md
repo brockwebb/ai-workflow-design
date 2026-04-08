@@ -140,6 +140,8 @@ This is the stochastic tax (Chapter 1 introduced the concept for inference; here
 
 The solution is config-driven, importable infrastructure modules: rate limiting, backoff, checkpointing, and parallel dispatch as shared components, not as code that gets rewritten for every project. Chapter 7 provides the architectural pattern. Chapter 11 addresses the meta-level challenge: when your development tool is itself an LLM, the infrastructure reinvention problem is a structural feature of the development process, not a one-time mistake.
 
+---
+
 ### Thought Experiment
 
 Design a classification pipeline that must survive three model swaps in 18 months without architectural rework. Your provider deprecates Model A six months after launch. A new market entrant offers Model B at half the cost with comparable accuracy. Your agency's security review clears Model C but not Model B.
