@@ -39,7 +39,7 @@ The manual equivalent: a trained analyst classifying survey questions against th
 
 ## The Cost Taxonomy
 
-People conflate four different cost categories when they talk about "AI costs." Separating them changes the conversation.
+People conflate five different cost categories when they talk about "AI costs." Separating them changes the conversation.
 
 | Cost Category | What It Includes | Who Cares |
 |---|---|---|
