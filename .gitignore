@@ -38,9 +38,12 @@ book/exports/
 # Claude Code
 .claude/
 
-# Session artifacts (not for public repo)
-cc_tasks/
-handoffs/
+# Audit artifacts (not for public repo)
+# AD-039: cc_tasks/ and handoffs/ are TRACKED; only data blobs under them are ignored, by size. Handoffs are secret-scanned before commit (FC-02).
+cc_tasks/*.json
+cc_tasks/*.jsonl
+handoffs/*.json
+handoffs/*.jsonl
 audits/
 
 # Working docs (research notes, perplexity results, design notes — not for public repo)
